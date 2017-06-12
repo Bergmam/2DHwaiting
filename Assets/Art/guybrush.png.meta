@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: b1c463aaca6d443d1bc61b4d1dda2aac
-timeCreated: 1497259533
+timeCreated: 1497288589
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -9,6 +9,8 @@ TextureImporter:
     21300004: head
     21300006: torso
     21300008: limb
+    21300010: green
+    21300012: red
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -176,6 +178,32 @@ TextureImporter:
         height: 122
       alignment: 9
       pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: green
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 217
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: red
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 217
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
