@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 ﻿using System.IO;
+using System;
 
 public class SceneHandler{
 
@@ -16,13 +17,14 @@ public class SceneHandler{
 		sceneStack = new Stack ();
 
 		//String path of folder containing all scenes
-		string sceneDirectoryPath = "Assets/Scenes";
+		string sceneDirectoryPath = "Assets" + Path.DirectorySeparatorChar + "Scenes";
 		scenePaths = Directory.GetFiles (sceneDirectoryPath);
 
 		//Add all scene names to list scenePathsList
 		for (int i = 0; i < scenePaths.Length; i++) {
 			string path = scenePaths [i];
-			path = path.Split ('/') [2].ToString (); //Remove begining of path
+            Debug.Log(path);
+			path = path.Split (Path.DirectorySeparatorChar) [2].ToString (); //Remove begining of path
 			path = path.Split ('.') [0].ToString (); //Remove file ending
 			if (!scenePathsList.Contains (path)) {
 				scenePathsList.Add (path);
