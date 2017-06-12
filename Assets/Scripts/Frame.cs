@@ -6,7 +6,7 @@ using System;
 public class Frame {
 
 	private Dictionary<string,float> bodyPartRotations;
-	private float defaultRotation;
+	private float defaultRotation = 0;
 
 	public Frame(){
 		bodyPartRotations = new Dictionary<string, float> ();
@@ -20,7 +20,14 @@ public class Frame {
 	}
 
 	public float getRotation(string bodyPart){
-		return bodyPartRotations.TryGetValue (bodyPart, defaultRotation);
+        if (bodyPartRotations.ContainsKey(bodyPart))
+        {
+            return bodyPartRotations[bodyPart];
+        }
+        else
+        {
+            return defaultRotation;
+        }
 	}
 
 }
