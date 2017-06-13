@@ -6,14 +6,35 @@ public class DragAndDrop : MonoBehaviour {
 
 	private bool mouseDown;
 
-    private bool outDown;
-    private bool outUp;
+	private bool outHardDown;
+	private bool outHardUp;
 
-    public float highTwistLimit;
-    public float lowTwistLimit;
+	private bool outFrameDown;
+	private bool outFrameUp;
+
+	private bool outHigh;
+	private bool outLow;
+
+	private float highFrameTwistLimit;
+	private float lowFrameTwistLimit;
+	public float frameTwistLimit;
+
+	public float highHardTwistLimit;
+	public float lowHardTwistLimit;
+
+	void Start(){
+		UpdateFrameLimits ();
+	}
 
     void OnMouseDown() {
 		mouseDown = true;
+	}
+
+	public void UpdateFrameLimits(){
+		float previousRotation = transform.parent.localEulerAngles.z;
+		//Make sure both limits are within [0 - 360]
+		highFrameTwistLimit = (previousRotation + frameTwistLimit) % 360;
+		lowFrameTwistLimit = (previousRotation - frameTwistLimit + 360) % 360;
 	}
 
 	void OnMouseDrag() {
@@ -53,33 +74,53 @@ public class DragAndDrop : MonoBehaviour {
 
             transform.parent.eulerAngles = new Vector3(0, 0, newRot); //Update rotation previous to checking limits
 
-            if (transform.parent.localEulerAngles.z < highTwistLimit) //Rotation is within limits, reset variables saying we are not
-            {
-                outUp = false;
-                outDown = false;
-            }else if (outDown) //Rotation is still outside limits to one side
-            {
-                transform.parent.localEulerAngles = new Vector3(0, 0, lowTwistLimit);
-            }
-            else if (outUp) //Rotation is still outside limits to other side
-            {
-                transform.parent.localEulerAngles = new Vector3(0, 0, highTwistLimit);
+			//Find biggest of low limits and smallest of high limis to create the smallest allowed intervall
+			float tmpLowLimit = InLimits (lowFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? lowFrameTwistLimit : lowHardTwistLimit;
+			float tmpHighLimit = InLimits (highFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? highFrameTwistLimit : highHardTwistLimit;
 
-            //Check to which side rotation is going outside limits. Save this to keep rotation at that side until limit is reached again
-            }else if(transform.parent.localEulerAngles.z > highTwistLimit + ((360 - highTwistLimit) / 2)) //TODO: Look this over
-            {
-                transform.parent.localEulerAngles = new Vector3(0, 0, lowTwistLimit);
-                outDown = true;
-            }
-            else
-            {
-                transform.parent.localEulerAngles = new Vector3(0, 0, highTwistLimit);
-                outUp = true;
-            }
+			float rotation = transform.parent.localEulerAngles.z;
+
+			if (InLimits (rotation, tmpLowLimit, tmpHighLimit)) { //Angle in limit
+				outHigh = false;
+				outLow = false;
+			} else {
+				if (outHigh) //Rotation is still outside limits to one side
+				{
+					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);
+				}
+				else if (outLow) //Rotation is still outside limits to the other side
+				{ 
+					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
+				}
+				//Check to which side rotation has exited the limits intervall
+				else if (InLimits(rotation, MiddleOfRotations (tmpHighLimit, tmpLowLimit), tmpLowLimit))
+				{
+					outLow = true;
+					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
+				}
+				else
+				{
+					outHigh = true;
+					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);
+				}
+			}
         }
 	}
 
 	void OnMouseUp() {
 		mouseDown = false;
+	}
+
+	//Returns true if angle is between low and high. Angles from 0 to 360.
+	private bool InLimits(float angle, float low, float high){
+		bool zeroInLimits = high < low;
+		bool inLimitsAroundZero = zeroInLimits && (angle < high || angle > low);
+		bool inLimitsWithoutZero = !zeroInLimits && (angle > low && angle < high);
+		return inLimitsAroundZero || inLimitsWithoutZero;
+	}
+
+	//Returns midpoint between low and high. Angles from 0 to 360.
+	private float MiddleOfRotations(float low, float high){
+		return ((high + 360 - low) / 2) % 360;
 	}
 }
