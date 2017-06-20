@@ -11,3 +11,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MoveEditorScene.unity
   - enabled: 1
     path: Assets/Scenes/MainMenuScene.unity
+  - enabled: 1
+    path: Assets/Scenes/MoveSelectionScene.unity
+  - enabled: 1
+    path: Assets/Scenes/SettingsScene.unity
