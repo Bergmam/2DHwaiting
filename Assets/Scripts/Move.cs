@@ -21,22 +21,18 @@ public class Move {
 
 	//Add a frame to the list. Increases nextIndex.
 	public void AddFrame(Frame frame){
-		if (nextIndex > frames.Length) {
-			return;
+		if (nextIndex < frames.Length) {
+			frames [nextIndex] = frame;
+			nextIndex++;
 		}
-			
-		frames [nextIndex] = frame;
-		nextIndex++;
 	}
 
 	//Remove a frame from the list. Decreases nextIndex.
 	public void RemoveFrame(){
-		if (nextIndex <= 0) {
-			return;
+		if (nextIndex > 0) {
+			nextIndex--;
+			frames [nextIndex] = null;
 		}
-			
-		nextIndex--;
-		frames [nextIndex] = null;
 	}
 
 	public void SetSpeed(int newSpeed){

@@ -31,11 +31,12 @@ public class Recorder : MonoBehaviour {
 		move.AddFrame (frame);
 	}
 
-	//###### TEST ###### TODO: Remove this
 	void Update(){
-		if (Input.GetKeyDown ("r")) {
+		if (Input.GetKeyDown ("space")) {
 			RecordFrame ();
-		} else if (Input.GetKeyDown ("p")) {
+		}
+		//###### TEST ###### TODO: Remove this
+		else if (Input.GetKeyDown ("p")) {
 			int i = 0;
 			foreach (System.Object o in move.GetFrames()) {
 				if (o is Frame) {
