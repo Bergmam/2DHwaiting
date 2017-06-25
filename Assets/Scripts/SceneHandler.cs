@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 ﻿using System.IO;
 using System;
+using UnityEditor;
 
 public class SceneHandler{
 
@@ -43,10 +44,18 @@ public class SceneHandler{
 	//If stack is non empty, the top scene is loaded
 	public static void GoBack(){
 		if (sceneStack.Count > 0) {
-			string previousSceneName = (string)sceneStack.Pop ();
-			if (scenePathsList.Contains (previousSceneName)) {
-				SceneManager.LoadScene (previousSceneName);
-			}
+            if (SceneManager.GetActiveScene().name == "MoveEditorScene")
+            {
+                if (!EditorUtility.DisplayDialog("Quit while editing move?", "Do you want to quit while still editing a move?", "Yes", "No"))
+                {
+                    return;
+                }
+            }
+            string previousSceneName = (string)sceneStack.Pop();
+            if (scenePathsList.Contains(previousSceneName))
+            {
+                SceneManager.LoadScene(previousSceneName);
+            }
 		}
 	}
 }
