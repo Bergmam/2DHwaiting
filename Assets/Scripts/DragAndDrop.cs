@@ -75,14 +75,14 @@ public class DragAndDrop : MonoBehaviour {
             transform.parent.eulerAngles = new Vector3(0, 0, newRot); //Update rotation previous to checking limits
 
 			//Find biggest of low limits and smallest of high limis to create the smallest allowed intervall
-			float tmpLowLimit = InLimits (lowFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? lowFrameTwistLimit : lowHardTwistLimit;
-			float tmpHighLimit = InLimits (highFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? highFrameTwistLimit : highHardTwistLimit;
+			float tmpLowLimit = RotationUtils.InLimits (lowFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? lowFrameTwistLimit : lowHardTwistLimit;
+			float tmpHighLimit = RotationUtils.InLimits (highFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? highFrameTwistLimit : highHardTwistLimit;
 
 			float rotation = transform.parent.localEulerAngles.z;
 
-			if (InLimits (rotation, tmpLowLimit, tmpHighLimit)) { //Angle in limit
+			if (RotationUtils.InLimits (rotation, tmpLowLimit, tmpHighLimit)) { //Angle in limit
 				outHigh = false;
-				outLow = false;
+				outLow = false;	
 			} else {
 				if (outHigh) //Rotation is still outside limits to one side
 				{
@@ -93,7 +93,7 @@ public class DragAndDrop : MonoBehaviour {
 					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
 				}
 				//Check to which side rotation has exited the limits intervall
-				else if (InLimits(rotation, MiddleOfRotations (tmpHighLimit, tmpLowLimit), tmpLowLimit))
+				else if (RotationUtils.InLimits(rotation, RotationUtils.MiddleOfRotations (tmpHighLimit, tmpLowLimit), tmpLowLimit))
 				{
 					outLow = true;
 					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
@@ -109,18 +109,5 @@ public class DragAndDrop : MonoBehaviour {
 
 	void OnMouseUp() {
 		mouseDown = false;
-	}
-
-	//Returns true if angle is between low and high. Angles from 0 to 360.
-	private bool InLimits(float angle, float low, float high){
-		bool zeroInLimits = high < low;
-		bool inLimitsAroundZero = zeroInLimits && (angle < high || angle > low);
-		bool inLimitsWithoutZero = !zeroInLimits && (angle > low && angle < high);
-		return inLimitsAroundZero || inLimitsWithoutZero;
-	}
-
-	//Returns midpoint between low and high. Angles from 0 to 360.
-	private float MiddleOfRotations(float low, float high){
-		return ((high + 360 - low) / 2) % 360;
 	}
 }
