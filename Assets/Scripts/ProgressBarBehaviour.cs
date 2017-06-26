@@ -7,21 +7,29 @@ public class ProgressBarBehaviour : MonoBehaviour {
 
 	private int barHeigh = 20;
 	private int barWidth = 400;
-	private int totalNumberOfFrames = 10;
-	private int currentNumberOfFrames = 0;
+	private int totalNbrOfFrames = 0;
+	private int currentNbrOfFrames = 0;
 
-	public void SetCurrentNumberOfFrames(int nbr){
-		currentNumberOfFrames = nbr;
+	public void SetTotalNbrOfFrames(int nbr){
+		totalNbrOfFrames = nbr;
 	}
 
-	public void SetTotalNumberOfFrames(int nbr){
-		currentNumberOfFrames = nbr;
+	public void IncrementNbrOfFrames (){
+		if (currentNbrOfFrames < totalNbrOfFrames) {
+			currentNbrOfFrames++;
+		}
+	}
+
+	public void DecrementNbrOfFrames (){
+		if (currentNbrOfFrames > 0) {
+			currentNbrOfFrames--;
+		}
 	}
 
 	void OnGUI(){
 		float positionX = Screen.width / 2 - barWidth / 2;
 		float positionY = 0.8f * Screen.height - barHeigh / 2;
-		float percentageOfFrames = (float)currentNumberOfFrames / (float)totalNumberOfFrames;
+		float percentageOfFrames = (float)currentNbrOfFrames / (float)totalNbrOfFrames;
 
 		GUI.BeginGroup (new Rect (positionX, positionY, barWidth, barHeigh));
 			GUIStyle filledStyle = OneColorStyle (Color.green);

@@ -9,7 +9,7 @@ public class Move {
 	private Frame[] frames;
 	private int nextIndex;
 	private bool done;
-	private int defaultNbrOfFrames = 5; //C# requires default constructor. Here this number is used to create the frame array.
+	private int defaultNbrOfFrames = 10; //C# requires default constructor. In default constructor, this number is used to create the frame array.
 
 	public Move(){
 		frames = new Frame[defaultNbrOfFrames];
@@ -49,5 +49,10 @@ public class Move {
 
 	public Frame[] GetFrames(){
 		return frames;
+	}
+
+	//Get the total number of frames this move has when completed.
+	public int GetNumberOfFrames(){
+		return frames.Length;
 	}
 }

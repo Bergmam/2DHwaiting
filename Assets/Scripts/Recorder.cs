@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Recorder : MonoBehaviour {
 
+	ProgressBarBehaviour progressBarBehaviour;
 	private Move move; //The move being built by the recorder.
 	public GameObject[] endPoints; //All end points (greens) of the recorded character. These are added manually in the unity scene editor.
                                    //TODO: Look through all childs of transform to find end points on start up to avoid manual work in editor?
@@ -11,19 +12,14 @@ public class Recorder : MonoBehaviour {
 
 	void Start(){
 		move = new Move ();
+		progressBarBehaviour = gameObject.AddComponent<ProgressBarBehaviour> ();
+		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
 	}
 
 	//Create a frame object containing rotations of each limb and add it to the move.
 	public void RecordFrame ()
 	{
-        // If we are recording a move, set isRecording variable
-        if (move.GetFrames().Length == 0)
-        {
-            isRecording = true;
-            print("isrecording = true");
-        }
-
-		Frame frame = new Frame ();
+        Frame frame = new Frame ();
 		foreach (GameObject go in endPoints) {
 			//Make sure endPoit has a drag and drop script before checking its parent's roation.
 			DragAndDrop dragAndDrop = go.GetComponent<DragAndDrop> ();
@@ -36,6 +32,7 @@ public class Recorder : MonoBehaviour {
 			frame.addBodyPartRoation (name, rotation);
 			dragAndDrop.UpdateFrameLimits (); //Update drag and drop rotation limit by frame.
 		}
+		progressBarBehaviour.IncrementNbrOfFrames ();
 		move.AddFrame (frame);
 	}
 
