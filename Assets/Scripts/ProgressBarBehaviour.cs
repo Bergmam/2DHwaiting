@@ -51,4 +51,8 @@ public class ProgressBarBehaviour : MonoBehaviour {
 		style.normal.background = fillTexture;
 		return style;
 	}
+
+	public int GetCurrentNbrOfFrames(){
+		return currentNbrOfFrames;
+	}
 }
