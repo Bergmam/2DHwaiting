@@ -30,4 +30,15 @@ public class Frame {
         }
 	}
 
+	public List<string> getBodyPartNames()
+	{
+		List<string> names;
+
+		foreach (string key in bodyPartRotations) 
+		{
+			names.Add (key);
+		}
+		return names;
+	}
+
 }

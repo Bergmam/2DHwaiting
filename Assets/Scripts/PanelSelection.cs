@@ -13,7 +13,7 @@ public class PanelSelection : MonoBehaviour {
 	void Start(){
 		RectTransform rectTransform = gameObject.GetComponentInChildren<RectTransform> ();
 		if (rectTransform != null) {
-			borderImageTransform = rectTransform.FindChild ("BorderImage"); //BorderImage is the name of the border in the MovePreviewPanel prefab.
+			borderImageTransform = rectTransform.Find ("BorderImage"); //BorderImage is the name of the border in the MovePreviewPanel prefab.
 		}
 		if (borderImageTransform != null) {
 			borderImage = borderImageTransform.gameObject;
