@@ -32,9 +32,9 @@ public class Frame {
 
 	public List<string> getBodyPartNames()
 	{
-		List<string> names;
+		List<string> names = new List<String> ();
 
-		foreach (string key in bodyPartRotations) 
+		foreach (string key in bodyPartRotations.Keys) 
 		{
 			names.Add (key);
 		}
