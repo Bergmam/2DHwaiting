@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovePlayer : MonoBehaviour {
 
 	private bool isPlaying;
-	Move moveToPlay;
+	private Move moveToPlay;
 
 	// Use this for initialization
 	void Start() {
@@ -25,17 +25,24 @@ public class MovePlayer : MonoBehaviour {
 
 	public Frame BlendFrames(Frame fromFrame, Frame toFrame, int percentage)
 	{
-		List<string> fromFrameNames = fromFrame.getBodyPartNames ();
-		List<string> toFrameNames = toFrame.getBodyPartNames ();
+		List<string> bodyPartNames = fromFrame.getBodyPartNames ();
 		Frame newFrame = fromFrame;
 
-		foreach (string name in fromFrameNames) 
+		foreach (string name in bodyPartNames) 
 		{
-			if (toFrameNames.Contains (name)) 
+			float newRotation;
+			float fromRot = fromFrame.getRotation (name);
+			float toRot = toFrame.getRotation (name);
+			if (toRot < fromRot && RotationUtils.InLimits (0, fromRot, toRot)) 
 			{
-				float newRotation = fromFrame.getRotation(name) + (float)percentage/(float)100 * (toFrame.getRotation(name) - fromFrame.getRotation(name));
-				newFrame.AddBodyPartRotation (name, newRotation);
+				toRot = toRot + 360;
+			} 
+			if (fromRot < toRot && RotationUtils.InLimits (0, toRot, fromRot))
+			{
+				fromRot = fromRot + 360;
 			}
+			newRotation = fromRot + (float)percentage/(float)100 * (toRot- fromRot);
+			newFrame.AddBodyPartRotation (name, newRotation);
 		}
 		return newFrame;
 	}

@@ -9,7 +9,7 @@ public class RotationUtils{
 		bool inLimitsAroundZero = zeroInLimits && (angle < high || angle > low);
 		bool inLimitsWithoutZero = !zeroInLimits && (angle > low && angle < high);
 		return inLimitsAroundZero || inLimitsWithoutZero;
-	}
+	}	
 
 	//Returns midpoint between low and high. Angles from 0 to 360.
 	public static float MiddleOfRotations(float low, float high){
