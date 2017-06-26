@@ -23,4 +23,20 @@ public class MovePlayer : MonoBehaviour {
 		isPlaying = true;
 	}
 
+	public Frame BlendFrames(Frame fromFrame, Frame toFrame, int percentage)
+	{
+		List<string> fromFrameNames = fromFrame.getBodyPartNames ();
+		List<string> toFrameNames = toFrame.getBodyPartNames ();
+		Frame newFrame = fromFrame;
+
+		foreach (string name in fromFrameNames) 
+		{
+			if (toFrameNames.Contains (name)) 
+			{
+				float newRotation = fromFrame.getRotation(name) + (float)percentage/(float)100 * (toFrame.getRotation(name) - fromFrame.getRotation(name));
+				newFrame.AddBodyPartRotation (name, newRotation);
+			}
+		}
+		return newFrame;
+	}
 }

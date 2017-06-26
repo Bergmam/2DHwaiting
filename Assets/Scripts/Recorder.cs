@@ -29,7 +29,7 @@ public class Recorder : MonoBehaviour {
 			//Add end point parent (limb) rotation and name to move.
 			float rotation = go.transform.parent.localEulerAngles.z;
 			string name = go.transform.parent.name;
-			frame.addBodyPartRoation (name, rotation);
+			frame.AddBodyPartRotation (name, rotation);
 			dragAndDrop.UpdateFrameLimits (); //Update drag and drop rotation limit by frame.
 		}
 		progressBarBehaviour.IncrementNbrOfFrames ();

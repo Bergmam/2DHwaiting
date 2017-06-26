@@ -12,7 +12,7 @@ public class Frame {
 		bodyPartRotations = new Dictionary<string, float> ();
 	}
 
-	public void addBodyPartRoation(string bodyPart, float rotation) {
+	public void AddBodyPartRotation(string bodyPart, float rotation) {
 		if (bodyPartRotations.ContainsKey (bodyPart)) {
 			bodyPartRotations.Remove (bodyPart);
 		}
