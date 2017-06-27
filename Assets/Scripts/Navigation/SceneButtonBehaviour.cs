@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneButtonBehaviour : MonoBehaviour {
-
-	//Open scene if it exists
-	public void SwitchScene(string sceneName){
+/// <summary>
+/// Class to put on buttons that will change the scene. 
+/// The method in the class calls the SceneHandler to switch the scene.
+/// </summary>
+public class SceneButtonBehaviour : MonoBehaviour 
+{
+	public void SwitchScene(string sceneName)
+	{
 		SceneHandler.SwitchScene (sceneName);
 	}
 }

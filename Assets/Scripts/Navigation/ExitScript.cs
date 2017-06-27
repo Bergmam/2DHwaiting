@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExitScript : MonoBehaviour {
-
-	public void Exit(){
+/// <summary>
+/// Script with a method to exit the application
+/// </summary>
+public class ExitScript : MonoBehaviour 
+{	
+	public void Exit()
+	{
 		Application.Quit ();
 	}
 }

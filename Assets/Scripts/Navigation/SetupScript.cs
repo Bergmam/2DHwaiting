@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetupScript : MonoBehaviour {
-
-	void Start () {
+/// <summary>
+/// Class handling the instantiation of the SceneHandler.
+/// </summary>
+public class SetupScript : MonoBehaviour 
+{
+	void Start () 
+	{
 		SceneHandler.Init (); //Instantiate SceneHandler with list of existing scenes and return stack
 	}
 }

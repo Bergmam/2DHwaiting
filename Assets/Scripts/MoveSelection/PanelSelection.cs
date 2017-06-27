@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//Used for enabling or disabling the child GameObject which holds the border around the panel.
-public class PanelSelection : MonoBehaviour {
-
+/// <summary>
+/// Class used for enabling or disabling the child GameObject which holds the border around the panel.
+/// </summary>
+public class PanelSelection : MonoBehaviour 
+{
 	private Transform borderImageTransform;
 	private GameObject borderImage;
 	private bool selected;
 
-	void Start(){
+	void Start()
+	{
 		RectTransform rectTransform = gameObject.GetComponentInChildren<RectTransform> ();
-		if (rectTransform != null) {
+		if (rectTransform != null) 
+		{
 			borderImageTransform = rectTransform.Find ("BorderImage"); //BorderImage is the name of the border in the MovePreviewPanel prefab.
 		}
-		if (borderImageTransform != null) {
+		if (borderImageTransform != null) 
+		{
 			borderImage = borderImageTransform.gameObject;
 		}
 	}
 
-	public void Select(){
+	public void Select()
+	{
 		if (borderImage != null) {
 			selected = true;
 			borderImage.SetActive (true);
@@ -28,13 +34,15 @@ public class PanelSelection : MonoBehaviour {
 	}
 
 	public void DeSelect(){
-		if (borderImage != null) {
+		if (borderImage != null) 
+		{
 			selected = false;
 			borderImage.SetActive (false);
 		}
 	}
 
-	public bool IsSelected(){
+	public bool IsSelected()
+	{
 		return selected;
 	}
 }
