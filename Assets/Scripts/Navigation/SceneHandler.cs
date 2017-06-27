@@ -9,14 +9,15 @@ using UnityEditor;
 /// <summary>
 /// Class containing methods for changing and exiting the current scene.
 /// </summary>
-public class SceneHandler{
-
+public class SceneHandler
+{
 	private static Stack sceneStack;
 	private static AssetBundle myLoadedAssetBundle;
 	private static string[] scenePaths;
 	private static ArrayList scenePathsList;
 
-	public static void Init(){
+	public static void Init()
+	{
 		scenePathsList = new ArrayList ();
 		sceneStack = new Stack ();
 
@@ -25,12 +26,14 @@ public class SceneHandler{
 		scenePaths = Directory.GetFiles (sceneDirectoryPath);
 
 		//Add all scene names to list scenePathsList
-		for (int i = 0; i < scenePaths.Length; i++) {
+		for (int i = 0; i < scenePaths.Length; i++)
+		{
 			string path = scenePaths [i];
             Debug.Log(path);
 			path = path.Split (Path.DirectorySeparatorChar) [2].ToString (); //Remove begining of path
 			path = path.Split ('.') [0].ToString (); //Remove file ending
-			if (!scenePathsList.Contains (path)) {
+			if (!scenePathsList.Contains (path))
+			{
 				scenePathsList.Add (path);
 			}
 		}
@@ -40,8 +43,10 @@ public class SceneHandler{
 	/// Opens the scene if it exists and adds the current scene to the stack
 	/// </summary>
 	/// <param name="sceneName">The name of the scene to be changed to.</param>
-	public static void SwitchScene(string sceneName){
-		if (scenePathsList.Contains (sceneName)) {
+	public static void SwitchScene(string sceneName)
+	{
+		if (scenePathsList.Contains (sceneName))
+		{
 			sceneStack.Push (SceneManager.GetActiveScene().name);
 			SceneManager.LoadScene (sceneName);
 		}
