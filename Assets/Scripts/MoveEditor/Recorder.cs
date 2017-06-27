@@ -52,6 +52,11 @@ public class Recorder : MonoBehaviour
 			if (progressBarBehaviour.GetCurrentNbrOfFrames () >= move.GetNumberOfFrames () / 2 && reverseOnWayBack) 
 			{
 				ReverseFrames ();
+				FinishMove ();
+			}
+			else if (progressBarBehaviour.GetCurrentNbrOfFrames () >= move.GetNumberOfFrames () && !reverseOnWayBack)
+			{
+				FinishMove ();
 			}
 		}
 	}
@@ -93,6 +98,15 @@ public class Recorder : MonoBehaviour
 			move.AddFrame (frame);
 			progressBarBehaviour.IncrementNbrOfFrames ();
 		}
+	}
+
+	/// <summary>
+	/// Tells the MovePlayer that we are done recording the move and that it should start playing the move
+	/// </summary>
+	private void FinishMove()
+	{
+		movePlayer.SetAutoLoopEnabled (true);
+		movePlayer.PlayMove (move);
 	}
 
 	/// <summary>
