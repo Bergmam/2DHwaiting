@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212975248759814636}
   m_Layer: 0
   m_Name: torso
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 212537448136041542}
   m_Layer: 0
   m_Name: Lower Left leg
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 212831585879209210}
   m_Layer: 0
   m_Name: Upper Right Leg
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 212140317568826968}
   m_Layer: 0
   m_Name: Lower Right Leg
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 212842519168045670}
   m_Layer: 0
   m_Name: Upper Left Leg
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 114636492431029098}
   m_Layer: 0
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 212343768963552334}
   m_Layer: 0
   m_Name: Left Hand
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 212991742214431420}
   m_Layer: 0
   m_Name: Right Hand
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 212384999405136336}
   m_Layer: 0
   m_Name: Lower Right Arm
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 212846788593040514}
   m_Layer: 0
   m_Name: Upper Right Arm
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,6 +215,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4870974241409348}
+  - component: {fileID: 114332078239704228}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -269,7 +270,7 @@ GameObject:
   - component: {fileID: 212863333435743856}
   m_Layer: 0
   m_Name: Left Foot
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -304,7 +305,7 @@ GameObject:
   - component: {fileID: 212644855047937296}
   m_Layer: 0
   m_Name: Lower Left Arm
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,7 +340,7 @@ GameObject:
   - component: {fileID: 212130759469468690}
   m_Layer: 0
   m_Name: Upper Left Arm
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -355,7 +356,7 @@ GameObject:
   - component: {fileID: 212995933656243046}
   m_Layer: 0
   m_Name: Right Foot
-  m_TagString: Untagged
+  m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -620,8 +621,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1603108710586492}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 4059712357960260}
   m_Father: {fileID: 0}
@@ -829,8 +830,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4de2946ce26d477c8e081a823c31fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highTwistLimit: 0
-  lowTwistLimit: 0
+  frameTwistLimit: 0
+  highHardTwistLimit: 0
+  lowHardTwistLimit: 0
+--- !u!114 &114332078239704228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1603108710586492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c18488503984cf3a0915a52b20b091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverseOnWayBack: 1
 --- !u!114 &114636492431029098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -842,8 +856,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4de2946ce26d477c8e081a823c31fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highTwistLimit: 0
-  lowTwistLimit: 0
+  frameTwistLimit: 0
+  highHardTwistLimit: 0
+  lowHardTwistLimit: 0
 --- !u!114 &114771538919134024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -855,8 +870,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4de2946ce26d477c8e081a823c31fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highTwistLimit: 0
-  lowTwistLimit: 0
+  frameTwistLimit: 90
+  highHardTwistLimit: 170
+  lowHardTwistLimit: 0
 --- !u!212 &212070166704149456
 SpriteRenderer:
   m_ObjectHideFlags: 1

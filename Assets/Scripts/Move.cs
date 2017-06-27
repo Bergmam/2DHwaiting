@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Move {
 
-	private float speed;
+	private int speed = 10;
 	private float strength;
 	private Frame[] frames;
 	private int nextIndex;
@@ -54,5 +54,9 @@ public class Move {
 	//Get the total number of frames this move has when completed.
 	public int GetNumberOfFrames(){
 		return frames.Length;
+	}
+
+	public int GetSpeed(){
+		return speed;
 	}
 }

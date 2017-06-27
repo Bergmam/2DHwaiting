@@ -6,14 +6,19 @@ public class Recorder : MonoBehaviour {
 
 	ProgressBarBehaviour progressBarBehaviour;
 	private Move move; //The move being built by the recorder.
-	public GameObject[] endPoints; //All end points (greens) of the recorded character. These are added manually in the unity scene editor.
+	private List<GameObject> endPoints;
+	//public GameObject[] endPoints; //All end points (greens) of the recorded character. These are added manually in the unity scene editor.
                                    //TODO: Look through all childs of transform to find end points on start up to avoid manual work in editor?
 	public bool reverseOnWayBack = true;
+	private MovePlayer movePlayer;
 
 	void Start(){
 		move = new Move ();
+		endPoints = new List<GameObject> ();
 		progressBarBehaviour = gameObject.AddComponent<ProgressBarBehaviour> ();
 		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
+		movePlayer = gameObject.AddComponent<MovePlayer> ();
+		FindEndPoints ();
 	}
 
 	//Create a frame object containing rotations of each limb and add it to the move.
@@ -55,6 +60,7 @@ public class Recorder : MonoBehaviour {
 					i++;
 				}
 			}
+			movePlayer.PlayMove (move);
 		}
 	}
 
@@ -66,6 +72,18 @@ public class Recorder : MonoBehaviour {
 			Frame frame = frames [frameIndex];
 			move.AddFrame (frame);
 			progressBarBehaviour.IncrementNbrOfFrames ();
+		}
+	}
+
+	private void FindEndPoints()
+	{
+		Transform[] children = gameObject.GetComponentsInChildren<Transform> ();
+		foreach (Transform child in children) {
+			GameObject go = child.gameObject;
+			DragAndDrop dragAndDrop = go.GetComponent<DragAndDrop> ();
+			if (dragAndDrop != null) {
+				endPoints.Add (go);
+			}
 		}
 	}
 }

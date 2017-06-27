@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Frame {
+public class Frame : ICloneable{
 
 	private Dictionary<string,float> bodyPartRotations;
 	private float defaultRotation = 0;
@@ -39,6 +39,16 @@ public class Frame {
 			names.Add (key);
 		}
 		return names;
+	}
+
+	public object Clone()
+	{
+		Frame clone = new Frame ();
+		foreach (string key in bodyPartRotations.Keys) 
+		{
+			clone.AddBodyPartRotation (key, bodyPartRotations [key]);
+		}
+		return clone;
 	}
 
 }
