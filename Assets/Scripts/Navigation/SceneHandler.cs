@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEditor;
 
+/// <summary>
+/// Class containing methods for changing and exiting the current scene.
+/// </summary>
 public class SceneHandler{
 
 	private static Stack sceneStack;
@@ -33,15 +36,19 @@ public class SceneHandler{
 		}
 	}
 
-	//Open scene if it exists and add the current scene to stack
+	/// <summary>
+	/// Opens the scene if it exists and adds the current scene to the stack
+	/// </summary>
+	/// <param name="sceneName">Scene name.</param>
 	public static void SwitchScene(string sceneName){
 		if (scenePathsList.Contains (sceneName)) {
 			sceneStack.Push (SceneManager.GetActiveScene().name);
 			SceneManager.LoadScene (sceneName);
 		}
 	}
-
-	//If stack is non empty, the top scene is loaded
+	/// <summary>
+	/// If the scene stack is non empty, pops the stack and loads the top scene.
+	/// </summary>
 	public static void GoBack(){
 		if (sceneStack.Count > 0) {
             if (SceneManager.GetActiveScene().name == "MoveEditorScene")

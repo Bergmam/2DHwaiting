@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Recorder : MonoBehaviour {
-
+/// <summary>
+/// Class for recording several Frames and storing them in a Move in the MoveEditor.
+/// </summary>
+public class Recorder : MonoBehaviour 
+{
 	ProgressBarBehaviour progressBarBehaviour;
 	private Move move; //The move being built by the recorder.
 	private List<GameObject> endPoints;
@@ -12,7 +15,8 @@ public class Recorder : MonoBehaviour {
 	public bool reverseOnWayBack = true;
 	private MovePlayer movePlayer;
 
-	void Start(){
+	void Start()
+	{
 		move = new Move ();
 		endPoints = new List<GameObject> ();
 		progressBarBehaviour = gameObject.AddComponent<ProgressBarBehaviour> ();
@@ -21,15 +25,20 @@ public class Recorder : MonoBehaviour {
 		FindEndPoints ();
 	}
 
-	//Create a frame object containing rotations of each limb and add it to the move.
+	/// <summary>
+	/// Creates a frame object containng rotations of each limb and adds it to a move
+	/// </summary>
 	public void RecordFrame ()
 	{
-		if (progressBarBehaviour.GetCurrentNbrOfFrames () < move.GetNumberOfFrames ()) {
+		if (progressBarBehaviour.GetCurrentNbrOfFrames () < move.GetNumberOfFrames ()) 
+		{
 			Frame frame = new Frame ();
-			foreach (GameObject go in endPoints) {
+			foreach (GameObject go in endPoints) 
+			{
 				//Make sure endPoit has a drag and drop script before checking its parent's roation.
 				DragAndDrop dragAndDrop = go.GetComponent<DragAndDrop> ();
-				if (dragAndDrop == null) {
+				if (dragAndDrop == null) 
+				{
 					continue;
 				}
 				//Add end point parent (limb) rotation and name to move.
@@ -40,21 +49,27 @@ public class Recorder : MonoBehaviour {
 			}
 			progressBarBehaviour.IncrementNbrOfFrames ();
 			move.AddFrame (frame);
-			if (progressBarBehaviour.GetCurrentNbrOfFrames () >= move.GetNumberOfFrames () / 2 && reverseOnWayBack) {
+			if (progressBarBehaviour.GetCurrentNbrOfFrames () >= move.GetNumberOfFrames () / 2 && reverseOnWayBack) 
+			{
 				ReverseFrames ();
 			}
 		}
 	}
 
-	void Update(){
-		if (Input.GetKeyDown ("space")) {
+	void Update()
+	{
+		if (Input.GetKeyDown ("space")) 
+		{
 			RecordFrame ();
 		}
 		//###### TEST ###### TODO: Remove this
-		else if (Input.GetKeyDown ("p")) {
+		else if (Input.GetKeyDown ("p")) 
+		{
 			int i = 0;
-			foreach (System.Object o in move.GetFrames()) {
-				if (o is Frame) {
+			foreach (System.Object o in move.GetFrames()) 
+			{
+				if (o is Frame) 
+				{
 					Frame frame = (Frame)o;
 					print (i + ". frame.getRotation (\"Lower Right Arm\") = " + frame.getRotation ("Lower Right Arm"));
 					i++;
@@ -64,10 +79,15 @@ public class Recorder : MonoBehaviour {
 		}
 	}
 
-	private void ReverseFrames(){
+	/// <summary>
+	/// Adds the reverse of all existing frames to make the move end where it started.
+	/// </summary>
+	private void ReverseFrames()
+	{
 		Frame[] frames = move.GetFrames ();
 		int halfNbrOfFrames = move.GetNumberOfFrames () / 2;
-		for (int i = 0; i < halfNbrOfFrames; i++) {
+		for (int i = 0; i < halfNbrOfFrames; i++) 
+		{
 			int frameIndex = halfNbrOfFrames - 1 - i;
 			Frame frame = frames [frameIndex];
 			move.AddFrame (frame);
@@ -75,13 +95,18 @@ public class Recorder : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Finds the end points of the all the children of the current gameobject.
+	/// </summary>
 	private void FindEndPoints()
 	{
 		Transform[] children = gameObject.GetComponentsInChildren<Transform> ();
-		foreach (Transform child in children) {
+		foreach (Transform child in children) 
+		{
 			GameObject go = child.gameObject;
 			DragAndDrop dragAndDrop = go.GetComponent<DragAndDrop> ();
-			if (dragAndDrop != null) {
+			if (dragAndDrop != null) 
+			{
 				endPoints.Add (go);
 			}
 		}

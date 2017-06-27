@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Class for handling the behaviour of the progress bar in the MoveEditor.
+/// </summary>
 public class ProgressBarBehaviour : MonoBehaviour {
 
 	private int barHeigh = 20;

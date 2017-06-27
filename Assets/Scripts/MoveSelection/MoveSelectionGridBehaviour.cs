@@ -4,16 +4,19 @@ using UnityEngine;
 using System;
 ﻿using System.IO;
 
-public class MoveSelectionGridBehaviour : MonoBehaviour {
-
+/// <summary>
+///  Class for handling the grid in the MoveSelection screen
+/// </summary>
+public class MoveSelectionGridBehaviour : MonoBehaviour 
+{
 	PanelSelection[,] panels; //TODO: Switch to something more like PanelSelection[][] panels; so that not every row has to be the same length.
 	int currentX;
 	int currentY;
 	int rowLength = 10; //TODO: Make this dependant on the screen width and gui settings.
 	int columnLength;
 
-	void Start () {
-
+	void Start () 
+	{
 		List<Move> moves = AvailableMoves.GetMoves ();
 
 		//### TEST ### TODO: Remove this
@@ -65,7 +68,6 @@ public class MoveSelectionGridBehaviour : MonoBehaviour {
 				panels [currentX, currentY].Select ();
 			}
 		}
-
 		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 			if (currentX > 0) {
 				panels [currentX, currentY].DeSelect ();
@@ -84,7 +86,6 @@ public class MoveSelectionGridBehaviour : MonoBehaviour {
 		if (!panels [currentX, currentY].IsSelected ()) {
 			panels [currentX, currentY].Select ();
 		}
-
 		//TODO: Add selection of moves through pressing a button corresponding to an attack.
 	}
 }

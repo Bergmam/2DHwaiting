@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class for handling the dragging and dropping of limbs in the MoveEditor.
+/// </summary>
 public class DragAndDrop : MonoBehaviour {
 
 	private bool mouseDown;
@@ -30,45 +33,72 @@ public class DragAndDrop : MonoBehaviour {
 		mouseDown = true;
 	}
 
+	void OnMouseUp() {
+		mouseDown = false;
+	}
+
+	/// <summary>
+	/// Updates the twist limits to fit the new angle of the moved bodypart.
+	/// </summary>
 	public void UpdateFrameLimits(){
 		float previousRotation = transform.parent.localEulerAngles.z;
-		//Make sure both limits are within [0 - 360]
+		//Mod 360 to make sure both limits are within [0 - 360]
 		highFrameTwistLimit = (previousRotation + frameTwistLimit) % 360;
 		lowFrameTwistLimit = (previousRotation - frameTwistLimit + 360) % 360;
 	}
 
-	void OnMouseDrag() {
-		if (mouseDown) {
-            // Position relative to current camera bounds.
-            Vector3 mousePos = Input.mousePosition;
-            Vector3 parentPos = Camera.main.WorldToScreenPoint(transform.parent.position);
+	/// <summary>
+	/// Converts the mouse pointer world rotation to the local rotation of the bodypart pivot.
+	/// </summary>
+	/// <returns>The local rotation of the pointer around the bodypart pivot.</returns>
+	float LocalMouseRotation()
+	{
+		// Position relative to current camera bounds.
+		Vector3 mousePos = Input.mousePosition;
+		Vector3 parentPos = Camera.main.WorldToScreenPoint(transform.parent.position);
 
-            bool mouseXGreater = mousePos.x > parentPos.x;
-            bool mouseYGreater = mousePos.y > parentPos.y;
+		bool mouseXGreater = mousePos.x > parentPos.x;
+		bool mouseYGreater = mousePos.y > parentPos.y;
 
-            float arctan = 0f;
-            float newRot = 0f;
+		float arctan = 0f;
+		float newRot = 0f;
 
-            if(mouseXGreater && mouseYGreater)  // 1st quadrant
-            {
-                arctan = Mathf.Atan2(mousePos.y - parentPos.y, mousePos.x - parentPos.x);
-                newRot = Mathf.Rad2Deg * arctan + 90;
-            }
-            else if (!mouseXGreater && mouseYGreater) // 2nd quadrant
-            {
-                arctan = Mathf.Atan2(parentPos.x - mousePos.x, mousePos.y - parentPos.y);
-                newRot = Mathf.Rad2Deg * arctan + 180;
-            }
-            else if (!mouseXGreater && !mouseYGreater) // 3rd quadrant
-            {
-                arctan = Mathf.Atan2(parentPos.y - mousePos.y, parentPos.x - mousePos.x);
-                newRot = Mathf.Rad2Deg * arctan + 270;
-            }
-            else // 4th quadrant
-            {
-                arctan = Mathf.Atan2(mousePos.x - parentPos.x, parentPos.y - mousePos.y);
-                newRot = Mathf.Rad2Deg * arctan;
-            }
+		// 1st quadrant
+		if(mouseXGreater && mouseYGreater)  
+		{
+			arctan = Mathf.Atan2(mousePos.y - parentPos.y, mousePos.x - parentPos.x);
+			newRot = Mathf.Rad2Deg * arctan + 90;
+		}
+		// 2nd quadrant
+		else if (!mouseXGreater && mouseYGreater) 
+		{
+			arctan = Mathf.Atan2(parentPos.x - mousePos.x, mousePos.y - parentPos.y);
+			newRot = Mathf.Rad2Deg * arctan + 180;
+		}
+		// 3rd quadrant
+		else if (!mouseXGreater && !mouseYGreater) 
+		{
+			arctan = Mathf.Atan2(parentPos.y - mousePos.y, parentPos.x - mousePos.x);
+			newRot = Mathf.Rad2Deg * arctan + 270;
+		}
+		// 4th quadrant
+		else 
+		{
+			arctan = Mathf.Atan2(mousePos.x - parentPos.x, parentPos.y - mousePos.y);
+			newRot = Mathf.Rad2Deg * arctan;
+		}
+		return newRot;
+	}
+
+	/// <summary>
+	/// Main method for getting the mouse position, regognizing a click, and moving the relevant bodypart accordingly.
+	/// </summary>
+	void OnMouseDrag() 
+	{
+		if (mouseDown) 
+		{
+            
+			float newRot = LocalMouseRotation ();
 
             //TODO: Look at twist limits based on mouse position and not one test update.
 
@@ -80,10 +110,13 @@ public class DragAndDrop : MonoBehaviour {
 
 			float rotation = transform.parent.localEulerAngles.z;
 
-			if (RotationUtils.InLimits (rotation, tmpLowLimit, tmpHighLimit)) { //Angle in limit
+			if (RotationUtils.InLimits (rotation, tmpLowLimit, tmpHighLimit)) 
+			{ 
+				//Angle in limit
 				outHigh = false;
 				outLow = false;	
-			} else {
+			} else 
+			{
 				if (outHigh) //Rotation is still outside limits to one side
 				{
 					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);
@@ -105,9 +138,5 @@ public class DragAndDrop : MonoBehaviour {
 				}
 			}
         }
-	}
-
-	void OnMouseUp() {
-		mouseDown = false;
 	}
 }
