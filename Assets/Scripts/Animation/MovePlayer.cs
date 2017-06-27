@@ -12,9 +12,11 @@ public class MovePlayer : MonoBehaviour
 	private List<Frame> frames;
 	int frameIndex = 0;
 	private Dictionary<string,Transform> nameBodyPartDict = new Dictionary<string, Transform> ();
+	private bool autoLoop;
 
 	void Start()
 	{
+		autoLoop = false;
 		frames = new List<Frame> ();
 		FindRotatables ();
 	}
@@ -29,6 +31,8 @@ public class MovePlayer : MonoBehaviour
 				Frame frame = frames [frameIndex];
 				FrameToCharacter (frame);
 				frameIndex++;
+			} else if(autoLoop){
+				frameIndex = 0;
 			} else
 			{
 				//Clean up and reset for new move
@@ -128,5 +132,10 @@ public class MovePlayer : MonoBehaviour
 				nameBodyPartDict.Add (go.name, child);
 			}
 		}
+	}
+
+	public void SetAutoLoopEnabled(bool enabled)
+	{
+		autoLoop = enabled;
 	}
 }
