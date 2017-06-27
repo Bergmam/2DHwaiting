@@ -96,8 +96,7 @@ public class DragAndDrop : MonoBehaviour {
 	void OnMouseDrag() 
 	{
 		if (mouseDown) 
-		{
-            
+		{ 
 			float newRot = LocalMouseRotation ();
 
             //TODO: Look at twist limits based on mouse position and not one test update.

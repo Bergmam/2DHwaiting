@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//Used for enabling or disabling the child GameObject which holds the border around the panel.
+/// <summary>
+/// Class used for enabling or disabling the child GameObject which holds the border around the panel.
+/// </summary>
 public class PanelSelection : MonoBehaviour 
 {
 	private Transform borderImageTransform;
