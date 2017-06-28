@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SliderScript : MonoBehaviour {
+/// <summary>
+/// Class containing functionality and help functions for controlling the sliders 
+/// in the moveeditor.
+/// </summary>
+public class SliderScript : MonoBehaviour
+{
 
     public Text strengthText;
     public Text speedText;
@@ -13,8 +18,8 @@ public class SliderScript : MonoBehaviour {
     private int strengthValue;
     private int speedValue;
 
-    // Use this for initialization
-    void Start () {
+    void Start ()
+    {
       //  strengthSlider = GameObject.Find("StrengthSlider").GetComponent<Slider>();
         //speedSlider = GameObject.Find("SpeedSlider").GetComponent<Slider>();
 
@@ -24,13 +29,13 @@ public class SliderScript : MonoBehaviour {
         strengthText.text = "Strength: " + strengthValue.ToString();
         speedText.text = "Speed: " + speedValue.ToString();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 
+    /// <summary>
+    /// When the value of the speed slider changes, update the value of the text field
+    /// and the speed slider.
+    /// </summary>
+    /// <param name="newValue">The new value of the speedslider</param>
     public void SpeedSliderChanged(float newValue)
     {
         speedValue = (int)newValue;
@@ -39,6 +44,11 @@ public class SliderScript : MonoBehaviour {
         UpdateSliderValues(strengthValue, speedValue);
     }
 
+    /// <summary>
+    /// When the value of the strength slider changes, update the value of the text field
+    /// and the sleed slider.
+    /// </summary>
+    /// <param name="newValue"></param>
     public void StrengthSliderChanged(float newValue)
     {
         strengthValue = (int)newValue;
@@ -47,6 +57,11 @@ public class SliderScript : MonoBehaviour {
         UpdateSliderValues(strengthValue, speedValue);
     }
 
+    /// <summary>
+    /// Help function to update the text fields of the sliders
+    /// </summary>
+    /// <param name="strengthValue"></param>
+    /// <param name="speedValue"></param>
     public void UpdateSliderValues(int strengthValue, int speedValue)
     {
         strengthSlider.value = strengthValue;
