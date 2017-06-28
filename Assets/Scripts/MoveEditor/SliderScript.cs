@@ -9,7 +9,6 @@ using UnityEngine.UI;
 /// </summary>
 public class SliderScript : MonoBehaviour
 {
-
     public Text strengthText;
     public Text speedText;
     public Slider strengthSlider;
