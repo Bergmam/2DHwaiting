@@ -15,6 +15,9 @@ public class Recorder : MonoBehaviour
 	public bool reverseOnWayBack = true;
 	private MovePlayer movePlayer;
 
+    public GameObject confirmPrompt;
+
+
 	void Start()
 	{
 		move = new Move ();
@@ -22,7 +25,7 @@ public class Recorder : MonoBehaviour
 		progressBarBehaviour = gameObject.AddComponent<ProgressBarBehaviour> ();
 		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
 		movePlayer = gameObject.AddComponent<MovePlayer> ();
-		FindEndPoints ();
+        FindEndPoints ();
 	}
 
 	/// <summary>
@@ -101,15 +104,6 @@ public class Recorder : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Tells the MovePlayer that we are done recording the move and that it should start playing the move
-	/// </summary>
-	private void FinishMove()
-	{
-		movePlayer.SetAutoLoopEnabled (true);
-		movePlayer.PlayMove (move);
-	}
-
-	/// <summary>
 	/// Finds the end points of the all the children of the current gameobject.
 	/// </summary>
 	private void FindEndPoints()
@@ -125,4 +119,36 @@ public class Recorder : MonoBehaviour
 			}
 		}
 	}
+
+    /// <summary>
+	/// Tells the MovePlayer that we are done recording the move and that it should start playing the move
+	/// </summary>
+	private void FinishMove()
+    {
+        movePlayer.SetAutoLoopEnabled(true);
+        movePlayer.PlayMove(move);
+        confirmPrompt.SetActive(true);
+
+    }
+    
+    /// <summary>
+    /// Method run when a player wants to save a finished move
+    /// </summary>
+    public void ConfirmMove()
+    {
+        confirmPrompt.SetActive(false);
+    }
+
+    /// <summary>
+    /// Method run when a player wants to cancel a finished move
+    /// </summary>
+    public void CancelMove()
+        // TODO: Reset the character to the original position
+    {
+        confirmPrompt.SetActive(false);
+        Destroy(progressBarBehaviour);
+        Destroy(movePlayer);
+        Start();
+
+    }
 }
