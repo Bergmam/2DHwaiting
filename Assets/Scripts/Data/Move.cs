@@ -96,11 +96,18 @@ public class Move
 		return speed;
 	}
 
-    /// <summary>
-    /// Set the name of this instance.
-    /// </summary>
+    public float GetStrength()
+    {
+        return strength;
+    }
+
     public void SetName(string name)
     {
         this.name = name;
+    }
+
+    public string GetName()
+    {
+        return name;
     }
 }

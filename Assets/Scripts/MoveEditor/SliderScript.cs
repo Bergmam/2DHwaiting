@@ -69,4 +69,15 @@ public class SliderScript : MonoBehaviour
         speedText.text = "Speed: " + speedValue.ToString();
         strengthText.text = "Strength: " + strengthValue.ToString();
     }
+    
+
+    public int getStrength()
+    {
+        return strengthValue;
+    }
+
+    public int getSpeed()
+    {
+        return speedValue;
+    }
 }
