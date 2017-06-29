@@ -2726,6 +2726,11 @@ Prefab:
       propertyPath: confirmText
       value: 
       objectReference: {fileID: 478069246}
+    - target: {fileID: 114332078239704228, guid: 13c91d858a636473d9ed423f7fb29126,
+        type: 2}
+      propertyPath: sliders
+      value: 
+      objectReference: {fileID: 1885302854}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 13c91d858a636473d9ed423f7fb29126, type: 2}
   m_IsPrefabParent: 0
