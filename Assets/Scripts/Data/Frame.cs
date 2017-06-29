@@ -11,6 +11,7 @@ public class Frame : ICloneable
 
 	private Dictionary<string,float> bodyPartRotations;
 	private float defaultRotation = 0;
+    private string name = "";
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Frame"/> class.
@@ -80,5 +81,4 @@ public class Frame : ICloneable
 		}
 		return clone;
 	}
-
 }

@@ -13,6 +13,7 @@ public class Move
 	private int nextIndex; //At which index to place the next recorded frame. Adding or removing frames updates the index.
 	private bool done;
 	private int defaultNrOfFrames = 10; //C# requires default constructor. In default constructor, this number is used to create the frame array.
+    private string name;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Move"/> class.
@@ -86,8 +87,20 @@ public class Move
 		return frames.Length;
 	}
 
+    /// <summary>
+    /// Get the speed of this instance
+    /// </summary>
+    /// <returns>The Speed of this instance</returns>
 	public int GetSpeed()
 	{
 		return speed;
 	}
+
+    /// <summary>
+    /// Set the name of this instance.
+    /// </summary>
+    public void SetName(string name)
+    {
+        this.name = name;
+    }
 }

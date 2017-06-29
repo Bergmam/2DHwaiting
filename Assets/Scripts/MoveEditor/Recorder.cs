@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Class for recording several Frames and storing them in a Move in the MoveEditor.
@@ -16,6 +17,7 @@ public class Recorder : MonoBehaviour
 	private MovePlayer movePlayer;
 
     public GameObject confirmPrompt;
+    public GameObject confirmText;
 
 
 	void Start()
@@ -137,6 +139,8 @@ public class Recorder : MonoBehaviour
     public void ConfirmMove()
     {
         confirmPrompt.SetActive(false);
+        confirmText.SetActive(true);
+
     }
 
     /// <summary>
@@ -146,9 +150,30 @@ public class Recorder : MonoBehaviour
         // TODO: Reset the character to the original position
     {
         confirmPrompt.SetActive(false);
+        ResetMoveEditor();
+
+    }
+
+    /// <summary>
+    /// Method to call when the input field of the move has been filled.
+    /// Updates the name of the move, updates AvailableMoves with the move, and resets the MoveEditor.
+    /// </summary>
+    /// <param name="name"></param>
+    public void ConfirmText(InputField input)
+    {
+        move.SetName(input.text);
+        print("Move with name " + input.text + " saved in AvailableMoves");
+        confirmText.SetActive(false);
+        ResetMoveEditor();
+    }
+
+    /// <summary>
+    /// Resets the MoveEditor by restarting the progressBar and the movePlayer.
+    /// </summary>
+    private void ResetMoveEditor()
+    {
         Destroy(progressBarBehaviour);
         Destroy(movePlayer);
         Start();
-
     }
 }
