@@ -18,7 +18,9 @@ public class Recorder : MonoBehaviour
 
     public GameObject confirmPrompt;
     public GameObject confirmText;
+    public GameObject errorText;
 
+	public GameObject slidersObject;
     public SliderScript sliders;
 	private Frame initialPoseFrame;
 
@@ -76,9 +78,25 @@ public class Recorder : MonoBehaviour
 			string name = go.transform.parent.name;
 			frame.AddBodyPartRotation (name, rotation);
 			dragAndDrop.UpdateFrameLimits (); //Update drag and drop rotation limit by frame.
-			print("Added body part " + name + " rotation to initial frame");
 		}
 		return frame;
+	}
+
+	/// <summary>
+	/// Updates character frame twist limits to match current pose.
+	/// </summary>
+	private void UpdateFrameTwistLimits()
+	{
+		foreach (GameObject go in endPoints) 
+		{
+			//Make sure endPoit has a drag and drop script.
+			DragAndDrop dragAndDrop = go.GetComponent<DragAndDrop> ();
+			if (dragAndDrop == null) 
+			{
+				continue;
+			}
+			dragAndDrop.UpdateFrameLimits (); //Update drag and drop rotation limit by frame.
+		}
 	}
 
 	void Update()
@@ -142,6 +160,8 @@ public class Recorder : MonoBehaviour
 	/// </summary>
 	private void FinishMove()
     {
+        move.SetSpeed(sliders.GetSpeed());
+        slidersObject.SetActive(false);
         movePlayer.SetAutoLoopEnabled(true);
         movePlayer.PlayMove(move);
         confirmPrompt.SetActive(true);
@@ -176,25 +196,24 @@ public class Recorder : MonoBehaviour
     /// <param name="name"></param>
     public void ConfirmText(InputField input)
     {
-        move.SetStrength(sliders.GetStrength());
-        move.SetSpeed(sliders.GetSpeed());
-        
+		move.SetStrength(sliders.GetStrength());
         move.SetName(input.text);
-        //TODO: Not working GameObject errorText = GameObject.FindGameObjectWithTag("alreadyExists");
+
         if (AvailableMoves.ContainsName(move.GetName()))
         {
             // TODO: Some kind of pop-up when the name already exists, then player can enter a new name.
             print("The name of the move already exists in AvailableMoves ");
-            //errorText.SetActive(true);
+            errorText.SetActive(true);
         }
         else
         {
-           // errorText.SetActive(false); // Might already be false if we never entered a duplicate name.
+            errorText.SetActive(false); // Might already be false if we never entered a duplicate name.
+            confirmText.SetActive(false);
+            input.text = "Name...";
             AvailableMoves.AddMove(move);
             print("Move with name " + input.text + " and values strength: " + move.GetStrength().ToString() + ", speed: " + move.GetSpeed() + " saved in AvailableMoves");
         }
         print("AvailableMoves now contains: " + AvailableMoves.PrintMoveNames());
-        confirmText.SetActive(false);
         ResetMoveEditor();
     }
 
@@ -209,8 +228,9 @@ public class Recorder : MonoBehaviour
 		progressBarBehaviour = gameObject.AddComponent<ProgressBarBehaviour> ();
 		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
 		movePlayer.FrameToCharacter (initialPoseFrame); //Reset character pose
+		UpdateFrameTwistLimits();
 		sliders.ResetSliders(); //Reset sliders to 50/50
 		confirmText.GetComponentInChildren<InputField> ().text = ""; //Reset move name
-
+		slidersObject.SetActive(true);
     }
 }

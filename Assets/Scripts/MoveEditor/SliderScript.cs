@@ -11,6 +11,7 @@ public class SliderScript : MonoBehaviour
 {
     public Text strengthText;
     public Text speedText;
+
 	private Slider strengthSlider;
     private Slider speedSlider;
 
@@ -69,7 +70,21 @@ public class SliderScript : MonoBehaviour
         speedText.text = "Speed: " + speedValue.ToString();
         strengthText.text = "Strength: " + strengthValue.ToString();
     }
-    
+
+
+    /// <summary>
+    /// Disables the GameObject holding the sliders
+    /// </summary>
+    public void DisableSliders()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void EnableSliders()
+    {
+        gameObject.SetActive(false);
+    }
+
 
     public int GetStrength()
     {
