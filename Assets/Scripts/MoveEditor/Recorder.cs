@@ -21,6 +21,7 @@ public class Recorder : MonoBehaviour
     public GameObject errorText;
 
     public SliderScript sliders;
+    public GameObject slidersObject;
 
 
 	void Start()
@@ -130,6 +131,8 @@ public class Recorder : MonoBehaviour
 	/// </summary>
 	private void FinishMove()
     {
+        move.SetSpeed(sliders.getSpeed());
+        slidersObject.SetActive(false);
         movePlayer.SetAutoLoopEnabled(true);
         movePlayer.PlayMove(move);
         confirmPrompt.SetActive(true);
@@ -165,7 +168,7 @@ public class Recorder : MonoBehaviour
     public void ConfirmText(InputField input)
     {
         move.SetStrength(sliders.getStrength());
-        move.SetSpeed(sliders.getSpeed());
+        //move.SetSpeed(sliders.getSpeed());
         
         move.SetName(input.text);
 
@@ -195,5 +198,6 @@ public class Recorder : MonoBehaviour
         Destroy(progressBarBehaviour);
         Destroy(movePlayer);
         Start();
+        slidersObject.SetActive(true);
     }
 }
