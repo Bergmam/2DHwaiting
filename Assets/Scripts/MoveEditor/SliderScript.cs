@@ -11,16 +11,16 @@ public class SliderScript : MonoBehaviour
 {
     public Text strengthText;
     public Text speedText;
-    public Slider strengthSlider;
-    public Slider speedSlider;
+	private Slider strengthSlider;
+    private Slider speedSlider;
 
     private int strengthValue;
     private int speedValue;
 
     void Start ()
     {
-      //  strengthSlider = GameObject.Find("StrengthSlider").GetComponent<Slider>();
-        //speedSlider = GameObject.Find("SpeedSlider").GetComponent<Slider>();
+		strengthSlider = GameObject.Find("StrengthSlider").GetComponent<Slider>();
+        speedSlider = GameObject.Find("SpeedSlider").GetComponent<Slider>();
 
         strengthValue = (int)strengthSlider.value;
         speedValue = (int)speedSlider.value;

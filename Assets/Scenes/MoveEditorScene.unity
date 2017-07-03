@@ -2663,11 +2663,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4870974241409348, guid: 13c91d858a636473d9ed423f7fb29126, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 216
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4870974241409348, guid: 13c91d858a636473d9ed423f7fb29126, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 18
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4870974241409348, guid: 13c91d858a636473d9ed423f7fb29126, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3147,8 +3147,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   strengthText: {fileID: 641268511}
   speedText: {fileID: 2124916275}
-  strengthSlider: {fileID: 2066171493}
-  speedSlider: {fileID: 1086799428}
 --- !u!1 &2066171491
 GameObject:
   m_ObjectHideFlags: 0
