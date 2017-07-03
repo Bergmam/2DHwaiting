@@ -71,13 +71,21 @@ public class SliderScript : MonoBehaviour
     }
     
 
-    public int getStrength()
+    public int GetStrength()
     {
         return strengthValue;
     }
 
-    public int getSpeed()
+    public int GetSpeed()
     {
         return speedValue;
     }
+
+	/// <summary>
+	/// Reset sliders to 50/50 strength/speed.
+	/// </summary>
+	public void ResetSliders()
+	{
+		StrengthSliderChanged (50); //Automatically updates speed as well.
+	}
 }

@@ -20,6 +20,7 @@ public class Recorder : MonoBehaviour
     public GameObject confirmText;
 
     public SliderScript sliders;
+	private Frame initialPoseFrame;
 
 
 	void Start()
@@ -30,30 +31,17 @@ public class Recorder : MonoBehaviour
 		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
 		movePlayer = gameObject.AddComponent<MovePlayer> ();
         FindEndPoints ();
+		initialPoseFrame = GetCurrentPoseFrame ();
 	}
 
 	/// <summary>
-	/// Creates a frame object containng rotations of each limb and adds it to a move
+	/// Adds a frame object containng rotations of each limb to the move.
 	/// </summary>
 	public void RecordFrame ()
 	{
 		if (progressBarBehaviour.GetCurrentNbrOfFrames () < move.GetNumberOfFrames ()) 
 		{
-			Frame frame = new Frame ();
-			foreach (GameObject go in endPoints) 
-			{
-				//Make sure endPoit has a drag and drop script before checking its parent's roation.
-				DragAndDrop dragAndDrop = go.GetComponent<DragAndDrop> ();
-				if (dragAndDrop == null) 
-				{
-					continue;
-				}
-				//Add end point parent (limb) rotation and name to move.
-				float rotation = go.transform.parent.localEulerAngles.z;
-				string name = go.transform.parent.name;
-				frame.AddBodyPartRotation (name, rotation);
-				dragAndDrop.UpdateFrameLimits (); //Update drag and drop rotation limit by frame.
-			}
+			Frame frame = GetCurrentPoseFrame ();
 			progressBarBehaviour.IncrementNbrOfFrames ();
 			move.AddFrame (frame);
 			if (progressBarBehaviour.GetCurrentNbrOfFrames () >= move.GetNumberOfFrames () / 2 && reverseOnWayBack) 
@@ -66,6 +54,31 @@ public class Recorder : MonoBehaviour
 				FinishMove ();
 			}
 		}
+	}
+
+	/// <summary>
+	/// Creates a frame object containng current rotations of each limb.
+	/// </summary>
+	/// <returns>The current pose frame.</returns>
+	private Frame GetCurrentPoseFrame()
+	{
+		Frame frame = new Frame ();
+		foreach (GameObject go in endPoints) 
+		{
+			//Make sure endPoit has a drag and drop script before checking its parent's roation.
+			DragAndDrop dragAndDrop = go.GetComponent<DragAndDrop> ();
+			if (dragAndDrop == null) 
+			{
+				continue;
+			}
+			//Add end point parent (limb) rotation and name to move.
+			float rotation = go.transform.parent.localEulerAngles.z;
+			string name = go.transform.parent.name;
+			frame.AddBodyPartRotation (name, rotation);
+			dragAndDrop.UpdateFrameLimits (); //Update drag and drop rotation limit by frame.
+			print("Added body part " + name + " rotation to initial frame");
+		}
+		return frame;
 	}
 
 	void Update()
@@ -163,8 +176,8 @@ public class Recorder : MonoBehaviour
     /// <param name="name"></param>
     public void ConfirmText(InputField input)
     {
-        move.SetStrength(sliders.getStrength());
-        move.SetSpeed(sliders.getSpeed());
+        move.SetStrength(sliders.GetStrength());
+        move.SetSpeed(sliders.GetSpeed());
         
         move.SetName(input.text);
         //TODO: Not working GameObject errorText = GameObject.FindGameObjectWithTag("alreadyExists");
@@ -189,9 +202,15 @@ public class Recorder : MonoBehaviour
     /// Resets the MoveEditor by restarting the progressBar and the movePlayer.
     /// </summary>
     private void ResetMoveEditor()
-    {
-        Destroy(progressBarBehaviour);
-        Destroy(movePlayer);
-        Start();
+	{
+		movePlayer.SetAutoLoopEnabled (false);
+		move = new Move ();
+		Destroy(progressBarBehaviour);
+		progressBarBehaviour = gameObject.AddComponent<ProgressBarBehaviour> ();
+		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
+		movePlayer.FrameToCharacter (initialPoseFrame); //Reset character pose
+		sliders.ResetSliders(); //Reset sliders to 50/50
+		confirmText.GetComponentInChildren<InputField> ().text = ""; //Reset move name
+
     }
 }

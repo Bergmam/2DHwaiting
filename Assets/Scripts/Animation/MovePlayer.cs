@@ -137,5 +137,8 @@ public class MovePlayer : MonoBehaviour
 	public void SetAutoLoopEnabled(bool enabled)
 	{
 		autoLoop = enabled;
+		if (!autoLoop) {
+			isPlaying = false;
+		}
 	}
 }
