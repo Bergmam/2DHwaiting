@@ -18,6 +18,7 @@ public class Recorder : MonoBehaviour
 
     public GameObject confirmPrompt;
     public GameObject confirmText;
+    public GameObject errorText;
 
     public SliderScript sliders;
 
@@ -167,21 +168,22 @@ public class Recorder : MonoBehaviour
         move.SetSpeed(sliders.getSpeed());
         
         move.SetName(input.text);
-        //TODO: Not working GameObject errorText = GameObject.FindGameObjectWithTag("alreadyExists");
+
         if (AvailableMoves.ContainsName(move.GetName()))
         {
             // TODO: Some kind of pop-up when the name already exists, then player can enter a new name.
             print("The name of the move already exists in AvailableMoves ");
-            //errorText.SetActive(true);
+            errorText.SetActive(true);
         }
         else
         {
-           // errorText.SetActive(false); // Might already be false if we never entered a duplicate name.
+            errorText.SetActive(false); // Might already be false if we never entered a duplicate name.
+            confirmText.SetActive(false);
+            input.text = "Name...";
             AvailableMoves.AddMove(move);
             print("Move with name " + input.text + " and values strength: " + move.GetStrength().ToString() + ", speed: " + move.GetSpeed() + " saved in AvailableMoves");
         }
         print("AvailableMoves now contains: " + AvailableMoves.PrintMoveNames());
-        confirmText.SetActive(false);
         ResetMoveEditor();
     }
 
