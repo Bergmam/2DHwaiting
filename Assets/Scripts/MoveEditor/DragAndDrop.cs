@@ -98,25 +98,24 @@ public class DragAndDrop : MonoBehaviour {
 		if (mouseDown) 
 		{ 
 			float newRot = LocalMouseRotation ();
-
             //TODO: Look at twist limits based on mouse position and not one test update.
 
             transform.parent.eulerAngles = new Vector3(0, 0, newRot); //Update rotation previous to checking limits
 
 			//Find biggest of low limits and smallest of high limis to create the smallest allowed intervall
-			float tmpLowLimit = RotationUtils.InLimits (lowFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? lowFrameTwistLimit : lowHardTwistLimit;
-			float tmpHighLimit = RotationUtils.InLimits (highFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? highFrameTwistLimit : highHardTwistLimit;
+			float tmpLowLimit = RotationUtils.InCounterClockwiseLimits (lowFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? lowFrameTwistLimit : lowHardTwistLimit;
+			float tmpHighLimit = RotationUtils.InCounterClockwiseLimits (highFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? highFrameTwistLimit : highHardTwistLimit;
 
 			float rotation = transform.parent.localEulerAngles.z;
 
-			if (RotationUtils.InLimits (rotation, tmpLowLimit, tmpHighLimit)) 
+			if (RotationUtils.InCounterClockwiseLimits (rotation, tmpLowLimit, tmpHighLimit)) 
 			{ 
 				//Angle in limit
 				outHigh = false;
 				outLow = false;	
 			} else 
 			{
-				if (outHigh) //Rotation is still outside limits to one side
+                if (outHigh) //Rotation is still outside limits to one side
 				{
 					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);
 				}
@@ -125,7 +124,7 @@ public class DragAndDrop : MonoBehaviour {
 					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
 				}
 				//Check to which side rotation has exited the limits intervall
-				else if (RotationUtils.InLimits(rotation, RotationUtils.MiddleOfRotations (tmpHighLimit, tmpLowLimit), tmpLowLimit))
+				else if (RotationUtils.InCounterClockwiseLimits(rotation, RotationUtils.MiddleOfRotations (tmpHighLimit, tmpLowLimit), tmpLowLimit))
 				{
 					outLow = true;
 					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);

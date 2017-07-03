@@ -34,7 +34,7 @@ public class Recorder : MonoBehaviour
 		movePlayer = gameObject.AddComponent<MovePlayer> ();
         FindEndPoints ();
 		initialPoseFrame = GetCurrentPoseFrame ();
-	}
+    }
 
 	/// <summary>
 	/// Adds a frame object containng rotations of each limb to the move.
