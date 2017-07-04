@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 224217534504976660}
   - component: {fileID: 222061347900659246}
   - component: {fileID: 114883551391476624}
-  - component: {fileID: 114721035787953134}
+  - component: {fileID: 114095978898866406}
   m_Layer: 5
   m_Name: MovePanel
   m_TagString: Untagged
@@ -80,6 +80,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114095978898866406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1347518103529168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f295bc147520c4b44b1231ee7ac15ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114450889750569150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,17 +190,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 50
---- !u!114 &114721035787953134
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1347518103529168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f295bc147520c4b44b1231ee7ac15ac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114883551391476624
 MonoBehaviour:
   m_ObjectHideFlags: 1
