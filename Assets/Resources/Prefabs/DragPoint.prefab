@@ -71,6 +71,7 @@ MonoBehaviour:
   frameTwistLimit: 30
   highHardTwistLimit: 180
   lowHardTwistLimit: 270
+  pivotDirection: 0
 --- !u!212 &212966642184082168
 SpriteRenderer:
   m_ObjectHideFlags: 1

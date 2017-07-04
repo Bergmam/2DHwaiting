@@ -944,7 +944,7 @@ CircleCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1947062125956832}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1019,7 +1019,7 @@ CircleCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1830255937715568}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1049,7 +1049,7 @@ CircleCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1072524347289168}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1064,7 +1064,7 @@ CircleCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1849547556598826}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1132,6 +1132,8 @@ MonoBehaviour:
   frameTwistLimit: 30
   highHardTwistLimit: 100
   lowHardTwistLimit: 340
+  pivotDirection: 0
+  pivotRotationOffset: 0
 --- !u!114 &114009473580899108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1146,13 +1148,15 @@ MonoBehaviour:
   frameTwistLimit: 30
   highHardTwistLimit: 100
   lowHardTwistLimit: 340
+  pivotDirection: 0
+  pivotRotationOffset: 0
 --- !u!114 &114197385489725564
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1830255937715568}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4de2946ce26d477c8e081a823c31fb3, type: 3}
   m_Name: 
@@ -1160,6 +1164,8 @@ MonoBehaviour:
   frameTwistLimit: 20
   highHardTwistLimit: 100
   lowHardTwistLimit: 260
+  pivotDirection: 2
+  pivotRotationOffset: 0
 --- !u!114 &114332078239704228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1191,20 +1197,24 @@ MonoBehaviour:
   frameTwistLimit: 30
   highHardTwistLimit: 1
   lowHardTwistLimit: 170
+  pivotDirection: 0
+  pivotRotationOffset: 0
 --- !u!114 &114522623373779392
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1947062125956832}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4de2946ce26d477c8e081a823c31fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frameTwistLimit: 30
-  highHardTwistLimit: 200
-  lowHardTwistLimit: 160
+  frameTwistLimit: 10
+  highHardTwistLimit: 20
+  lowHardTwistLimit: 340
+  pivotDirection: 2
+  pivotRotationOffset: 0
 --- !u!114 &114547132100317612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1219,6 +1229,8 @@ MonoBehaviour:
   frameTwistLimit: 20
   highHardTwistLimit: 90
   lowHardTwistLimit: 270
+  pivotDirection: 0
+  pivotRotationOffset: 0
 --- !u!114 &114579062422617618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1233,13 +1245,15 @@ MonoBehaviour:
   frameTwistLimit: 30
   highHardTwistLimit: 170
   lowHardTwistLimit: 0
+  pivotDirection: 0
+  pivotRotationOffset: 0
 --- !u!114 &114593767181941642
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1849547556598826}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4de2946ce26d477c8e081a823c31fb3, type: 3}
   m_Name: 
@@ -1247,6 +1261,8 @@ MonoBehaviour:
   frameTwistLimit: 20
   highHardTwistLimit: 20
   lowHardTwistLimit: 100
+  pivotDirection: 2
+  pivotRotationOffset: 0
 --- !u!114 &114598068100414888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1261,6 +1277,8 @@ MonoBehaviour:
   frameTwistLimit: 20
   highHardTwistLimit: 90
   lowHardTwistLimit: 270
+  pivotDirection: 0
+  pivotRotationOffset: 0
 --- !u!114 &114755633750201288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1275,6 +1293,8 @@ MonoBehaviour:
   frameTwistLimit: 30
   highHardTwistLimit: 180
   lowHardTwistLimit: 270
+  pivotDirection: 0
+  pivotRotationOffset: 0
 --- !u!114 &114814459059569710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1289,13 +1309,15 @@ MonoBehaviour:
   frameTwistLimit: 30
   highHardTwistLimit: 180
   lowHardTwistLimit: 270
+  pivotDirection: 0
+  pivotRotationOffset: 0
 --- !u!114 &114906590636205826
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1072524347289168}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4de2946ce26d477c8e081a823c31fb3, type: 3}
   m_Name: 
@@ -1303,6 +1325,8 @@ MonoBehaviour:
   frameTwistLimit: 20
   highHardTwistLimit: 20
   lowHardTwistLimit: 100
+  pivotDirection: 2
+  pivotRotationOffset: 0
 --- !u!114 &114924508029433354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1317,6 +1341,8 @@ MonoBehaviour:
   frameTwistLimit: 30
   highHardTwistLimit: 1
   lowHardTwistLimit: 170
+  pivotDirection: 0
+  pivotRotationOffset: 0
 --- !u!114 &114985093837210712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1331,6 +1357,8 @@ MonoBehaviour:
   frameTwistLimit: 30
   highHardTwistLimit: 170
   lowHardTwistLimit: 0
+  pivotDirection: 0
+  pivotRotationOffset: 0
 --- !u!212 &212107943793580700
 SpriteRenderer:
   m_ObjectHideFlags: 1

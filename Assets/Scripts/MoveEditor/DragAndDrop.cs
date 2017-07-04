@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PivotDirection {North, West, South, East};
+
 /// <summary>
 /// Class for handling the dragging and dropping of limbs in the MoveEditor.
 /// </summary>
@@ -25,8 +27,26 @@ public class DragAndDrop : MonoBehaviour {
 	public float highHardTwistLimit;
 	public float lowHardTwistLimit;
 
+	public PivotDirection pivotDirection = PivotDirection.North;
+	public int pivotRotationOffset;
+
 	void Start(){
 		UpdateFrameLimits ();
+		switch (pivotDirection)
+		{
+			case PivotDirection.North:
+				pivotRotationOffset = 0;
+				break;
+			case PivotDirection.West:
+				pivotRotationOffset = 90;
+				break;
+			case PivotDirection.South:
+				pivotRotationOffset = 180;
+				break;
+			default : 
+				pivotRotationOffset = 270; //PivotDirection.East:
+				break;
+		}
 	}
 
     void OnMouseDown() {
@@ -99,6 +119,8 @@ public class DragAndDrop : MonoBehaviour {
 		{ 
 			float newRot = LocalMouseRotation ();
             //TODO: Look at twist limits based on mouse position and not one test update.
+
+			newRot += pivotRotationOffset;
 
             transform.parent.eulerAngles = new Vector3(0, 0, newRot); //Update rotation previous to checking limits
 
