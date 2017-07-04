@@ -6,6 +6,7 @@ using System;
 /// <summary>
 /// Data class holding information of a Frame. Consists of all rotatable body parts and their rotation at a certain moment.
 /// </summary>
+[System.Serializable]
 public class Frame : ICloneable
 {
 

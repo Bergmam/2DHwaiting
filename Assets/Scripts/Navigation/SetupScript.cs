@@ -10,5 +10,6 @@ public class SetupScript : MonoBehaviour
 	void Start () 
 	{
 		SceneHandler.Init (); //Instantiate SceneHandler with list of existing scenes and return stack
+        SaveLoad.Load();
 	}
 }
