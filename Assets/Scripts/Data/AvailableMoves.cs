@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class AvailableMoves
 {
-
 	private static List<Move> moves = new List<Move>();
 
 	//TODO: store moves as they are completed in the move editor.
@@ -57,4 +56,8 @@ public class AvailableMoves
         return false;
     }
 
+    public static void SetMoves(List<Move> newMoves)
+    {
+        moves = newMoves;
+    }
 }

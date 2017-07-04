@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Data class holding information of a Move. Consists of a collection of <see cref="Frame"/>'s and stats.
 /// </summary>
+[System.Serializable]
 public class Move
 {
 	private int speed = 10;
