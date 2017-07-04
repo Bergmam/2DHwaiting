@@ -9,6 +9,8 @@ public class MovePanelBehaviour : MonoBehaviour {
     private Text strengthText;
     private Text nameText;
 
+    private Color32 defaultColor = new Color32(58,149,255,255);
+
     void Awake()
     {
         speedText = transform.Find("SpeedText").GetComponent<Text>();
@@ -51,4 +53,14 @@ public class MovePanelBehaviour : MonoBehaviour {
 	{
         nameText.text = name;
 	}
+
+    public void Select()
+    {
+        gameObject.GetComponent<Image>().color = Color.yellow;
+    }
+
+    public void DeSelect()
+    {
+        gameObject.GetComponent<Image>().color = defaultColor;
+    }
 }

@@ -10,6 +10,8 @@ using System;
 public class MovePanelListBehaviour : MonoBehaviour 
 {
 	int currentY = 0;
+    float panelHeight;
+    int nbrOfVisiblePanels;
 	MovePanelBehaviour[] movePanelBehaviours;
 
 	void Start () 
@@ -35,55 +37,59 @@ public class MovePanelListBehaviour : MonoBehaviour
 		{
 			Move move = moves [i];
 			GameObject previewPanel = Instantiate (previewPanelObject, transform);
-			MovePanelBehaviour panel = previewPanel.GetComponent<MovePanelBehaviour> ();
-            panel.SetName(move.GetName());
-		}
+			movePanelBehaviours[i] = previewPanel.GetComponent<MovePanelBehaviour> ();
+            movePanelBehaviours[i].SetName(move.GetName());
+            movePanelBehaviours[i].SetSpeed(move.GetSpeed());
+            movePanelBehaviours[i].SetStrength(move.GetStrength());
+        }
+
+        float viewPortHeight = transform.parent.GetComponent<RectTransform>().rect.height;
+        panelHeight = movePanelBehaviours[0].gameObject.GetComponent<RectTransform>().rect.height;
+        nbrOfVisiblePanels = (int)Mathf.Round(viewPortHeight / panelHeight);
+
+        movePanelBehaviours[0].Select();
 	}
 
 	// Move selection within the grid of available moves.
-	/*void Update () 
+	void Update () 
 	{
-		//TODO: Compare with the length of the arrays instead of the columnLength and rowLength.
-		//This would remove the problem with index out of bounds exceptions on the last row.
-		if (Input.GetKeyDown (KeyCode.UpArrow)) 
-		{
-			if (currentY > 0) {
-				panels [currentX, currentY].DeSelect ();
+        if (Input.GetKeyDown (KeyCode.UpArrow))
+        {
+            bool inTopPanels = currentY <= (nbrOfVisiblePanels / 2);
+
+            if (currentY > 0) {
+				movePanelBehaviours [currentY].DeSelect ();
 				currentY--;
-				panels [currentX, currentY].Select ();
+				movePanelBehaviours [currentY].Select ();
 			}
-		}
-		if (Input.GetKeyDown (KeyCode.DownArrow)) 
-		{
-			if (currentY < columnLength - 1) {
-				panels [currentX, currentY].DeSelect ();
+
+            bool inBotPanels = currentY >= movePanelBehaviours.Length - (nbrOfVisiblePanels / 2) - 1;
+
+            if (!inTopPanels && !inBotPanels)
+            {
+                Vector3 currentPosition = GetComponent<RectTransform>().localPosition;
+                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y - panelHeight, currentPosition.z);
+                GetComponent<RectTransform>().localPosition = newPosition;
+            }
+        }
+		if (Input.GetKeyDown (KeyCode.DownArrow))
+        {
+            bool inBotPanels = currentY >= movePanelBehaviours.Length - (nbrOfVisiblePanels / 2) - 1;
+            
+            if (currentY < movePanelBehaviours.Length - 1) {
+				movePanelBehaviours [currentY].DeSelect ();
 				currentY++;
-				panels [currentX, currentY].Select ();
-			}
+				movePanelBehaviours [currentY].Select ();
+            }
+            
+            bool inTopPanels = currentY <= nbrOfVisiblePanels / 2;         
+            
+            if (!inTopPanels && !inBotPanels)
+            {
+                Vector3 currentPosition = GetComponent<RectTransform>().localPosition;
+                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y + panelHeight, currentPosition.z);
+                GetComponent<RectTransform>().localPosition = newPosition;
+            }
 		}
-		if (Input.GetKeyDown (KeyCode.LeftArrow)) 
-		{
-			if (currentX > 0) 
-			{
-				panels [currentX, currentY].DeSelect ();
-				currentX--;
-				panels [currentX, currentY].Select ();
-			}
-		}
-		if (Input.GetKeyDown (KeyCode.RightArrow)) 
-		{
-			if (currentX < rowLength - 1) 
-			{
-				panels [currentX, currentY].DeSelect ();
-				currentX++;
-				panels [currentX, currentY].Select ();
-			}
-		}
-		//Make sure the currently selected panel is acutally selected. Without this, no panel is selected before an arrow key is pressed.
-		if (!panels [currentX, currentY].IsSelected ()) 
-		{
-			panels [currentX, currentY].Select ();
-		}
-		//TODO: Add selection of moves through pressing a button corresponding to an attack.
-	}*/
+	}
 }
