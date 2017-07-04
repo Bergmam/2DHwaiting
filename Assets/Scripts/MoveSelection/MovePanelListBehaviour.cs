@@ -18,22 +18,25 @@ public class MovePanelListBehaviour : MonoBehaviour
 
 		//### TEST ### TODO: Remove this
 		moves = new List<Move>();
-		for (int i = 0; i < 45; i++) 
+		for (int i = 0; i < 10; i++) 
 		{
-			moves.Add (new Move ());
+            Move move = new Move();
+            move.SetName(i.ToString());
+            moves.Add (move);
 		}
 		//### TEST END ###
 
 		movePanelBehaviours = new MovePanelBehaviour[moves.Count];
 
 		string previewPath = "Prefabs" + Path.DirectorySeparatorChar + "MovePanel";
+        GameObject previewPanelObject = (GameObject)Resources.Load(previewPath);
 
-		for (int i = 0; i < moves.Count; i++)
+        for (int i = 0; i < moves.Count; i++)
 		{
 			Move move = moves [i];
-			GameObject previewPanelObject = (GameObject)Resources.Load (previewPath);
 			GameObject previewPanel = Instantiate (previewPanelObject, transform);
-			movePanelBehaviours [i] = previewPanel.GetComponent<MovePanelBehaviour> ();
+			MovePanelBehaviour panel = previewPanel.GetComponent<MovePanelBehaviour> ();
+            panel.SetName(move.GetName());
 		}
 	}
 

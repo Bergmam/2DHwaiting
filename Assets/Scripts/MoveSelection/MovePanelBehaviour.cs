@@ -5,15 +5,20 @@ using UnityEngine.UI;
 
 public class MovePanelBehaviour : MonoBehaviour {
 
-	private Text speedText;
-	private Text strengthText;
-	private Text nameText;
+    private Text speedText;
+    private Text strengthText;
+    private Text nameText;
 
-	void Start ()
+    void Awake()
+    {
+        speedText = transform.Find("SpeedText").GetComponent<Text>();
+        strengthText = transform.Find("StrengthText").GetComponent<Text>();
+        nameText = transform.Find("NameText").GetComponent<Text>();
+    }
+
+    void Start ()
 	{
-		speedText = GameObject.Find ("SpeedText").GetComponent<Text> ();
-		strengthText = GameObject.Find ("StrengthText").GetComponent<Text> ();
-		nameText = GameObject.Find ("NameText").GetComponent<Text> ();
+
 	}
 
 	void Update ()
@@ -34,16 +39,16 @@ public class MovePanelBehaviour : MonoBehaviour {
 
 	public void SetSpeed(int speed)
 	{
-		speedText.text = "" + speed;
+        speedText.text = "" + speed;
 	}
 
 	public void SetStrength(int strength)
 	{
-		strengthText.text = "" + strength;
+        strengthText.text = "" + strength;
 	}
 
 	public void SetName(string name)
 	{
-		nameText.text = name;
+        nameText.text = name;
 	}
 }

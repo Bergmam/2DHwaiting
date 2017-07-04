@@ -8,8 +8,8 @@ using UnityEngine;
 [System.Serializable]
 public class Move
 {
-	private int speed = 10;
-	private float strength;
+	private int speed;
+	private int strength;
 	private Frame[] frames;
 	private int nextIndex; //At which index to place the next recorded frame. Adding or removing frames updates the index.
 	private bool done;
@@ -97,7 +97,7 @@ public class Move
 		return speed;
 	}
 
-    public float GetStrength()
+    public int GetStrength()
     {
         return strength;
     }
