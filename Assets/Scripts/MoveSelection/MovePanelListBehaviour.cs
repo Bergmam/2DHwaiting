@@ -12,23 +12,27 @@ public class MovePanelListBehaviour : MonoBehaviour
 	int currentY = 0;
     float panelHeight;
     int nbrOfVisiblePanels;
-	MovePanelBehaviour[] movePanelBehaviours;
+    MovePanelBehaviour[] movePanelBehaviours;
+    List<Move> moves;
 
 	void Start () 
 	{
-		List<Move> moves = AvailableMoves.GetMoves ();
+		moves = AvailableMoves.GetMoves ();
 
-		//### TEST ### TODO: Remove this
-		moves = new List<Move>();
-		for (int i = 0; i < 10; i++) 
-		{
-            Move move = new Move();
-            move.SetName(i.ToString());
-            moves.Add (move);
-		}
-		//### TEST END ###
 
-		movePanelBehaviours = new MovePanelBehaviour[moves.Count];
+        // For testing purposes
+        // Makes sure we always have 10 moves
+        if (moves.Count < 10)
+        {
+            for (int i = moves.Count; i < 10; i++)
+            {
+                Move move = new Move();
+                move.SetName(i.ToString());
+                moves.Add(move);
+            }
+        }
+
+        movePanelBehaviours = new MovePanelBehaviour[moves.Count];
 
 		string previewPath = "Prefabs" + Path.DirectorySeparatorChar + "MovePanel";
         GameObject previewPanelObject = (GameObject)Resources.Load(previewPath);

@@ -49,6 +49,7 @@ public class MovePlayer : MonoBehaviour
 	/// <param name="move">The move to be displayed.</param>
 	public void PlayMove(Move move)
 	{
+        frames = new List<Frame>();
 		moveToPlay = move;
 		int speed = move.GetSpeed ();
 		Frame[] moveFrames = move.GetFrames ();
