@@ -13,8 +13,8 @@ public class MovePlayer : MonoBehaviour
 	int frameIndex = 0;
 	private Dictionary<string,Transform> nameBodyPartDict = new Dictionary<string, Transform> ();
 	private bool autoLoop;
-
-	void Start()
+  
+	void Awake()
 	{
 		autoLoop = false;
 		frames = new List<Frame> ();
@@ -98,10 +98,6 @@ public class MovePlayer : MonoBehaviour
                 }
             }
 			newRotation = fromRot + (float)percentage/(float)100 * (toRot- fromRot);
-            if(newRotation < 270 && newRotation > 90)
-            {
-                print("fromRot = " + fromRot + ", toRot = " + toRot + ", newRotation = " + newRotation);
-            }
 			newFrame.AddBodyPartRotation (name, newRotation);
 		}
 		return newFrame;

@@ -14,14 +14,18 @@ public class MovePanelListBehaviour : MonoBehaviour
 	private int nbrOfVisiblePanels;
 	private MovePanelBehaviour[] movePanelBehaviours;
 	private List<Move> moves;
-	private bool localMultiplayer = true;
 
 
 	Character player1Character;
 	Character player2Character;
 
+	MovePlayer character1;
+	bool hasMoved;
+
 	void Start () 
 	{
+		hasMoved = false;
+
 		//TODO: Get all characters from settingss
 		player1Character = new Character ();
 		player1Character.AddKey ("q");
@@ -33,19 +37,20 @@ public class MovePanelListBehaviour : MonoBehaviour
 		player2Character.AddKey ("p");
 
 		moves = AvailableMoves.GetMoves ();
-
+        character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>();
 
         // For testing purposes
         // Makes sure we always have 10 moves
-        if (moves.Count < 10)
+       /* if (moves.Count < 10)
         {
+            Move copyMove = moves[moves.Count - 1];
             for (int i = moves.Count; i < 10; i++)
             {
-                Move move = new Move();
+                Move move = copyMove;
                 move.SetName(i.ToString());
                 moves.Add(move);
             }
-        }
+        }*/
 
         movePanelBehaviours = new MovePanelBehaviour[moves.Count];
 
@@ -67,8 +72,10 @@ public class MovePanelListBehaviour : MonoBehaviour
         nbrOfVisiblePanels = (int)Mathf.Round(viewPortHeight / panelHeight);
 
         movePanelBehaviours[0].Select();
-	}
-
+        character1.SetAutoLoopEnabled(true);
+        character1.PlayMove(moves[currentY]);
+    }
+    
 	// Move selection within the grid of available moves.
 	void Update () 
 	{
@@ -89,7 +96,8 @@ public class MovePanelListBehaviour : MonoBehaviour
                 Vector3 currentPosition = GetComponent<RectTransform>().localPosition;
                 Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y - panelHeight, currentPosition.z);
                 GetComponent<RectTransform>().localPosition = newPosition;
-            }
+			}
+			hasMoved = true;
         } 
 		else if (Input.GetKeyDown (KeyCode.DownArrow))
         {
@@ -109,6 +117,7 @@ public class MovePanelListBehaviour : MonoBehaviour
                 Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y + panelHeight, currentPosition.z);
                 GetComponent<RectTransform>().localPosition = newPosition;
             }
+            hasMoved = true;
 		}
 		else if (Input.anyKeyDown)
 		{
@@ -146,6 +155,12 @@ public class MovePanelListBehaviour : MonoBehaviour
 					}
 				}
 			}
+		}
+		if (hasMoved)
+		{
+			character1.SetAutoLoopEnabled(true);
+			character1.PlayMove(moves[currentY]);
+			hasMoved = false;
 		}
 	}
 }
