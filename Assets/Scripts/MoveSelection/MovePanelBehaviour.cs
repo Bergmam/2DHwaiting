@@ -7,7 +7,8 @@ public class MovePanelBehaviour : MonoBehaviour {
 
     private Text speedText;
     private Text strengthText;
-    private Text nameText;
+	private Text nameText;
+	private Text assignedButtonText;
 
     private Color32 defaultColor = new Color32(58,149,255,255);
 
@@ -15,28 +16,13 @@ public class MovePanelBehaviour : MonoBehaviour {
     {
         speedText = transform.Find("SpeedText").GetComponent<Text>();
         strengthText = transform.Find("StrengthText").GetComponent<Text>();
-        nameText = transform.Find("NameText").GetComponent<Text>();
+		nameText = transform.Find("NameText").GetComponent<Text>();
+		assignedButtonText = transform.Find("AssignedButtonText").GetComponent<Text>();
     }
 
     void Start ()
 	{
 
-	}
-
-	void Update ()
-	{
-		if (Input.GetKeyDown ("a"))
-		{
-			SetName ("APA BEPA");
-		}
-		else if (Input.GetKeyDown ("s"))
-		{
-			SetSpeed (10);
-		}
-		else if (Input.GetKeyDown ("d"))
-		{
-			SetStrength (99);
-		}
 	}
 
 	public void SetSpeed(int speed)
@@ -63,4 +49,12 @@ public class MovePanelBehaviour : MonoBehaviour {
     {
         gameObject.GetComponent<Image>().color = defaultColor;
     }
+
+	public void AssignButton(string button)
+	{
+		if (button.Length == 1) //Make sure the assigned button is not more than one character
+		{
+			assignedButtonText.text = button;
+		}
+	}
 }
