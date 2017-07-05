@@ -36,7 +36,7 @@ public class MovePanelListBehaviour : MonoBehaviour
         for (int i = 0; i < moves.Count; i++)
 		{
 			Move move = moves [i];
-			GameObject previewPanel = Instantiate (previewPanelObject, transform);
+			GameObject previewPanel = Instantiate (previewPanelObject, previewPanelObject.transform.position, previewPanelObject.transform.rotation, transform);
 			movePanelBehaviours[i] = previewPanel.GetComponent<MovePanelBehaviour> ();
             movePanelBehaviours[i].SetName(move.GetName());
             movePanelBehaviours[i].SetSpeed(move.GetSpeed());
