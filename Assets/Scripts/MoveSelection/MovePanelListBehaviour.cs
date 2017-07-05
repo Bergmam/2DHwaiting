@@ -35,6 +35,9 @@ public class MovePanelListBehaviour : MonoBehaviour
 		player2Character.AddKey ("o");
 		player2Character.AddKey ("p");
 
+        StaticCharacterHolder.character1 = player1Character;
+        StaticCharacterHolder.character2 = player2Character;
+
 		moves = AvailableMoves.GetMoves ();
         character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>();
 		selectionPanels = new SelectionPanelBahviour[2];

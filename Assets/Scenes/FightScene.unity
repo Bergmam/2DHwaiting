@@ -970,6 +970,7 @@ GameObject:
   m_Component:
   - component: {fileID: 875336375}
   - component: {fileID: 875336376}
+  - component: {fileID: 875336377}
   m_Layer: 0
   m_Name: Torso
   m_TagString: Rotatable
@@ -1037,6 +1038,23 @@ SpriteRenderer:
   m_Size: {x: 0.24, y: 2.06}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!95 &875336377
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 875336374}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4087a43fe3d6e574b92bb8c79f5c7832, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &982757189
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,6 +1138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1015446535}
   - component: {fileID: 1015446536}
+  - component: {fileID: 1015446537}
   m_Layer: 0
   m_Name: Torso
   m_TagString: Rotatable
@@ -1187,6 +1206,23 @@ SpriteRenderer:
   m_Size: {x: 0.24, y: 2.06}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!95 &1015446537
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1015446534}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e981fbf490feda046b57cf7b348ba885, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1017906095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1632,7 +1668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1172354569}
   - component: {fileID: 1172354568}
-  - component: {fileID: 1172354567}
+  - component: {fileID: 1172354570}
   m_Layer: 0
   m_Name: Character 1
   m_TagString: Untagged
@@ -1640,23 +1676,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &1172354567
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1172354566}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6d475927a6d0eb94ab9dfce131da8fcb, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &1172354568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1683,6 +1702,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1172354570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1172354566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa2d013b805aab41b829914ee0f6855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.1
+  horizontalAxis: Horizontal
 --- !u!1 &1230264208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,6 +2016,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1468355795}
   - component: {fileID: 1468355794}
+  - component: {fileID: 1468355796}
   m_Layer: 0
   m_Name: Character 2
   m_TagString: Untagged
@@ -2017,6 +2050,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1468355796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468355793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa2d013b805aab41b829914ee0f6855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.1
+  horizontalAxis: Horizontal2
 --- !u!1 &1607347989
 GameObject:
   m_ObjectHideFlags: 0
