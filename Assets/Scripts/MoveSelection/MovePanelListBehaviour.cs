@@ -9,17 +9,33 @@ using System;
 /// </summary>
 public class MovePanelListBehaviour : MonoBehaviour 
 {
-	int currentY = 0;
-    float panelHeight;
-    int nbrOfVisiblePanels;
-    MovePanelBehaviour[] movePanelBehaviours;
-    List<Move> moves;
-    MovePlayer character1;
-    bool hasMoved;
+	private int currentY = 0;
+	private float panelHeight;
+	private int nbrOfVisiblePanels;
+	private MovePanelBehaviour[] movePanelBehaviours;
+	private List<Move> moves;
+
+
+	Character player1Character;
+	Character player2Character;
+
+	MovePlayer character1;
+	bool hasMoved;
 
 	void Start () 
 	{
-        hasMoved = false;
+		hasMoved = false;
+
+		//TODO: Get all characters from settingss
+		player1Character = new Character ();
+		player1Character.AddKey ("q");
+		player1Character.AddKey ("w");
+		player1Character.AddKey ("e");
+		player2Character = new Character ();
+		player2Character.AddKey ("i");
+		player2Character.AddKey ("o");
+		player2Character.AddKey ("p");
+
 		moves = AvailableMoves.GetMoves ();
         character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>();
 
@@ -80,10 +96,10 @@ public class MovePanelListBehaviour : MonoBehaviour
                 Vector3 currentPosition = GetComponent<RectTransform>().localPosition;
                 Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y - panelHeight, currentPosition.z);
                 GetComponent<RectTransform>().localPosition = newPosition;
-            }
-            hasMoved = true;
-        }
-		if (Input.GetKeyDown (KeyCode.DownArrow))
+			}
+			hasMoved = true;
+        } 
+		else if (Input.GetKeyDown (KeyCode.DownArrow))
         {
             bool inBotPanels = currentY >= movePanelBehaviours.Length - (nbrOfVisiblePanels / 2) - 1;
             
@@ -103,13 +119,48 @@ public class MovePanelListBehaviour : MonoBehaviour
             }
             hasMoved = true;
 		}
-
-        if (hasMoved)
-        {
-            character1.SetAutoLoopEnabled(true);
-            character1.PlayMove(moves[currentY]);
-            hasMoved = false;
-        }
-
-    }
+		else if (Input.anyKeyDown)
+		{
+			foreach(string key in player1Character.GetKeys())
+			{
+				if(Input.GetKeyDown(key))
+				{
+					if(player1Character.SetMove(key,moves[currentY]))
+					{
+						movePanelBehaviours [currentY].AssignButton1 (key, Color.red);
+						for (int i = 0; i < movePanelBehaviours.Length; i++)
+						{
+							if (i != currentY)
+							{
+								movePanelBehaviours [i].ClearAssignedButton1 (key);
+							}
+						}
+					}
+				}
+			}
+			foreach(string key in player2Character.GetKeys())
+			{
+				if(Input.GetKeyDown(key))
+				{
+					if(player2Character.SetMove(key,moves[currentY]))
+					{
+						movePanelBehaviours [currentY].AssignButton2 (key, Color.blue);
+						for (int i = 0; i < movePanelBehaviours.Length; i++)
+						{
+							if (i != currentY)
+							{
+								movePanelBehaviours [i].ClearAssignedButton2 (key);
+							}
+						}
+					}
+				}
+			}
+		}
+		if (hasMoved)
+		{
+			character1.SetAutoLoopEnabled(true);
+			character1.PlayMove(moves[currentY]);
+			hasMoved = false;
+		}
+	}
 }
