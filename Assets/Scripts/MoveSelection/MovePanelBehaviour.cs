@@ -8,8 +8,7 @@ public class MovePanelBehaviour : MonoBehaviour {
     private Text speedText;
     private Text strengthText;
 	private Text nameText;
-	private Text assignedButton1Text;
-	private Text assignedButton2Text;
+	private Text[] assignedButtonTexts;
 
     private Color32 defaultColor = new Color32(58,149,255,255);
 
@@ -18,8 +17,10 @@ public class MovePanelBehaviour : MonoBehaviour {
         speedText = transform.Find("SpeedText").GetComponent<Text>();
         strengthText = transform.Find("StrengthText").GetComponent<Text>();
 		nameText = transform.Find("NameText").GetComponent<Text>();
-		assignedButton1Text = transform.Find("AssignedButton1Text").GetComponent<Text>();
-		assignedButton2Text = transform.Find("AssignedButton2Text").GetComponent<Text>();
+
+		assignedButtonTexts = new Text[2];
+		assignedButtonTexts[0] = transform.Find("AssignedButton1Text").GetComponent<Text>();
+		assignedButtonTexts[1] = transform.Find("AssignedButton2Text").GetComponent<Text>();
     }
 
     void Start ()
@@ -52,39 +53,30 @@ public class MovePanelBehaviour : MonoBehaviour {
         gameObject.GetComponent<Image>().color = defaultColor;
     }
 
-	public void AssignButton1(string button, Color32 color)
+	public void AssignButton(string button, Color32 color, int playerNumber)
 	{
+		playerNumber--;
 		if (button.Length == 1) //Make sure the assigned button is not more than one character
 		{
-			assignedButton1Text.color = color;
-			assignedButton1Text.text = button;
+			assignedButtonTexts[playerNumber].color = color;
+			assignedButtonTexts[playerNumber].text = button;
 		}
 	}
 
-	public void ClearAssignedButton1(string button)
+	public void ClearAssignedButton(string button, int playerNumber)
 	{
-		if(assignedButton1Text.text.Equals(button))
+		playerNumber--;
+		if(assignedButtonTexts[playerNumber].text.Equals(button))
 		{
-			assignedButton1Text.color = Color.black;
-			assignedButton1Text.text = "";
+			assignedButtonTexts[playerNumber].color = Color.black;
+			assignedButtonTexts[playerNumber].text = "";
 		}
 	}
 
-	public void AssignButton2(string button, Color32 color)
+	public void ClearAssignedButton(int playerNumber)
 	{
-		if (button.Length == 1) //Make sure the assigned button is not more than one character
-		{
-			assignedButton2Text.color = color;
-			assignedButton2Text.text = button;
-		}
-	}
-
-	public void ClearAssignedButton2(string button)
-	{
-		if(assignedButton2Text.text.Equals(button))
-		{
-			assignedButton2Text.color = Color.black;
-			assignedButton2Text.text = "";
-		}
+		playerNumber--;
+		assignedButtonTexts[playerNumber].color = Color.black;
+		assignedButtonTexts[playerNumber].text = "";
 	}
 }
