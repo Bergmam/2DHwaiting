@@ -4,39 +4,55 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
 
-public class SelectionPanelBahviour : MonoBehaviour {
-
+/// <summary>
+/// Used for manipulating the panels next to each character showing the currently selected moves.
+/// </summary>
+public class SelectionPanelBahviour : MonoBehaviour
+{
 	private List<GameObject> panels;
 	private Character owner;
 
-	// Use this for initialization
 	void Start () {
 		panels = new List<GameObject> ();
 	}
 
-	public void AddPanelClone (GameObject original, string button, Color32 color)
+	/// <summary>
+	/// Adds a clone of a list item from the move list of the move selection screen to the panel this script is attached to.
+	/// </summary>
+	/// <param name="original">Original.</param>
+	/// <param name="button">Button.</param>
+	public void AddPanelClone (GameObject original, string button)
 	{
 		Transform originalTransform = original.transform;
-		string moveName = originalTransform.Find ("NameText").GetComponent<Text> ().text;
-		RemovePanelWithButton (button);
-		RemovePanelWithMove (moveName);
+		string moveName = original.GetComponent<MovePanelBehaviour> ().getMove ().GetName ();
+		RemovePanelWithButton (button); //Remove any panel currently using the same button.
+		RemovePanelWithMove (moveName); //Remove any panel currently holding the move.
 		GameObject previewPanel = Instantiate (original.gameObject, originalTransform.position, originalTransform.rotation, transform);
 		MovePanelBehaviour panelBehaviour = previewPanel.GetComponent<MovePanelBehaviour> ();
 		panelBehaviour.DeSelect ();
+		//Remove button of player1 and assign the button for player2 (even if the panel belongs to player1) because it is the furthest to the right in the panel.
+		//Purely for visual effect. These list items are just select by 1 player so the furthest to the right looks better.
 		panelBehaviour.ClearAssignedButton (1);
-		panelBehaviour.AssignButton (button, color, 2);
+		panelBehaviour.AssignButton (button, owner.GetColor(), 2); 
 		panels.Add (previewPanel);
 	}
 
+	/// <summary>
+	/// Removes any panel with  move.
+	/// </summary>
+	/// <param name="moveName">Move name.</param>
 	private void RemovePanelWithMove(string moveName)
 	{
+		//Cannot remove items from list while itterating.
+		//Only one panel at a time can hold the same move. This fins it if it exists.
 		GameObject panelWithMove = null;
 		foreach(GameObject panel in panels)
 		{
-			Text moveText = panel.transform.Find("NameText").GetComponent<Text>();
-			if (moveText.text.Equals (moveName))
+			string panelMoveName = panel.GetComponent<MovePanelBehaviour> ().getMove ().GetName ();
+			if (panelMoveName.Equals (moveName))
 			{
 				panelWithMove = panel;
+				break;
 			}
 		}
 		if (panelWithMove != null)
@@ -46,33 +62,29 @@ public class SelectionPanelBahviour : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Removes any panel with button.
+	/// </summary>
+	/// <param name="button">Button.</param>
 	private void RemovePanelWithButton(string button)
 	{
-
-		GameObject panelWithButton1 = null;
-		GameObject panelWithButton2 = null;
+		GameObject panelWithButton = null;
 		foreach(GameObject panel in panels)
 		{
-			Text assignedButton1Text = panel.transform.Find("AssignedButton1Text").GetComponent<Text>();
-			Text assignedButton2Text = panel.transform.Find("AssignedButton2Text").GetComponent<Text>();
-			if (assignedButton1Text.text.Equals (button))
+			//Cannot remove items from list while itterating.
+			//Only one panel at a time can hold the same move. This fins it if it exists.
+			//Since all copies are added with button assigned as player2 for visual purposes, we don't need check player1 button.
+			Text assignedButtonText = panel.transform.Find("AssignedButton2Text").GetComponent<Text>();
+			if (assignedButtonText.text.Equals (button))
 			{
-				panelWithButton1 = panel;
-			}
-			if (assignedButton2Text.text.Equals (button))
-			{
-				panelWithButton2 = panel;
+				panelWithButton = panel;
+				break;
 			}
 		}
-		if (panelWithButton1 != null)
+		if (panelWithButton != null)
 		{
-			panels.Remove (panelWithButton1);
-			Destroy (panelWithButton1);
-		}
-		if (panelWithButton2 != null)
-		{
-			panels.Remove (panelWithButton2);
-			Destroy (panelWithButton2);
+			panels.Remove (panelWithButton);
+			Destroy (panelWithButton);
 		}
 	}
 

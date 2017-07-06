@@ -109,9 +109,14 @@ public static class InputSettings
 		return null;
 	}
 
+	/// <summary>
+	/// Checks if all buttons have a move assigned to them.
+	/// </summary>
+	/// <returns><c>true</c>, if each button of every character has a move assigned to it, <c>false</c> otherwise.</returns>
 	public static bool AllButtonsAssigned()
 	{
 		bool allButtonsAssigned = true;
+		//Check each character input individually
 		foreach (CharacterInput characterInput in characterInputs)
 		{
 			allButtonsAssigned &= characterInput.AllButtonsAssigned ();

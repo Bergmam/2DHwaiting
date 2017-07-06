@@ -48,6 +48,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 			selectedMovesPanels [i].SetOwner (character);
 		}
 
+		//Hide the play button untill each character has a move assigned to each of its used buttons.
 		playButton = GameObject.Find ("PlayButton");
 		playButton.SetActive (false);
 
@@ -60,43 +61,29 @@ public class MovePanelListBehaviour : MonoBehaviour
 	{
         if (Input.GetKeyDown (KeyCode.UpArrow)) //Up arrow pressed
         {
-            bool inTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
-            if (selectedListIndex > 0) {
-				listItems [selectedListIndex].DeSelect ();
-				selectedListIndex--;
-				listItems [selectedListIndex].Select ();
-			}
-            bool inBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
-            if (!inTopPanels && !inBotPanels)
+			bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
+			MoveSelection (-1);
+			bool movedIntoBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
+            if (!movedOutOfTopPanels && !movedIntoBotPanels)
             {
-                Vector3 currentPosition = GetComponent<RectTransform>().localPosition;
-                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y - listItemHeight, currentPosition.z);
-                GetComponent<RectTransform>().localPosition = newPosition;
+				ScrollList (-1);
 			}
 			PlayAnimation ();
         } 
-		else if (Input.GetKeyDown (KeyCode.DownArrow))
+		else if (Input.GetKeyDown (KeyCode.DownArrow)) //Down arrow pressed
         {
-            bool inBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
-            
-            if (selectedListIndex < listItems.Length - 1) {
-				listItems [selectedListIndex].DeSelect ();
-				selectedListIndex++;
-				listItems [selectedListIndex].Select ();
-            }
-            
-            bool inTopPanels = selectedListIndex <= nbrOfVisiblePanels / 2;         
-            
-            if (!inTopPanels && !inBotPanels)
+			bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
+			MoveSelection (1);
+			bool moveIntoTopPanels = selectedListIndex <= nbrOfVisiblePanels / 2;
+            if (!moveIntoTopPanels && !movedOutOfBotPanels)
             {
-                Vector3 currentPosition = GetComponent<RectTransform>().localPosition;
-                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y + listItemHeight, currentPosition.z);
-                GetComponent<RectTransform>().localPosition = newPosition;
+				ScrollList (1);
             }
 			PlayAnimation ();
 		}
 		else if (Input.anyKeyDown)
 		{
+			//Check if any button used in the game has been pressed.
 			foreach (string button in InputSettings.allUsedButtons)
 			{
 				if(Input.GetKeyDown(button))
@@ -107,12 +94,48 @@ public class MovePanelListBehaviour : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Moves the selection a number of steps up or down.
+	/// </summary>
+	/// <param name="steps"> Number of steps to move. Positive for down and negative for up.</param>
+	private void MoveSelection(int steps)
+	{
+		int newIndex = selectedListIndex + steps;
+		if (newIndex >= 0 && newIndex < listItems.Length)
+		{
+			listItems [selectedListIndex].DeSelect ();
+			selectedListIndex = newIndex;
+			listItems [newIndex].Select ();
+		}
+	}
+
+	/// <summary>
+	/// Scrolls the list a number of steps up or down by moving the content of the scroll view (which this script is place on) up or down.
+	/// </summary>
+	/// <param name="steps">Number of steps to scroll. Positive for up and negative for down.</param>
+	private void ScrollList(int steps)
+	{
+		Vector3 currentPosition = GetComponent<RectTransform>().localPosition;
+		float newPositionY = currentPosition.y + steps * listItemHeight;
+		Vector3 newPosition = new Vector3 (currentPosition.x, newPositionY, currentPosition.z);
+		GetComponent<RectTransform>().localPosition = newPosition;
+	}
+
+	/// <summary>
+	/// Plays the move animation of the currently selected list item on one of the characters in the scene.
+	/// </summary>
 	private void PlayAnimation()
 	{
 		character1.SetAutoLoopEnabled(true);
 		character1.PlayMove(moves[selectedListIndex]);
 	}
 
+	/// <summary>
+	/// Creates a move panel.
+	/// </summary>
+	/// <returns>The move panel.</returns>
+	/// <param name="move">Move.</param>
+	/// <param name="parent">Parent.</param>
 	public GameObject CreateMovePanel(Move move, Transform parent){
 		string previewPath = "Prefabs" + Path.DirectorySeparatorChar + "MovePanel";
 		GameObject previewPanelObject = (GameObject)Resources.Load(previewPath);
@@ -122,40 +145,57 @@ public class MovePanelListBehaviour : MonoBehaviour
 		return previewPanel;
 	}
 
+	/// <summary>
+	/// Registers the move of the currently selected list item to a button.
+	/// </summary>
+	/// <param name="button">The button to assign the move to.</param>
 	private void RegisterPlayerMoveToButton(string button)
 	{
 		Move selectedMove = listItems [selectedListIndex].getMove ();
 		Character registeredCharacter = InputSettings.Register (button, selectedMove.GetName ());
+		//The character returned by InputSettings.Register is the character that uses the button.
+		//If the returned character is null, no character uses the button.
 		if (registeredCharacter != null)
 		{
 			registeredCharacter.AddMove (selectedMove);
 			Color characterColor = registeredCharacter.GetColor ();
 			int characterNbr = registeredCharacter.GetNbr ();
-			listItems [selectedListIndex].AssignButton (button, characterColor, characterNbr);
+			listItems [selectedListIndex].AssignButton (button, characterColor, characterNbr); //Mark the selected list item with button and player color.
+			//Remove the marking from any list item of a move previously registered to the button.
 			for (int i = 0; i < listItems.Length; i++)
 			{
-				if (i != selectedListIndex)
+				if (i != selectedListIndex) //Do not remove the marking from the list item that was just marked.
 				{
-					listItems [i].ClearAssignedButton (button, characterNbr);
+					listItems [i].ClearAssignedButton (button);
 				}
 			}
-			AddPanelToPlayerMoves (registeredCharacter, button);
+			AddPanelToCharacterMoves (registeredCharacter, button);
 			ShowOrHidePlayButton ();
 		}
 	}
 
-	private void AddPanelToPlayerMoves(Character character, string button)
+	/// <summary>
+	/// Adds a panel to the selected moves of a character.
+	/// </summary>
+	/// <param name="character">Character.</param>
+	/// <param name="button">Button.</param>
+	private void AddPanelToCharacterMoves(Character character, string button)
 	{
+		//Find the panel of the character.
 		foreach (SelectionPanelBahviour selectionPanel in selectedMovesPanels)
 		{
 			if (selectionPanel.GetOwner().Equals(character))
 			{
-				GameObject original = listItems [selectedListIndex].gameObject;
-				selectionPanel.AddPanelClone (original, button, character.GetColor());
+				GameObject original = listItems [selectedListIndex].gameObject; //Copy the selected list item.
+				selectionPanel.AddPanelClone (original, button); //Add copy to the selected moves panel.
+				break;
 			}
 		}
 	}
 
+	/// <summary>
+	/// Shows the or hide play button depending on wether all characters have registered all moves.
+	/// </summary>
 	private void ShowOrHidePlayButton()
 	{
 		playButton.SetActive (InputSettings.AllButtonsAssigned ());

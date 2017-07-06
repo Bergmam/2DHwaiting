@@ -3,45 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MovePanelBehaviour : MonoBehaviour {
-
+/// <summary>
+/// Used for manipulating each item in the list of moves in the MoveSelectionScreen.
+/// </summary>
+public class MovePanelBehaviour : MonoBehaviour
+{
+	// UI Text fields holding move information.
     private Text speedText;
     private Text strengthText;
 	private Text nameText;
-	private Text[] assignedButtonTexts;
+
+	private Text[] assignedButtonTexts; //One text field for each character so that they both can select the same move.
 	private Move move;
 
-    private Color32 defaultColor = new Color32(58,149,255,255);
+    private Color32 defaultColor = new Color32(58,149,255,255); //Used to reset panel color on deselection.
 
     void Awake()
     {
         speedText = transform.Find("SpeedText").GetComponent<Text>();
         strengthText = transform.Find("StrengthText").GetComponent<Text>();
 		nameText = transform.Find("NameText").GetComponent<Text>();
-
 		assignedButtonTexts = new Text[2];
 		assignedButtonTexts[0] = transform.Find("AssignedButton1Text").GetComponent<Text>();
 		assignedButtonTexts[1] = transform.Find("AssignedButton2Text").GetComponent<Text>();
-    }
-
-    void Start ()
-	{
-
 	}
 
-	private void SetSpeed(int speed)
+	public void setMove(Move move)
 	{
-        speedText.text = "" + speed;
-	}
-
-	private void SetStrength(int strength)
-	{
-        strengthText.text = "" + strength;
-	}
-
-	private void SetName(string name)
-	{
-        nameText.text = name;
+		this.move = move;
+		nameText.text = move.GetName ();
+		speedText.text = "" + move.GetSpeed ();
+		strengthText.text = "" + move.GetStrength ();
 	}
 
     public void Select()
@@ -54,9 +46,15 @@ public class MovePanelBehaviour : MonoBehaviour {
         gameObject.GetComponent<Image>().color = defaultColor;
     }
 
+	/// <summary>
+	/// Mark the panel with button string in player color at the column representing the playerNumber.
+	/// </summary>
+	/// <param name="button">Button.</param>
+	/// <param name="color">Color.</param>
+	/// <param name="playerNumber">Player number.</param>
 	public void AssignButton(string button, Color32 color, int playerNumber)
 	{
-		playerNumber--;
+		playerNumber--; //Decrement to make player1 have index 0 etc.
 		if (button.Length == 1) //Make sure the assigned button is not more than one character
 		{
 			assignedButtonTexts[playerNumber].color = color;
@@ -64,29 +62,30 @@ public class MovePanelBehaviour : MonoBehaviour {
 		}
 	}
 
-	public void ClearAssignedButton(string button, int playerNumber)
+	/// <summary>
+	/// Clears the assigned button from either player column.
+	/// </summary>
+	/// <param name="button">Button.</param>
+	public void ClearAssignedButton(string button)
 	{
-		playerNumber--;
-		if(assignedButtonTexts[playerNumber].text.Equals(button))
-		{
-			assignedButtonTexts[playerNumber].color = Color.black;
-			assignedButtonTexts[playerNumber].text = "";
+		//Search all columns. Since no two players can use the same button, the button should be removed if it is in either column.
+		foreach (Text assignedButtonText in assignedButtonTexts) {
+			if (assignedButtonText.text.Equals (button)) {
+				assignedButtonText.color = Color.black;
+				assignedButtonText.text = "";
+			}
 		}
 	}
 
+	/// <summary>
+	/// Clears the assigned button of a specific player in this panel.
+	/// </summary>
+	/// <param name="playerNumber">Player number.</param>
 	public void ClearAssignedButton(int playerNumber)
 	{
-		playerNumber--;
+		playerNumber--; //Decrement to make player1 have index 0 etc.
 		assignedButtonTexts[playerNumber].color = Color.black;
 		assignedButtonTexts[playerNumber].text = "";
-	}
-
-	public void setMove(Move move)
-	{
-		this.move = move;
-		SetName (move.GetName ());
-		SetSpeed (move.GetSpeed ());
-		SetStrength (move.GetStrength ());
 	}
 
 	public Move getMove()

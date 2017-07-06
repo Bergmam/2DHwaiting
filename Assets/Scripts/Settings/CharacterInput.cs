@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contains information on the buttons used to controll a character.
+/// Handles registration of moves to each button.
+/// </summary>
 public class CharacterInput
 {
 	private List<string> buttons; //All buttons used by the character.
@@ -87,6 +91,10 @@ public class CharacterInput
 		return assignedButtons [button];
 	}
 
+	/// <summary>
+	/// Checks if all buttons have a move assigned.
+	/// </summary>
+	/// <returns><c>true</c>, if the number of assigned moves is the same as the total number of used buttons, <c>false</c> otherwise.</returns>
 	public bool AllButtonsAssigned()
 	{
 		return buttons.Count == assignedButtons.Keys.Count;
