@@ -5,100 +5,95 @@ using System;
 ﻿using System.IO;
 
 /// <summary>
-///  Class for handling the grid in the MoveSelection screen
+///  Class for handling the list of available moves in the MoveSelectionScene.
 /// </summary>
 public class MovePanelListBehaviour : MonoBehaviour 
 {
-	private int currentY = 0;
-	private float panelHeight;
+	private int selectedListIndex = 0; //The index of the currently selected list item.
+	private float listItemHeight; //The height of one list element.
 	private int nbrOfVisiblePanels;
-	private MovePanelBehaviour[] movePanelBehaviours;
 	private List<Move> moves;
-	private SelectionPanelBahviour[] selectionPanels;
-
-	MovePlayer character1;
-	bool hasMoved;
+	private MovePanelBehaviour[] listItems; //Object used for interacting with the underlying list items.
+	private SelectionPanelBahviour[] selectedMovesPanels;
+	private MovePlayer character1; //used for displaying the selected move on one of the visible characters.
 
 	void Start () 
 	{
-		hasMoved = false;
-
+		//Create a list item for each available move.
 		moves = AvailableMoves.GetMoves ();
-        character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>();
-		selectionPanels = new SelectionPanelBahviour[2];
-		for (int i = 0; i < selectionPanels.Length; i++) {
-			selectionPanels[i] = GameObject.Find ("Panel" + (i+1)).GetComponent<SelectionPanelBahviour> ();
-			Character character = StaticCharacterHolder.characters [i];
-			if (character == null) {
-				continue;
-			}
-			selectionPanels [i].SetOwner (character);
-		}
-
-        movePanelBehaviours = new MovePanelBehaviour[moves.Count];
-
+        listItems = new MovePanelBehaviour[moves.Count];
         for (int i = 0; i < moves.Count; i++)
 		{
 			Move move = moves [i];
 			GameObject previewPanel = CreateMovePanel (move, transform);
-			movePanelBehaviours[i] = previewPanel.GetComponent<MovePanelBehaviour> ();
+			listItems[i] = previewPanel.GetComponent<MovePanelBehaviour> (); //Get the interaction script from the created list item.
         }
 
+		//Calculate the number of visible panels in the scroll view.
         float viewPortHeight = transform.parent.GetComponent<RectTransform>().rect.height;
-        panelHeight = movePanelBehaviours[0].gameObject.GetComponent<RectTransform>().rect.height;
-        nbrOfVisiblePanels = (int)Mathf.Round(viewPortHeight / panelHeight);
+        listItemHeight = listItems[0].gameObject.GetComponent<RectTransform>().rect.height;
+        nbrOfVisiblePanels = (int)Mathf.Round(viewPortHeight / listItemHeight);
 
-        movePanelBehaviours[0].Select();
-        character1.SetAutoLoopEnabled(true);
-        character1.PlayMove(moves[currentY]);
+		//Get a reference to the interaction script of each panel viewing the currently selected moves of each character and place them in a list.
+		selectedMovesPanels = new SelectionPanelBahviour[2];
+		for (int i = 0; i < selectedMovesPanels.Length; i++) {
+			// (Panel(i+1) is used becuase the panels are named Panel1 and Panel2, not Panel0 and Panel1)
+			selectedMovesPanels[i] = GameObject.Find ("Panel" + (i+1)).GetComponent<SelectionPanelBahviour> ();
+			Character character = StaticCharacterHolder.characters [i];
+			//Make sure there is actually a characters present for each selected moves panel.
+			if (character == null) {
+				continue;
+			}
+			selectedMovesPanels [i].SetOwner (character);
+		}
+
+		listItems[0].Select(); //Select the top list item.
+		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
+		PlayAnimation (); //Start previewing the animation corresponding to the first list item.
     }
     
-	// Move selection within the grid of available moves.
 	void Update () 
 	{
-        if (Input.GetKeyDown (KeyCode.UpArrow))
+        if (Input.GetKeyDown (KeyCode.UpArrow)) //Up arrow pressed
         {
-            bool inTopPanels = currentY <= (nbrOfVisiblePanels / 2);
-
-            if (currentY > 0) {
-				movePanelBehaviours [currentY].DeSelect ();
-				currentY--;
-				movePanelBehaviours [currentY].Select ();
+            bool inTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
+            if (selectedListIndex > 0) {
+				listItems [selectedListIndex].DeSelect ();
+				selectedListIndex--;
+				listItems [selectedListIndex].Select ();
 			}
-
-            bool inBotPanels = currentY >= movePanelBehaviours.Length - (nbrOfVisiblePanels / 2) - 1;
-
+            bool inBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
             if (!inTopPanels && !inBotPanels)
             {
                 Vector3 currentPosition = GetComponent<RectTransform>().localPosition;
-                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y - panelHeight, currentPosition.z);
+                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y - listItemHeight, currentPosition.z);
                 GetComponent<RectTransform>().localPosition = newPosition;
 			}
-			hasMoved = true;
+			PlayAnimation ();
         } 
 		else if (Input.GetKeyDown (KeyCode.DownArrow))
         {
-            bool inBotPanels = currentY >= movePanelBehaviours.Length - (nbrOfVisiblePanels / 2) - 1;
+            bool inBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
             
-            if (currentY < movePanelBehaviours.Length - 1) {
-				movePanelBehaviours [currentY].DeSelect ();
-				currentY++;
-				movePanelBehaviours [currentY].Select ();
+            if (selectedListIndex < listItems.Length - 1) {
+				listItems [selectedListIndex].DeSelect ();
+				selectedListIndex++;
+				listItems [selectedListIndex].Select ();
             }
             
-            bool inTopPanels = currentY <= nbrOfVisiblePanels / 2;         
+            bool inTopPanels = selectedListIndex <= nbrOfVisiblePanels / 2;         
             
             if (!inTopPanels && !inBotPanels)
             {
                 Vector3 currentPosition = GetComponent<RectTransform>().localPosition;
-                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y + panelHeight, currentPosition.z);
+                Vector3 newPosition = new Vector3(currentPosition.x, currentPosition.y + listItemHeight, currentPosition.z);
                 GetComponent<RectTransform>().localPosition = newPosition;
             }
-            hasMoved = true;
+			PlayAnimation ();
 		}
 		else if (Input.anyKeyDown)
 		{
-			foreach (string button in InputSettings.registeredButtons)
+			foreach (string button in InputSettings.allUsedButtons)
 			{
 				if(Input.GetKeyDown(button))
 				{
@@ -106,12 +101,12 @@ public class MovePanelListBehaviour : MonoBehaviour
 				}
 			}
 		}
-		if (hasMoved)
-		{
-			character1.SetAutoLoopEnabled(true);
-			character1.PlayMove(moves[currentY]);
-			hasMoved = false;
-		}
+	}
+
+	private void PlayAnimation()
+	{
+		character1.SetAutoLoopEnabled(true);
+		character1.PlayMove(moves[selectedListIndex]);
 	}
 
 	public GameObject CreateMovePanel(Move move, Transform parent){
@@ -125,19 +120,19 @@ public class MovePanelListBehaviour : MonoBehaviour
 
 	private void RegisterPlayerMoveToButton(string button)
 	{
-		Move selectedMove = movePanelBehaviours [currentY].getMove ();
+		Move selectedMove = listItems [selectedListIndex].getMove ();
 		Character registeredCharacter = InputSettings.Register (button, selectedMove.GetName ());
 		if (registeredCharacter != null)
 		{
 			registeredCharacter.AddMove (selectedMove);
 			Color characterColor = registeredCharacter.GetColor ();
 			int characterNbr = registeredCharacter.GetNbr ();
-			movePanelBehaviours [currentY].AssignButton (button, characterColor, characterNbr);
-			for (int i = 0; i < movePanelBehaviours.Length; i++)
+			listItems [selectedListIndex].AssignButton (button, characterColor, characterNbr);
+			for (int i = 0; i < listItems.Length; i++)
 			{
-				if (i != currentY)
+				if (i != selectedListIndex)
 				{
-					movePanelBehaviours [i].ClearAssignedButton (button, characterNbr);
+					listItems [i].ClearAssignedButton (button, characterNbr);
 				}
 			}
 			AddPanelToPlayerMoves (registeredCharacter, button);
@@ -146,11 +141,11 @@ public class MovePanelListBehaviour : MonoBehaviour
 
 	private void AddPanelToPlayerMoves(Character character, string button)
 	{
-		foreach (SelectionPanelBahviour selectionPanel in selectionPanels)
+		foreach (SelectionPanelBahviour selectionPanel in selectedMovesPanels)
 		{
 			if (selectionPanel.GetOwner().Equals(character))
 			{
-				GameObject original = movePanelBehaviours [currentY].gameObject;
+				GameObject original = listItems [selectedListIndex].gameObject;
 				selectionPanel.AddPanelClone (original, button, character.GetColor());
 			}
 		}

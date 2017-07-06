@@ -5,13 +5,13 @@ using UnityEngine;
 public class CharacterInput
 {
 	private List<string> buttons;
-	private Dictionary<string,string> buttonMoveNameDict;
+	private Dictionary<string,string> assignedButtons;
 	private Character character;
 
 	public CharacterInput(Character character)
 	{
 		this.buttons = new List<string> ();
-		this.buttonMoveNameDict = new Dictionary<string, string> ();
+		this.assignedButtons = new Dictionary<string, string> ();
 		this.character = character;
 	}
 
@@ -27,22 +27,23 @@ public class CharacterInput
 	{
 		if (buttons.Contains (button)) {
 			string sameMoveButton = "";
-			foreach(KeyValuePair<string,string> entry in buttonMoveNameDict)
+			foreach(KeyValuePair<string,string> entry in assignedButtons)
 			{
 				if (entry.Value.Equals (moveName))
 				{
 					sameMoveButton = entry.Key;
+					break;
 				}
 			}
 			if(!sameMoveButton.Equals(""))
 			{
-				buttonMoveNameDict.Remove (sameMoveButton);
+				assignedButtons.Remove (sameMoveButton);
 			}
-			if (buttonMoveNameDict.ContainsKey (button)) {
-				character.DeleteMove (buttonMoveNameDict[button]);
-				buttonMoveNameDict.Remove (button);
+			if (assignedButtons.ContainsKey (button)) {
+				character.DeleteMove (assignedButtons[button]);
+				assignedButtons.Remove (button);
 			}
-			buttonMoveNameDict.Add (button, moveName);
+			assignedButtons.Add (button, moveName);
 		}
 	}
 
