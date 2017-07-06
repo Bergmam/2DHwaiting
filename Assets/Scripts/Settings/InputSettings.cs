@@ -71,4 +71,14 @@ public static class InputSettings
 		}
 		return null;
 	}
+
+	public static bool AllButtonsAssigned()
+	{
+		bool allButtonsAssigned = true;
+		foreach (CharacterInput characterInput in characterInputs)
+		{
+			allButtonsAssigned &= characterInput.AllButtonsAssigned ();
+		}
+		return allButtonsAssigned;
+	}
 }
