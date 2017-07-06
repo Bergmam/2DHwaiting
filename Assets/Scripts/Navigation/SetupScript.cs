@@ -11,5 +11,7 @@ public class SetupScript : MonoBehaviour
 	{
 		SceneHandler.Init (); //Instantiate SceneHandler with list of existing scenes and return stack
         SaveLoad.Load();
+		StaticCharacterHolder.Init ();
+		InputSettings.Init ();
 	}
 }

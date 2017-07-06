@@ -5,72 +5,38 @@ using UnityEngine;
 public class Character {
 
 	private Dictionary<string,Move> moves;
-	private List<string> keys;
+	private Color color;
+	private int nbr;
 
-	public Character(){
+	public Character(Color color, int nbr){
 		moves = new Dictionary<string,Move> ();
-		keys = new List<string> ();
+		this.color = color;
+		this.nbr = nbr;
 	}
 
-	public Character(List<string> keys){
-		moves = new Dictionary<string,Move> ();
-		keys = new List<string> ();
-		foreach (string key in keys)
-		{
-			if (key.Length == 1)
-			{
-				keys.Add (key);
-				moves.Add (key, null);
-			}
-		}
-	}
-
-	public void AddKey(string key)
+	public Color GetColor()
 	{
-		if (key.Length == 1)
-		{
-			keys.Add (key);
-			moves.Add (key, null);
-		}
+		return this.color;
 	}
 
-	public bool SetMove(string key, Move move){
-		if (keys.Contains(key))
-		{
-			DeleteMove (move);
-			moves.Remove (key);
-			moves.Add (key, move);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public void DeleteMove(Move move)
+	public int GetNbr()
 	{
-		string key = "";
-		foreach (KeyValuePair<string, Move> entry in moves)
+		return this.nbr;
+	}
+
+	public void AddMove(Move move)
+	{
+		if (!moves.ContainsKey (move.GetName ()))
 		{
-			if(entry.Value != null && entry.Value.Equals(move))
-			{				
-				key = entry.Key;
-			}
-		}
-		if (!key.Equals (""))
-		{
-			moves [key] = null;
+			moves.Add (move.GetName (), move);
 		}
 	}
 
-	public bool HasKey(string key)
+	public void DeleteMove(string moveName)
 	{
-		return moves.ContainsKey (key);
-	}
-
-	public List<string> GetKeys()
-	{
-		return keys;
+		if (moves.ContainsKey (moveName))
+		{
+			moves.Remove (moveName);
+		}
 	}
 }

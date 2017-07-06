@@ -9,6 +9,7 @@ public class MovePanelBehaviour : MonoBehaviour {
     private Text strengthText;
 	private Text nameText;
 	private Text[] assignedButtonTexts;
+	private Move move;
 
     private Color32 defaultColor = new Color32(58,149,255,255);
 
@@ -28,17 +29,17 @@ public class MovePanelBehaviour : MonoBehaviour {
 
 	}
 
-	public void SetSpeed(int speed)
+	private void SetSpeed(int speed)
 	{
         speedText.text = "" + speed;
 	}
 
-	public void SetStrength(int strength)
+	private void SetStrength(int strength)
 	{
         strengthText.text = "" + strength;
 	}
 
-	public void SetName(string name)
+	private void SetName(string name)
 	{
         nameText.text = name;
 	}
@@ -78,5 +79,18 @@ public class MovePanelBehaviour : MonoBehaviour {
 		playerNumber--;
 		assignedButtonTexts[playerNumber].color = Color.black;
 		assignedButtonTexts[playerNumber].text = "";
+	}
+
+	public void setMove(Move move)
+	{
+		this.move = move;
+		SetName (move.GetName ());
+		SetSpeed (move.GetSpeed ());
+		SetStrength (move.GetStrength ());
+	}
+
+	public Move getMove()
+	{
+		return this.move;
 	}
 }

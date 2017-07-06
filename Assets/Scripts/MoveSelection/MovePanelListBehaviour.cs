@@ -15,8 +15,6 @@ public class MovePanelListBehaviour : MonoBehaviour
 	private MovePanelBehaviour[] movePanelBehaviours;
 	private List<Move> moves;
 	private SelectionPanelBahviour[] selectionPanels;
-	private Character player1Character;
-	private Character player2Character;
 
 	MovePlayer character1;
 	bool hasMoved;
@@ -25,31 +23,24 @@ public class MovePanelListBehaviour : MonoBehaviour
 	{
 		hasMoved = false;
 
-		//TODO: Get all characters from settingss
-		player1Character = new Character ();
-		player1Character.AddKey ("q");
-		player1Character.AddKey ("w");
-		player1Character.AddKey ("e");
-		player2Character = new Character ();
-		player2Character.AddKey ("i");
-		player2Character.AddKey ("o");
-		player2Character.AddKey ("p");
-
-        StaticCharacterHolder.character1 = player1Character;
-        StaticCharacterHolder.character2 = player2Character;
-
 		moves = AvailableMoves.GetMoves ();
         character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>();
 		selectionPanels = new SelectionPanelBahviour[2];
-		selectionPanels[0] = GameObject.Find ("Panel1").GetComponent<SelectionPanelBahviour> ();
-		selectionPanels[1] = GameObject.Find ("Panel2").GetComponent<SelectionPanelBahviour> ();
+		for (int i = 0; i < selectionPanels.Length; i++) {
+			selectionPanels[i] = GameObject.Find ("Panel" + (i+1)).GetComponent<SelectionPanelBahviour> ();
+			Character character = StaticCharacterHolder.characters [i];
+			if (character == null) {
+				continue;
+			}
+			selectionPanels [i].SetOwner (character);
+		}
 
         movePanelBehaviours = new MovePanelBehaviour[moves.Count];
 
         for (int i = 0; i < moves.Count; i++)
 		{
 			Move move = moves [i];
-			GameObject previewPanel = CreateMovePanel (move.GetName (), move.GetSpeed (), move.GetStrength (), transform);
+			GameObject previewPanel = CreateMovePanel (move, transform);
 			movePanelBehaviours[i] = previewPanel.GetComponent<MovePanelBehaviour> ();
         }
 
@@ -107,8 +98,13 @@ public class MovePanelListBehaviour : MonoBehaviour
 		}
 		else if (Input.anyKeyDown)
 		{
-			SelectPlayerMove (player1Character, Color.red, 1);
-			SelectPlayerMove (player2Character, Color.blue, 2);
+			foreach (string button in InputSettings.registeredButtons)
+			{
+				if(Input.GetKeyDown(button))
+				{
+					RegisterPlayerMoveToButton (button);
+				}
+			}
 		}
 		if (hasMoved)
 		{
@@ -118,38 +114,44 @@ public class MovePanelListBehaviour : MonoBehaviour
 		}
 	}
 
-	public GameObject CreateMovePanel(string name, int speed, int strength, Transform parent){
+	public GameObject CreateMovePanel(Move move, Transform parent){
 		string previewPath = "Prefabs" + Path.DirectorySeparatorChar + "MovePanel";
 		GameObject previewPanelObject = (GameObject)Resources.Load(previewPath);
 		GameObject previewPanel = Instantiate (previewPanelObject, previewPanelObject.transform.position, previewPanelObject.transform.rotation, parent);
 		MovePanelBehaviour panelBehaviour = previewPanel.GetComponent<MovePanelBehaviour> ();
-		panelBehaviour.SetName(name);
-		panelBehaviour.SetSpeed(speed);
-		panelBehaviour.SetStrength(strength);
+		panelBehaviour.setMove (move);
 		return previewPanel;
 	}
 
-	private void SelectPlayerMove(Character playerCharacter, Color playerColor, int playerNumber)
+	private void RegisterPlayerMoveToButton(string button)
 	{
-		foreach(string key in playerCharacter.GetKeys())
+		Move selectedMove = movePanelBehaviours [currentY].getMove ();
+		Character registeredCharacter = InputSettings.Register (button, selectedMove.GetName ());
+		if (registeredCharacter != null)
 		{
-			if(Input.GetKeyDown(key))
+			registeredCharacter.AddMove (selectedMove);
+			Color characterColor = registeredCharacter.GetColor ();
+			int characterNbr = registeredCharacter.GetNbr ();
+			movePanelBehaviours [currentY].AssignButton (button, characterColor, characterNbr);
+			for (int i = 0; i < movePanelBehaviours.Length; i++)
 			{
-				bool successfulSelection = playerCharacter.SetMove (key, moves [currentY]);
-				if(successfulSelection)
+				if (i != currentY)
 				{
-					movePanelBehaviours [currentY].AssignButton (key, Color.red, playerNumber);
-					GameObject original = movePanelBehaviours [currentY].gameObject;
-					selectionPanels [playerNumber - 1].AddPanelClone (original, key, playerColor);
-
-					for (int i = 0; i < movePanelBehaviours.Length; i++)
-					{
-						if (i != currentY)
-						{
-							movePanelBehaviours [i].ClearAssignedButton (key, playerNumber);
-						}
-					}
+					movePanelBehaviours [i].ClearAssignedButton (button, characterNbr);
 				}
+			}
+			AddPanelToPlayerMoves (registeredCharacter, button);
+		}
+	}
+
+	private void AddPanelToPlayerMoves(Character character, string button)
+	{
+		foreach (SelectionPanelBahviour selectionPanel in selectionPanels)
+		{
+			if (selectionPanel.GetOwner().Equals(character))
+			{
+				GameObject original = movePanelBehaviours [currentY].gameObject;
+				selectionPanel.AddPanelClone (original, button, character.GetColor());
 			}
 		}
 	}

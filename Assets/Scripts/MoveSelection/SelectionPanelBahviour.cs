@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SelectionPanelBahviour : MonoBehaviour {
 
 	private List<GameObject> panels;
+	private Character owner;
 
 	// Use this for initialization
 	void Start () {
@@ -73,5 +74,15 @@ public class SelectionPanelBahviour : MonoBehaviour {
 			panels.Remove (panelWithButton2);
 			Destroy (panelWithButton2);
 		}
+	}
+
+	public void SetOwner(Character character)
+	{
+		this.owner = character;
+	}
+
+	public Character GetOwner()
+	{
+		return this.owner;
 	}
 }
