@@ -16,6 +16,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 	private MovePanelBehaviour[] listItems; //Object used for interacting with the underlying list items.
 	private SelectionPanelBahviour[] selectedMovesPanels;
 	private MovePlayer character1; //used for displaying the selected move on one of the visible characters.
+	private GameObject playButton;
 
 	void Start () 
 	{
@@ -46,6 +47,9 @@ public class MovePanelListBehaviour : MonoBehaviour
 			}
 			selectedMovesPanels [i].SetOwner (character);
 		}
+
+		playButton = GameObject.Find ("PlayButton");
+		playButton.SetActive (false);
 
 		listItems[0].Select(); //Select the top list item.
 		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
@@ -136,6 +140,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 				}
 			}
 			AddPanelToPlayerMoves (registeredCharacter, button);
+			ShowOrHidePlayButton ();
 		}
 	}
 
@@ -149,5 +154,10 @@ public class MovePanelListBehaviour : MonoBehaviour
 				selectionPanel.AddPanelClone (original, button, character.GetColor());
 			}
 		}
+	}
+
+	private void ShowOrHidePlayButton()
+	{
+		playButton.SetActive (InputSettings.AllButtonsAssigned ());
 	}
 }
