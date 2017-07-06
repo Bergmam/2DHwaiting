@@ -61,4 +61,9 @@ public class CharacterInput
 	{
 		return this.character;
 	}
+
+	public string GetMoveName(string button)
+	{
+		return assignedButtons [button];
+	}
 }

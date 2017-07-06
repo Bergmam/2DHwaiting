@@ -49,6 +49,7 @@ public class MovePlayer : MonoBehaviour
 	/// <param name="move">The move to be displayed.</param>
 	public void PlayMove(Move move)
 	{
+		isPlaying = true;
         frames = new List<Frame>();
 		moveToPlay = move;
 		int speed = move.GetSpeed ();
@@ -64,7 +65,7 @@ public class MovePlayer : MonoBehaviour
 			}
 		}
 		frameIndex = 0; //Make sure the animation starts from the first frame.
-		isPlaying = true;
+
 	}
 
 	/// <summary>
@@ -144,5 +145,10 @@ public class MovePlayer : MonoBehaviour
 		if (!autoLoop) {
 			isPlaying = false;
 		}
+	}
+
+	public bool CheckIsPlaying()
+	{
+		return isPlaying;
 	}
 }

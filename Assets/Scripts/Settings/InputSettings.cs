@@ -71,4 +71,42 @@ public static class InputSettings
 		}
 		return null;
 	}
+
+
+	/// <summary>
+	/// Checks if the specified character has a move assigned to the specified button.
+	/// </summary>
+	/// <returns><c>true</c> if the character has the specified button; otherwise, <c>false</c>.</returns>
+	/// <param name="characterIndex">The characterIndex to check.</param>
+	/// <param name="button">The button that was pressed</param>
+	public static bool HasButton(int characterIndex, string button)
+	{
+		foreach(CharacterInput charInput in characterInputs)
+		{
+			MonoBehaviour.print ("charInput.GetCharacter().GetNbr(): " + charInput.GetCharacter().GetNbr() + ", characterIndex: " + characterIndex);
+			if (charInput.HasButton(button) && charInput.GetCharacter().GetNbr() == characterIndex)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	/// <summary>
+	/// Returns a move linked to the specified button.
+	/// </summary>
+	/// <returns>The move.</returns>
+	/// <param name="button">The pressed button.</param>
+	public static string GetMoveName(string button)
+	{
+		foreach (CharacterInput charInput in characterInputs) 
+		{
+			if(charInput.HasButton(button))
+			{
+				return charInput.GetMoveName(button);
+			}
+		}
+		return null;
+	}
 }

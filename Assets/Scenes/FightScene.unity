@@ -1715,6 +1715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.1
   horizontalAxis: Horizontal
+  characterIndex: 1
 --- !u!1 &1230264208
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,6 +2064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.1
   horizontalAxis: Horizontal2
+  characterIndex: 2
 --- !u!1 &1607347989
 GameObject:
   m_ObjectHideFlags: 0

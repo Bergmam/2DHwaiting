@@ -39,4 +39,14 @@ public class Character {
 			moves.Remove (moveName);
 		}
 	}
+
+	public Move GetMove(string moveName)
+	{
+		if (moves.ContainsKey (moveName)) {
+			return moves [moveName];
+		} else 
+		{
+			return null;
+		}
+	}
 }
