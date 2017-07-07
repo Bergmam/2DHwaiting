@@ -34,6 +34,15 @@ public class Recorder : MonoBehaviour
 		movePlayer = gameObject.AddComponent<MovePlayer> ();
         FindEndPoints ();
 		initialPoseFrame = GetCurrentPoseFrame ();
+
+		// Set the move in all selectors so that they can set the damage dealing body part and listen to changes.
+		foreach (DamageDealerSelector selector in gameObject.GetComponentsInChildren<DamageDealerSelector>())
+		{
+			if (selector != null)
+			{
+				selector.SetMove (move);
+			}
+		}
     }
 
 	/// <summary>

@@ -14,7 +14,12 @@ public class Move
 	private int nextIndex; //At which index to place the next recorded frame. Adding or removing frames updates the index.
 	private bool done;
 	private int defaultNrOfFrames = 10; //C# requires default constructor. In default constructor, this number is used to create the frame array.
-    private string name;
+	private string name;
+	private string damageDealerName; //Name of the body part dealing damage when move is performed.
+	//Delegate is used as type for any listener of the event. New listeners are added by simply adding (+=) them to the OnDamageDealerChanged event object.
+	//Any listener must be a function with the same return type and parameters as the DamageDealerChangedAction delegate.
+	public delegate void DamageDealerChangedAction(string newDamageDealerName);
+	public event DamageDealerChangedAction onDamageDealerChanged;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Move"/> class.
@@ -110,5 +115,20 @@ public class Move
     public string GetName()
     {
         return name;
-    }
+	}
+
+	/// <summary>
+	/// Sets the damage dealer and notifies any listeners of the onDamageDealerChanged event.
+	/// </summary>
+	/// <param name="newDamageDealerName">New damage dealer name.</param>
+	public void SetDamageDealer(string newDamageDealerName)
+	{
+		if (!newDamageDealerName.Equals (damageDealerName)) { //Make sure new is not the same as old.
+			this.damageDealerName = newDamageDealerName;
+			MonoBehaviour.print ("New damage dealer is " + newDamageDealerName);
+			if (onDamageDealerChanged != null) { //event is null if no listeners have been attached.
+				onDamageDealerChanged (newDamageDealerName);
+			}
+		}
+	}
 }
