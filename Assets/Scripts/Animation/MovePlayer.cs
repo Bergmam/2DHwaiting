@@ -49,6 +49,7 @@ public class MovePlayer : MonoBehaviour
 	/// <param name="move">The move to be displayed.</param>
 	public void PlayMove(Move move)
 	{
+        MonoBehaviour.print("Playing move");
 		isPlaying = true;
         frames = new List<Frame>();
 		moveToPlay = move;
@@ -151,4 +152,9 @@ public class MovePlayer : MonoBehaviour
 	{
 		return isPlaying;
 	}
+    
+    public void SetIsPlaying()
+    {
+        isPlaying = true;
+    }
 }
