@@ -24,12 +24,14 @@ public class SelectionPanelBahviour : MonoBehaviour
 	public void AddPanelClone (GameObject original, string button)
 	{
 		Transform originalTransform = original.transform;
-		string moveName = original.GetComponent<MovePanelBehaviour> ().getMove ().GetName ();
+		Move originalMove = original.GetComponent<MovePanelBehaviour> ().getMove ();
+		string moveName = originalMove.GetName ();
 		RemovePanelWithButton (button); //Remove any panel currently using the same button.
 		RemovePanelWithMove (moveName); //Remove any panel currently holding the move.
 		GameObject previewPanel = Instantiate (original.gameObject, originalTransform.position, originalTransform.rotation, transform);
 		MovePanelBehaviour panelBehaviour = previewPanel.GetComponent<MovePanelBehaviour> ();
 		panelBehaviour.DeSelect ();
+		panelBehaviour.setMove (originalMove);
 		//Remove button of player1 and assign the button for player2 (even if the panel belongs to player1) because it is the furthest to the right in the panel.
 		//Purely for visual effect. These list items are just select by 1 player so the furthest to the right looks better.
 		panelBehaviour.ClearAssignedButton (1);
@@ -48,7 +50,9 @@ public class SelectionPanelBahviour : MonoBehaviour
 		GameObject panelWithMove = null;
 		foreach(GameObject panel in panels)
 		{
-			string panelMoveName = panel.GetComponent<MovePanelBehaviour> ().getMove ().GetName ();
+			MovePanelBehaviour panelBehaviour = panel.GetComponent<MovePanelBehaviour> ();
+			Move panelMove = panelBehaviour.getMove ();
+			string panelMoveName = panelMove.GetName ();
 			if (panelMoveName.Equals (moveName))
 			{
 				panelWithMove = panel;
