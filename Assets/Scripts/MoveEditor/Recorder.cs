@@ -35,12 +35,13 @@ public class Recorder : MonoBehaviour
         FindEndPoints ();
 		initialPoseFrame = GetCurrentPoseFrame ();
 
+		DamagaDealerChangedNotifier damageDealerNotifier = new DamagaDealerChangedNotifier (move);
 		// Set the move in all selectors so that they can set the damage dealing body part and listen to changes.
 		foreach (DamageDealerSelector selector in gameObject.GetComponentsInChildren<DamageDealerSelector>())
 		{
 			if (selector != null)
 			{
-				selector.SetMove (move);
+				selector.SetDamageDealerNotifier (damageDealerNotifier);
 			}
 		}
     }

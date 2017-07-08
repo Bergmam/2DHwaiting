@@ -9,7 +9,7 @@ using System;
 public class DamageDealerSelector : MonoBehaviour
 {
 
-	private Move move;
+	private DamagaDealerChangedNotifier damageDealerNotifier;
 	private string name; //Name of the body part.
 	private bool selected;
 
@@ -21,28 +21,28 @@ public class DamageDealerSelector : MonoBehaviour
 
 	void OnMouseDown()
 	{
-		if (this.move != null)
+		if (this.damageDealerNotifier != null)
 		{
-			move.SetDamageDealer (name);
+			damageDealerNotifier.SetDamageDealer (name);
 			this.Select ();
 		}
 	}
 
 	/// <summary>
-	/// Sets the move and sets DamageDealerChanged as the method to be called when the damage dealer changes.
+	/// Sets the damageDealerNotifier and sets DamageDealerChanged as the method to be called when the damage dealer changes.
 	/// </summary>
-	/// <param name="move">Move.</param>
-	public void SetMove(Move move)
+	/// <param name="damageDealerNotifier">damageDealerNotifier.</param>
+	public void SetDamageDealerNotifier(DamagaDealerChangedNotifier notifier)
 	{
-		if (move != null)
+		if (notifier != null)
 		{
-			this.move = move;
-			this.move.onDamageDealerChanged += DamageDealerChanged; //Register DamageDealerChanged as listener to the onDamageDealerChanged event in Move.
+			this.damageDealerNotifier = notifier;
+			this.damageDealerNotifier.onDamageDealerChanged += DamageDealerChanged; //Register DamageDealerChanged as listener to the onDamageDealerChanged event in damageDealerNotifier.
 		}
 	}
 
 	/// <summary>
-	/// Called by the event of the move this selector listens to when the damage dealing body part changes.
+	/// Called by the event of the damageDealerNotifier this selector listens to when the damage dealing body part changes.
 	/// </summary>
 	/// <param name="newDamageDealerName">New damage dealer name.</param>
 	void DamageDealerChanged(string newDamageDealerName)
