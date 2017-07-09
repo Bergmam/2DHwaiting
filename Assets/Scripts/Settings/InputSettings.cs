@@ -82,7 +82,6 @@ public static class InputSettings
 	{
 		foreach(CharacterInput charInput in characterInputs)
 		{
-			//MonoBehaviour.print ("charInput.GetCharacter().GetNbr(): " + charInput.GetCharacter().GetNbr() + ", characterIndex: " + characterIndex);
 			if (charInput.HasButton(button) && charInput.GetCharacter().GetNbr() == characterIndex)
 			{
 				return true;
