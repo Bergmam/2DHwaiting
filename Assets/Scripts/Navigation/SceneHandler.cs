@@ -65,6 +65,7 @@ public class SceneHandler
                 {
                     return;
                 }
+				SaveLoad.Save(AvailableMoves.GetMoves());
             }
             string previousSceneName = (string)sceneStack.Pop();
             if (scenePathsList.Contains(previousSceneName))

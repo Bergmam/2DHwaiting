@@ -9,7 +9,6 @@ public class ExitScript : MonoBehaviour
 {	
 	public void Exit()
 	{
-        SaveLoad.Save(AvailableMoves.GetMoves());
 		Application.Quit ();
 	}
 }
