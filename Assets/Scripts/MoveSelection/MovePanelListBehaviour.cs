@@ -20,8 +20,14 @@ public class MovePanelListBehaviour : MonoBehaviour
 
 	void Start () 
 	{
+		//Hide the play button untill each character has a move assigned to each of its used buttons.
+		playButton = GameObject.Find ("PlayButton");
+		playButton.SetActive (false);
 		//Create a list item for each available move.
 		moves = AvailableMoves.GetMoves ();
+		if (moves.Count == 0) { //Don't view anything if there are no moves.
+			return;
+		}
         listItems = new MovePanelBehaviour[moves.Count];
         for (int i = 0; i < moves.Count; i++)
 		{
@@ -47,10 +53,6 @@ public class MovePanelListBehaviour : MonoBehaviour
 			}
 			selectedMovesPanels [i].SetOwner (character);
 		}
-
-		//Hide the play button untill each character has a move assigned to each of its used buttons.
-		playButton = GameObject.Find ("PlayButton");
-		playButton.SetActive (false);
 
 		listItems[0].Select(); //Select the top list item.
 		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
