@@ -34,7 +34,6 @@ public class InputController : MonoBehaviour {
         //Check if we are finished with previous animation
         if (!characterMovePlayer.CheckIsPlaying())
         {
-            print("Currently not animating.");
             isPlayingMove = false;
             animator.enabled = true;
         }
@@ -53,7 +52,6 @@ public class InputController : MonoBehaviour {
                 }
                 if (InputSettings.HasButton(characterIndex, pressedButton))
                 {
-                    print("Inputsettings has button!");
                     string moveName = InputSettings.GetMoveName(pressedButton);
                     Move move = character.GetMove(moveName);
                     //Make sure the character cannot start playing another animation until this one is finished.
@@ -63,16 +61,16 @@ public class InputController : MonoBehaviour {
                     characterMovePlayer.PlayMove(move);
                 }
             }
+			if (Mathf.Abs(horizontal) > 0)
+			{
+				animator.SetBool("Running", true);
+				stupidCounter = 1;
+			}
+			else if (stupidCounter == 0)
+			{
+				animator.SetBool("Running", false);
+			}
+			stupidCounter--;
         }
-        if (Mathf.Abs(horizontal) > 0)
-        {
-            animator.SetBool("Running", true);
-            stupidCounter = 1;
-        }
-        else if (stupidCounter == 0)
-        {
-            animator.SetBool("Running", false);
-        }
-        stupidCounter--;
     }
 }
