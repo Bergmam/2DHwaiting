@@ -11,6 +11,8 @@ public class InputController : MonoBehaviour {
 	Animator animator;
 	MovePlayer characterMovePlayer;
 
+	public int MaxHorizontalDiff;
+
 	public int characterIndex;
 	private Character character;
 
@@ -41,7 +43,6 @@ public class InputController : MonoBehaviour {
 			if (Input.anyKeyDown) {
 				foreach (string button in InputSettings.allUsedButtons) {
 					if (Input.GetKeyDown (button)) {
-						//print("Input.GetKeyDown(button): " + Input.GetKeyDown(button) + ", Button: " + button);
 						pressedButton = button;
 					}
 				}
@@ -57,7 +58,11 @@ public class InputController : MonoBehaviour {
 			}
 		}
 		if (!isPlayingMove){
-			transform.position = newPosition;
+			print ("newposition.x: " + newPosition.x);
+			if(Mathf.Abs(newPosition.x) <= MaxHorizontalDiff)
+			{
+				transform.position = newPosition;
+			}
 			if (Mathf.Abs(horizontal) > 0)
 			{
 				animator.SetBool("Running", true);
