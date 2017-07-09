@@ -813,7 +813,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 20
   m_Viewport: {fileID: 666948282}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1652682398}
@@ -4430,6 +4430,7 @@ GameObject:
   - component: {fileID: 1562200425}
   - component: {fileID: 1562200424}
   - component: {fileID: 1562200423}
+  - component: {fileID: 1562200426}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: Untagged
@@ -4546,6 +4547,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1562200421}
+--- !u!114 &1562200426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1562200421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e0fc8619fd540aea0a8a84ccb6eb1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1604472330
 GameObject:
   m_ObjectHideFlags: 0
