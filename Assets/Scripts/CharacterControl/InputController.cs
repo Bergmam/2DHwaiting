@@ -28,7 +28,6 @@ public class InputController : MonoBehaviour {
     void Update() {
         float horizontal = Input.GetAxis(horizontalAxis);
         Vector3 newPosition = new Vector3(transform.position.x + speed * horizontal, transform.position.y, transform.position.z);
-        transform.position = newPosition;
         pressedButton = "";
 
         //Check if we are finished with previous animation
@@ -38,29 +37,27 @@ public class InputController : MonoBehaviour {
             animator.enabled = true;
         }
 
-        if (!isPlayingMove)
-        {
-            if (Input.anyKeyDown)
-            {
-                foreach (string button in InputSettings.allUsedButtons)
-                {
-                    if (Input.GetKeyDown(button))
-                    {
-                        print("Input.GetKeyDown(button): " + Input.GetKeyDown(button) + ", Button: " + button);
-                        pressedButton = button;
-                    }
-                }
-                if (InputSettings.HasButton(characterIndex, pressedButton))
-                {
-                    string moveName = InputSettings.GetMoveName(pressedButton);
-                    Move move = character.GetMove(moveName);
-                    //Make sure the character cannot start playing another animation until this one is finished.
-                    isPlayingMove = true;
-                    animator.enabled = false;
-                    characterMovePlayer.SetIsPlaying();
-                    characterMovePlayer.PlayMove(move);
-                }
-            }
+		if (!isPlayingMove) {
+			if (Input.anyKeyDown) {
+				foreach (string button in InputSettings.allUsedButtons) {
+					if (Input.GetKeyDown (button)) {
+						//print("Input.GetKeyDown(button): " + Input.GetKeyDown(button) + ", Button: " + button);
+						pressedButton = button;
+					}
+				}
+				if (InputSettings.HasButton (characterIndex, pressedButton)) {
+					string moveName = InputSettings.GetMoveName (pressedButton);
+					Move move = character.GetMove (moveName);
+					//Make sure the character cannot start playing another animation until this one is finished.
+					isPlayingMove = true;
+					animator.enabled = false;
+					characterMovePlayer.SetIsPlaying ();
+					characterMovePlayer.PlayMove (move);
+				}
+			}
+		}
+		if (!isPlayingMove){
+			transform.position = newPosition;
 			if (Mathf.Abs(horizontal) > 0)
 			{
 				animator.SetBool("Running", true);
