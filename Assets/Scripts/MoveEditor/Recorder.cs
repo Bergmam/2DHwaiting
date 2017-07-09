@@ -29,7 +29,7 @@ public class Recorder : MonoBehaviour
 	{
 		move = new Move ();
 		endPoints = new List<GameObject> ();
-		progressBarBehaviour = gameObject.AddComponent<ProgressBarBehaviour> ();
+		progressBarBehaviour = GameObject.Find ("ProgressBar").GetComponent<ProgressBarBehaviour> ();
 		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
 		movePlayer = gameObject.AddComponent<MovePlayer> ();
         FindEndPoints ();
@@ -235,8 +235,8 @@ public class Recorder : MonoBehaviour
 		movePlayer.SetAutoLoopEnabled (false);
 		move = new Move ();
 		Destroy(progressBarBehaviour);
-		progressBarBehaviour = gameObject.AddComponent<ProgressBarBehaviour> ();
 		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
+		progressBarBehaviour.SetCurrentNbrOfFrames (0);
 		movePlayer.FrameToCharacter (initialPoseFrame); //Reset character pose
 		UpdateFrameTwistLimits();
 		sliders.ResetSliders(); //Reset sliders to 50/50
