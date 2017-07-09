@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour {
 
-	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
+
     
     public float speed;
     public string horizontalAxis;
 	public int MaxHorizontalDiff;
 	public int characterIndex;
 
-
+	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
 	bool isPlayingMove = false;
 	string pressedButton = "";
 	Character character;
