@@ -157,7 +157,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: NAME
+  m_Text: 
 --- !u!114 &114458992101676942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -190,9 +190,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Y
-
-'
+  m_Text: 
 --- !u!114 &114496506712281350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -225,7 +223,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 
 --- !u!114 &114707541417857198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,7 +256,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 50
+  m_Text: 
 --- !u!114 &114866197172109580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -291,7 +289,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: X
+  m_Text: 
 --- !u!114 &114883551391476624
 MonoBehaviour:
   m_ObjectHideFlags: 1
