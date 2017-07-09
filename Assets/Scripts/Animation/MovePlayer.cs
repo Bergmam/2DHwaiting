@@ -53,7 +53,7 @@ public class MovePlayer : MonoBehaviour
 		isPlaying = true;
         frames = new List<Frame>();
 		moveToPlay = move;
-		int speed = move.GetSpeed ();
+		int speed = move.GetSpeed () + 1; // +1 to avoid speed = 0 causing infinite loops.
 		Frame[] moveFrames = move.GetFrames ();
 		for (int i = 0; i < (moveFrames.Length - 1); i++)
 		{
