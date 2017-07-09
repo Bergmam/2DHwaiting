@@ -9,8 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public class SliderScript : MonoBehaviour
 {
-    public Text strengthText;
-    public Text speedText;
+	private Text strengthText;
+	private Text speedText;
 
 	private Slider strengthSlider;
     private Slider speedSlider;
@@ -21,7 +21,10 @@ public class SliderScript : MonoBehaviour
     void Start ()
     {
 		strengthSlider = GameObject.Find("StrengthSlider").GetComponent<Slider>();
-        speedSlider = GameObject.Find("SpeedSlider").GetComponent<Slider>();
+		speedSlider = GameObject.Find("SpeedSlider").GetComponent<Slider>();
+
+		strengthText = GameObject.Find ("StrengthText").GetComponent<Text>();
+		speedText = GameObject.Find("SpeedText").GetComponent<Text>();
 
         strengthValue = (int)strengthSlider.value;
         speedValue = (int)speedSlider.value;
