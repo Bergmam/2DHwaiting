@@ -4,35 +4,39 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour {
 
-    private bool isPlayingMove = false;
-	private string pressedButton = "";
+
+    
     public float speed;
     public string horizontalAxis;
+	public int MaxHorizontalDiff;
+	public int characterIndex;
+
+	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
+	bool isPlayingMove = false;
+	string pressedButton = "";
+	Character character;
+
 	Animator animator;
 	MovePlayer characterMovePlayer;
 
-	public int MaxHorizontalDiff;
-
-	public int characterIndex;
-	private Character character;
-
+	// stupidCounter exists to make sure that the transition between unity animations and a MovePlayer animation does not happen too fast.
+	// TODO: Remove the counter
 	int stupidCounter = 0;
 
-	// Use this for initialization
 	void Start () {
 		animator = GameObject.Find ("Character " + characterIndex +"/Torso").GetComponent<Animator> ();
 		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
-		// -1 to make character 1 have index 1 etc.	
+		// characterIndex-1 to make character 1 have index 1 etc.	
 		character = StaticCharacterHolder.characters [characterIndex-1];
 	}
 
-    // Update is called once per frame
     void Update() {
+		// Get information about the next position of the Character
         float horizontal = Input.GetAxis(horizontalAxis);
         Vector3 newPosition = new Vector3(transform.position.x + speed * horizontal, transform.position.y, transform.position.z);
         pressedButton = "";
 
-        //Check if we are finished with previous animation
+        // If previous animation is finished, reset isPlayingMove and enable the animator.
         if (!characterMovePlayer.CheckIsPlaying())
         {
             isPlayingMove = false;
@@ -52,13 +56,17 @@ public class InputController : MonoBehaviour {
 					//Make sure the character cannot start playing another animation until this one is finished.
 					isPlayingMove = true;
 					animator.enabled = false;
+					// Sets MovePlayer.isPlaying before calling MovePlayer.PlayMove() to avoid concurrency issues.
 					characterMovePlayer.SetIsPlaying ();
 					characterMovePlayer.PlayMove (move);
 				}
 			}
 		}
+
+		// Check isPlayingMove again since it can be set to true in the if-block above.
 		if (!isPlayingMove){
 			print ("newposition.x: " + newPosition.x);
+			// Make sure the character is inside the specified area.
 			if(Mathf.Abs(newPosition.x) <= MaxHorizontalDiff)
 			{
 				transform.position = newPosition;
