@@ -23,6 +23,8 @@ public class Move
 	public Move()
 	{
 		frames = new Frame[defaultNrOfFrames];
+		this.speed = 50;
+		this.strength = 50;
 	}
 
 	/// <summary>
@@ -32,6 +34,8 @@ public class Move
 	public Move(int nrOfFrames)
 	{
 		frames = new Frame[nrOfFrames]; //TODO: Should the length of a move be adjustable? Maybe it is always the same?
+		this.speed = 50;
+		this.strength = 50;
 	}
 
 	/// <summary>

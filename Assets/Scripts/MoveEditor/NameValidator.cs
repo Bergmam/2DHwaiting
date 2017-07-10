@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NameValidator : MonoBehaviour {
-
+public class NameValidator : MonoBehaviour
+{
 	private GameObject alreadyUsedText;
 	private InputField inputField;
-	private string newName;
+	private string name;
 	private bool nameExists;
 
-	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		alreadyUsedText = transform.FindChild ("AlreadyUsedText").gameObject;
 		alreadyUsedText.SetActive (false);
 		inputField = transform.FindChild ("NameInputField").gameObject.GetComponent<InputField> ();
@@ -27,5 +27,10 @@ public class NameValidator : MonoBehaviour {
 	public bool IsNameValid()
 	{
 		return !nameExists;
+	}
+
+	public string GetName()
+	{
+		return this.name;
 	}
 }

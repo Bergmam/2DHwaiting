@@ -25,6 +25,7 @@ public class DropdownBehaviour : MonoBehaviour
 			bodyPartNames.Add (bodyPartTransform.name);
 		}
 		dropdown.AddOptions (bodyPartNames);
+		DropdownValueChanged ();
 	}
 
 	/// <summary>
