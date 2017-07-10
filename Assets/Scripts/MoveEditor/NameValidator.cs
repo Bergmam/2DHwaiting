@@ -12,9 +12,9 @@ public class NameValidator : MonoBehaviour
 
 	void Start ()
 	{
-		alreadyUsedText = transform.FindChild ("AlreadyUsedText").gameObject;
+		alreadyUsedText = transform.Find ("AlreadyUsedText").gameObject;
 		alreadyUsedText.SetActive (false);
-		inputField = transform.FindChild ("NameInputField").gameObject.GetComponent<InputField> ();
+		inputField = transform.Find ("NameInputField").gameObject.GetComponent<InputField> ();
 	}
 
 	public void ValidateName()

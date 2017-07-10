@@ -83,7 +83,8 @@ public class MoveCreator : MonoBehaviour
 		sliders.ResetSliders(); //Reset sliders to 50/50
 		move = new Move ();
 		recorder.Reset (move);
-	}
+        saveButton.interactable = false;
+    }
 
 	public void SaveMove()
 	{
@@ -91,11 +92,10 @@ public class MoveCreator : MonoBehaviour
 		{
 			AvailableMoves.AddMove (move);
 			ResetMoveEditor ();
-			saveButton.interactable = true;
 		}
 		else
 		{
-			saveButton.interactable = false;
-		}
+            saveButton.interactable = false;
+        }
 	}
 }

@@ -11,6 +11,7 @@ public class Character
 	private Dictionary<string,Move> moves;
 	private Color color;
 	private int nbr; //Used for comparisons and, in some cases, as index in lists.
+    private int health = 100;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Character"/> class.
@@ -71,4 +72,40 @@ public class Character
 			return null;
 		}
 	}
+
+    public string PrintNames()
+    {
+        string name = "";
+        foreach (string bajs in moves.Keys)
+        {
+            name += bajs;
+            name += " ";
+        }
+        return name;
+    }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public void SetHealth(int health)
+    {
+        this.health = health;
+    }
+
+    public void AddHealth(int number)
+    {
+        health += number;
+    }
+
+    public void SubHealth(int number)
+    {
+        health -= number;
+    }
+
+    public void ApplyMoveTo(Move move)
+    {
+        SubHealth(move.GetStrength());
+    }
 }
