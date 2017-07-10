@@ -8,6 +8,7 @@ public class MoveCreator : MonoBehaviour
 	private Move move;
 	private SliderScript sliders;
 	private Recorder recorder;
+	private InputField nameInputField;
 	private NameValidator nameValidator;
 	private DropdownBehaviour dropDown;
 	private Button saveButton;
@@ -19,6 +20,7 @@ public class MoveCreator : MonoBehaviour
 		nameValidator = GameObject.Find ("NamePanel").GetComponent<NameValidator> ();
 		dropDown = GameObject.Find ("BodypartDropdown").GetComponent<DropdownBehaviour> ();
 		saveButton = GameObject.Find ("SaveButton").GetComponent<Button> ();
+		nameInputField = GameObject.Find ("NameInputField").GetComponent<InputField> ();
 		PlaceCharacter (0.5f, 0.5f);
 		move = new Move ();
 		recorder.SetMove (move);
@@ -59,8 +61,9 @@ public class MoveCreator : MonoBehaviour
 	/// <summary>
 	/// Resets the MoveEditor by restarting the progressBar and the movePlayer.
 	/// </summary>
-	private void ResetMoveEditor()
+	public void ResetMoveEditor()
 	{
+		nameInputField.text = string.Empty;
 		sliders.ResetSliders(); //Reset sliders to 50/50
 		move = new Move ();
 		recorder.Reset (move);
