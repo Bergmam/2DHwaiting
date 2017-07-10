@@ -8,7 +8,7 @@ public class NameValidator : MonoBehaviour
 	private GameObject alreadyUsedText;
 	private InputField inputField;
 	private string name;
-	private bool nameExists;
+	private bool validName;
 
 	void Start ()
 	{
@@ -20,13 +20,14 @@ public class NameValidator : MonoBehaviour
 	public void ValidateName()
 	{
 		name = inputField.text;
-		nameExists = AvailableMoves.ContainsName (name);
-		alreadyUsedText.SetActive (nameExists);
+		validName = !AvailableMoves.ContainsName (name);
+		validName &= !name.Equals (string.Empty);
+		alreadyUsedText.SetActive (AvailableMoves.ContainsName (name));
 	}
 
 	public bool IsNameValid()
 	{
-		return !nameExists;
+		return validName;
 	}
 
 	public string GetName()

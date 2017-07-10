@@ -71,7 +71,7 @@ public class MoveCreator : MonoBehaviour
 
 	public void SaveMove()
 	{
-		if (!AvailableMoves.ContainsName (move.GetName ()))
+		if (!AvailableMoves.ContainsName (move.GetName ()) && !move.GetName().Equals(string.Empty))
 		{
 			AvailableMoves.AddMove (move);
 			ResetMoveEditor ();
