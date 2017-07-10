@@ -14,7 +14,10 @@ public class InputController : MonoBehaviour {
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
 	bool isPlayingMove = false;
 	string pressedButton = "";
-	Character character;
+    string damageDealerName;
+    BoxCollider2D damageDealerBox;
+    Character character;
+    Move currentlyPlayedMove;
 
 	Animator animator;
 	MovePlayer characterMovePlayer;
@@ -41,6 +44,13 @@ public class InputController : MonoBehaviour {
         {
             isPlayingMove = false;
             animator.enabled = true;
+            currentlyPlayedMove = null;
+
+            // Only set the boxcollider to false if we have enabled it once before
+            if(damageDealerBox != null)
+            {
+                damageDealerBox.enabled = false;
+            }
         }
 
 		if (!isPlayingMove) {
@@ -52,20 +62,25 @@ public class InputController : MonoBehaviour {
 				}
 				if (InputSettings.HasButton (characterIndex, pressedButton)) {
 					string moveName = InputSettings.GetMoveName (pressedButton);
-					Move move = character.GetMove (moveName);
+					currentlyPlayedMove = character.GetMove (moveName);
 					//Make sure the character cannot start playing another animation until this one is finished.
 					isPlayingMove = true;
 					animator.enabled = false;
 					// Sets MovePlayer.isPlaying before calling MovePlayer.PlayMove() to avoid concurrency issues.
 					characterMovePlayer.SetIsPlaying ();
-					characterMovePlayer.PlayMove (move);
+					characterMovePlayer.PlayMove (currentlyPlayedMove);
+                    // Get the name of the move assigned to do damage.
+                    damageDealerName = currentlyPlayedMove.GetDamageDealer();
+                    Transform damageDealer = UnityUtils.RecursiveFind(transform,damageDealerName);
+                    damageDealerBox = damageDealer.GetComponent<BoxCollider2D>();
+                    // Enables the Collider component of the 
+                    damageDealerBox.enabled = true;
 				}
 			}
 		}
 
 		// Check isPlayingMove again since it can be set to true in the if-block above.
 		if (!isPlayingMove){
-			print ("newposition.x: " + newPosition.x);
 			// Make sure the character is inside the specified area.
 			if(Mathf.Abs(newPosition.x) <= MaxHorizontalDiff)
 			{
@@ -82,5 +97,15 @@ public class InputController : MonoBehaviour {
 			}
 			stupidCounter--;
         }
+    }
+
+    public Character GetCharacter()
+    {
+        return character;
+    }
+
+    public Move GetCurretlyPlayedMove()
+    {
+        return currentlyPlayedMove;
     }
 }

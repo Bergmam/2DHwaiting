@@ -23,7 +23,7 @@ public class DropdownItemBehaviour : MonoBehaviour, IPointerEnterHandler
 	/// <param name="eventData">Event data.</param>
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		string bodyPartName = transform.FindChild ("Item Label").GetComponent<Text> ().text;
+		string bodyPartName = transform.Find ("Item Label").GetComponent<Text> ().text;
 		bodyPartName.Replace (" ", string.Empty); //Label automatically inserts spaces when it reads camel case. This removes those spaces.
 		dropdown.HighlightChanged (bodyPartName);
 	}
