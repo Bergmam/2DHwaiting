@@ -22,7 +22,7 @@ public class Recorder : MonoBehaviour
 	{
 		doneRecording = false;
 		endPoints = new List<GameObject> ();
-		movePlayer = gameObject.AddComponent<MovePlayer> ();
+		movePlayer = gameObject.GetComponent<MovePlayer> ();
         FindEndPoints ();
 		initialPoseFrame = GetCurrentPoseFrame ();
     }

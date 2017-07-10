@@ -12,10 +12,13 @@ public class MoveCreator : MonoBehaviour
 	private NameValidator nameValidator;
 	private DropdownBehaviour dropDown;
 	private Button saveButton;
+	private MovePlayer movePlayer;
 
 	void Start ()
 	{
-		recorder = GameObject.Find ("Character").GetComponent<Recorder> ();
+		GameObject character = GameObject.Find ("Character");
+		recorder = character.GetComponent<Recorder> ();
+		movePlayer = character.GetComponent<MovePlayer> ();
 		sliders = GameObject.Find ("SlidersPanel").GetComponent<SliderScript> ();
 		nameValidator = GameObject.Find ("NamePanel").GetComponent<NameValidator> ();
 		dropDown = GameObject.Find ("BodypartDropdown").GetComponent<DropdownBehaviour> ();
@@ -28,23 +31,36 @@ public class MoveCreator : MonoBehaviour
 
 	void Update ()
 	{
-		if (sliders.GetStrength () != move.GetStrength ())
+		//Update strength and speed values if they have changed. Don't need to update twice since the sliders update each other.
+		if (sliders.GetSpeed () != move.GetSpeed () || sliders.GetStrength () != move.GetStrength ()) 
 		{
-			move.SetStrength(sliders.GetStrength ());
+			updateStrengthAndSpeed (sliders.GetSpeed (), sliders.GetStrength ());
 		}
-		if (sliders.GetSpeed () != move.GetSpeed ())
-		{
-			move.SetSpeed(sliders.GetSpeed ());
-		}
+		//Update damage dealing bodypart.
 		if (!dropDown.GetDamageDealer ().Equals (move.GetDamageDealer ()))
 		{
 			move.SetDamageDealer (dropDown.GetDamageDealer ());
 		}
+		//All frames recorded and a new, non-empty, move name has been entered.
 		if (recorder.IsDoneRecording () && nameValidator.IsNameValid ()) {
 			move.SetName (nameValidator.GetName ());
 			saveButton.interactable = true;
 		} else {
-			saveButton.interactable = false;
+			saveButton.interactable = false; //hide button again if name is no longer valid.
+		}
+	}
+
+	/// <summary>
+	/// Updates the strength and speed values to the values of the sliders.
+	/// </summary>
+	private void updateStrengthAndSpeed(int speed, int strength)
+	{
+		move.SetSpeed(speed);
+		move.SetStrength(strength);
+		//If animation is already playing, replay it as speed changes.
+		if (movePlayer != null && movePlayer.CheckIsPlaying ())
+		{
+			movePlayer.PlayMove (this.move);
 		}
 	}
 

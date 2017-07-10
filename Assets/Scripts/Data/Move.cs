@@ -65,7 +65,7 @@ public class Move
 
 	public void SetSpeed(int newSpeed)
 	{
-		if (newSpeed > 0)
+		if (newSpeed >= 0)
 		{
 			speed = newSpeed;
 		}
@@ -73,7 +73,7 @@ public class Move
 
 	public void SetStrength(int newStrength)
 	{
-		if (newStrength > 0)
+		if (newStrength >= 0)
 		{
 			strength = newStrength;
 		}
