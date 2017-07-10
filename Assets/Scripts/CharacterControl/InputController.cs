@@ -53,6 +53,20 @@ public class InputController : MonoBehaviour {
 				if (InputSettings.HasButton (characterIndex, pressedButton)) {
 					string moveName = InputSettings.GetMoveName (pressedButton);
 					Move move = character.GetMove (moveName);
+					// ### TEST ### TODO: Remove below
+					if (move == null) {
+						print ("Move " + moveName + " is null! Character index is " + characterIndex + ", characterNbr = " + character.GetNbr ());
+						foreach (Character ch in StaticCharacterHolder.characters) {
+							foreach (string b in InputSettings.allUsedButtons) {
+								if (ch.GetMove (InputSettings.GetMoveName (b)) == null) {
+									print ("character has move " + null + " at button " + b);
+								}else{
+									print ("character has move " + InputSettings.GetMoveName (b) + " at button " + b);
+								}
+							}
+						}
+					}
+					// ### TEST END ### TODO: Remove above
 					//Make sure the character cannot start playing another animation until this one is finished.
 					isPlayingMove = true;
 					animator.enabled = false;
