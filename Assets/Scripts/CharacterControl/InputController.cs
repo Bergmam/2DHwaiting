@@ -15,7 +15,7 @@ public class InputController : MonoBehaviour {
 	bool isPlayingMove = false;
 	string pressedButton = "";
     string damageDealerName;
-    BoxCollider2D damageDealerBox;
+    Collider2D damageDealerCollider;
     Character character;
     Move currentlyPlayedMove;
 
@@ -27,10 +27,12 @@ public class InputController : MonoBehaviour {
 	int stupidCounter = 0;
 
 	void Start () {
-		animator = GameObject.Find ("Character " + characterIndex +"/Torso").GetComponent<Animator> ();
+        // characterIndex-1 to make character 1 have index 1 etc.
+        character = StaticCharacterHolder.characters[characterIndex - 1];
+        animator = GameObject.Find ("Character " + characterIndex +"/Torso").GetComponent<Animator> ();
 		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
-		// characterIndex-1 to make character 1 have index 1 etc.	
-		character = StaticCharacterHolder.characters [characterIndex-1];
+			
+		
 	}
 
     void Update() {
@@ -46,10 +48,10 @@ public class InputController : MonoBehaviour {
             animator.enabled = true;
             currentlyPlayedMove = null;
 
-            // Only set the boxcollider to false if we have enabled it once before
-            if(damageDealerBox != null)
+            // Only set the collider to false if we have enabled it once before
+            if(damageDealerCollider != null)
             {
-                damageDealerBox.enabled = false;
+                damageDealerCollider.enabled = false;
             }
         }
 
@@ -88,9 +90,9 @@ public class InputController : MonoBehaviour {
                     // Get the name of the move assigned to do damage.
                     damageDealerName = currentlyPlayedMove.GetDamageDealer();
                     Transform damageDealer = UnityUtils.RecursiveFind(transform,damageDealerName);
-                    damageDealerBox = damageDealer.GetComponent<BoxCollider2D>();
+                    damageDealerCollider = damageDealer.GetComponent<Collider2D>();
                     // Enables the Collider component of the 
-                    damageDealerBox.enabled = true;
+                    damageDealerCollider.enabled = true;
 				}
 			}
 		}
