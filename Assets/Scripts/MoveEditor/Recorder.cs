@@ -30,6 +30,7 @@ public class Recorder : MonoBehaviour
 	public void SetMove(Move move)
 	{
 		this.move = move;
+		//Adjust progress bar to fit the specified move.
 		progressBarBehaviour = GameObject.Find ("ProgressBar").GetComponent<ProgressBarBehaviour> ();
 		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
 	}
@@ -159,6 +160,10 @@ public class Recorder : MonoBehaviour
 		return doneRecording;
 	}
 
+	/// <summary>
+	/// Reset the recorder and the progress bar.
+	/// </summary>
+	/// <param name="newMove">New move.</param>
 	public void Reset(Move newMove)
 	{
 		if (newMove == null)
