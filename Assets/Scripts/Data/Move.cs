@@ -13,16 +13,18 @@ public class Move
 	private Frame[] frames;
 	private int nextIndex; //At which index to place the next recorded frame. Adding or removing frames updates the index.
 	private bool done;
-	private int defaultNrOfFrames = 10; //C# requires default constructor. In default constructor, this number is used to create the frame array.
+	private int defaultNrOfFrames = 12; //C# requires default constructor. In default constructor, this number is used to create the frame array.
 	private string name;
 	private string damageDealerName; //Name of the body part dealing damage when move is performed.
+	private int currentNbrOfFrames;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Move"/> class.
 	/// </summary>
 	public Move()
 	{
-		frames = new Frame[defaultNrOfFrames];
+		this.currentNbrOfFrames = 0;
+		this.frames = new Frame[defaultNrOfFrames];
 		this.speed = 50;
 		this.strength = 50;
 	}
@@ -48,6 +50,7 @@ public class Move
 		{
 			frames [nextIndex] = frame;
 			nextIndex++;
+			currentNbrOfFrames++;
 		}
 	}
 
@@ -60,6 +63,7 @@ public class Move
 		{
 			nextIndex--;
 			frames [nextIndex] = null;
+			currentNbrOfFrames--;
 		}
 	}
 
@@ -88,7 +92,7 @@ public class Move
 	/// Returns the total number of frames this move has when completed.
 	/// </summary>
 	/// <returns>The number of frames.</returns>
-	public int GetNumberOfFrames()
+	public int GetTotalNbrOfFrames()
 	{
 		return frames.Length;
 	}
@@ -125,5 +129,10 @@ public class Move
 	public string GetDamageDealer()
 	{
 		return this.damageDealerName;
+	}
+
+	public int GetCurrentNbrOfFrames()
+	{
+		return currentNbrOfFrames;
 	}
 }

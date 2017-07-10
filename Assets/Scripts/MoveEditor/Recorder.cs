@@ -30,9 +30,8 @@ public class Recorder : MonoBehaviour
 	public void SetMove(Move move)
 	{
 		this.move = move;
-		//Adjust progress bar to fit the specified move.
 		progressBarBehaviour = GameObject.Find ("ProgressBar").GetComponent<ProgressBarBehaviour> ();
-		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
+		RecordFrame (); //Add initial pose as first frame in move.
 	}
 
 	/// <summary>
@@ -44,19 +43,20 @@ public class Recorder : MonoBehaviour
 		{
 			return;
 		}
-		if (progressBarBehaviour.GetCurrentNbrOfFrames () < move.GetNumberOfFrames ()) 
+		if (move.GetCurrentNbrOfFrames () < move.GetTotalNbrOfFrames ()) 
 		{
 			Frame frame = GetCurrentPoseFrame ();
-			progressBarBehaviour.IncrementNbrOfFrames ();
 			UpdateFrameTwistLimits ();
 			move.AddFrame (frame);
-			if (progressBarBehaviour.GetCurrentNbrOfFrames () >= move.GetNumberOfFrames () / 2 && reverseOnWayBack) 
+			UpdateProgressBar ();
+			if (move.GetCurrentNbrOfFrames () >= move.GetTotalNbrOfFrames () / 2 && reverseOnWayBack)
 			{
 				ReverseFrames ();
 				FinishMove ();
 			}
-			else if (progressBarBehaviour.GetCurrentNbrOfFrames () >= move.GetNumberOfFrames () && !reverseOnWayBack)
+			else if (move.GetCurrentNbrOfFrames () >= (move.GetTotalNbrOfFrames () - 1) && !reverseOnWayBack)
 			{
+				move.AddFrame (move.GetFrames () [0]); //Add start frame to end of move as well.
 				FinishMove ();
 			}
 		}
@@ -116,13 +116,13 @@ public class Recorder : MonoBehaviour
 	private void ReverseFrames()
 	{
 		Frame[] frames = move.GetFrames ();
-		int halfNbrOfFrames = move.GetNumberOfFrames () / 2;
+		int halfNbrOfFrames = move.GetTotalNbrOfFrames () / 2;
 		for (int i = 0; i < halfNbrOfFrames; i++) 
 		{
 			int frameIndex = halfNbrOfFrames - 1 - i;
 			Frame frame = frames [frameIndex];
 			move.AddFrame (frame);
-			progressBarBehaviour.IncrementNbrOfFrames ();
+			UpdateProgressBar ();
 		}
 	}
 
@@ -173,9 +173,21 @@ public class Recorder : MonoBehaviour
         this.move = newMove;
 		movePlayer.SetAutoLoopEnabled (false);
 		Destroy(progressBarBehaviour);
-		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
-		progressBarBehaviour.SetCurrentNbrOfFrames (0);
+		progressBarBehaviour.UpdateFill (0);
 		movePlayer.FrameToCharacter (initialPoseFrame); //Reset character pose
 		UpdateFrameTwistLimits();
+	}
+
+	/// <summary>
+	/// Updates the progress bar.
+	/// </summary>
+	private void UpdateProgressBar()
+	{
+		//Subtract the start and end frames from progress as they are the starting position and are not create by the user.
+		//With the first and last frames, some of the bar is filled in on start.
+		float currentNbrOfFrames = (float)(move.GetCurrentNbrOfFrames () - 1);
+		float totalNbrOfFrames = (float)(move.GetTotalNbrOfFrames () - 2);
+		float progress = currentNbrOfFrames / totalNbrOfFrames;
+		progressBarBehaviour.UpdateFill (progress);
 	}
 }
