@@ -165,6 +165,7 @@ public class Recorder : MonoBehaviour
 		{
 			return;
 		}
+        this.move = newMove;
 		movePlayer.SetAutoLoopEnabled (false);
 		Destroy(progressBarBehaviour);
 		progressBarBehaviour.SetTotalNbrOfFrames (move.GetNumberOfFrames ());
