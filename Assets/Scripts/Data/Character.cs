@@ -108,4 +108,28 @@ public class Character
     {
         SubHealth(move.GetStrength());
     }
+
+	public override bool Equals(System.Object obj)
+	{
+		// If parameter is null return false.
+		if (obj == null)
+		{
+			return false;
+		}
+
+		if (!(obj is Character))
+		{
+			return false;
+		}
+
+		// If parameter cannot be cast to Character return false(?)
+		Character otherCharacter = obj as Character;
+		if ((System.Object)otherCharacter == null)
+		{
+			return false;
+		}
+
+		// Return true if the fields match:
+		return this.nbr == otherCharacter.nbr;
+	}
 }
