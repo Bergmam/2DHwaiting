@@ -183,11 +183,13 @@ public class Recorder : MonoBehaviour
 	/// </summary>
 	private void UpdateProgressBar()
 	{
-		//Subtract the start and end frames from progress as they are the starting position and are not create by the user.
 		//With the first and last frames, some of the bar is filled in on start.
-		float currentNbrOfFrames = (float)(move.GetCurrentNbrOfFrames () - 1);
-		float totalNbrOfFrames = (float)(move.GetTotalNbrOfFrames () - 2);
-		float progress = currentNbrOfFrames / totalNbrOfFrames;
+		float nbrOfRecordedFrames = (float)move.GetCurrentNbrOfFrames () - 1; //Player did not record the first frame.
+		float totalNbrOfRecordableFrames = (float)move.GetTotalNbrOfFrames () - 2; //Player does not record first or last frame.
+		//Player did not record the last frame.
+		nbrOfRecordedFrames = nbrOfRecordedFrames > totalNbrOfRecordableFrames ? totalNbrOfRecordableFrames : nbrOfRecordedFrames;
+
+		float progress = nbrOfRecordedFrames / totalNbrOfRecordableFrames;
 		progressBarBehaviour.UpdateFill (progress);
 	}
 }
