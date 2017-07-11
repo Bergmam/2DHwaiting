@@ -70,15 +70,7 @@ public class InputController : MonoBehaviour {
 					// ### TEST ### TODO: Remove below
 					if (currentlyPlayedMove == null) {
 						print ("Move " + moveName + " is null! Character index is " + characterIndex + ", characterNbr = " + character.GetNbr ());
-						foreach (Character ch in StaticCharacterHolder.characters) {
-							foreach (string b in InputSettings.allUsedButtons) {
-								if (ch.GetMove (InputSettings.GetMoveName (b)) == null) {
-									print ("character has move " + null + " at button " + b);
-								}else{
-									print ("character has move " + InputSettings.GetMoveName (b) + " at button " + b);
-								}
-							}
-						}
+						print ("StaticCharacterHolder.characters.Count = " + StaticCharacterHolder.characters.Count);
 					}
 
 					//Make sure the character cannot start playing another animation until this one is finished.

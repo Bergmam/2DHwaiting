@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public static class InputSettings
 {
+	private static bool alreadyInitialized;
 	private static List<CharacterInput> characterInputs = new List<CharacterInput>();
 
 	//All buttons used in the game. Can be itterated over to check if any of them has been pressed.
@@ -19,18 +20,22 @@ public static class InputSettings
 	/// </summary>
 	public static void Init()
 	{
-		//Create a CharacterInput object for each character in the game.
-		foreach (Character character in StaticCharacterHolder.characters) {
-			CharacterInput characterInput = new CharacterInput (character);
-			characterInputs.Add (characterInput);
-		}
+		if (!alreadyInitialized)
+		{
+			alreadyInitialized = true;
+			//Create a CharacterInput object for each character in the game.
+			foreach (Character character in StaticCharacterHolder.characters) {
+				CharacterInput characterInput = new CharacterInput (character);
+				characterInputs.Add (characterInput);
+			}
 
-		//Register some buttons for each character TODO: Read buttons from file
-		foreach (char c in "qwe") {
-			AddButton (c + "", StaticCharacterHolder.characters [0]);
-		}
-		foreach (char c in "iop") {
-			AddButton (c + "", StaticCharacterHolder.characters [1]);
+			//Register some buttons for each character TODO: Read buttons from file
+			foreach (char c in "qwe") {
+				AddButton (c + "", StaticCharacterHolder.characters [0]);
+			}
+			foreach (char c in "iop") {
+				AddButton (c + "", StaticCharacterHolder.characters [1]);
+			}
 		}
 	}
 

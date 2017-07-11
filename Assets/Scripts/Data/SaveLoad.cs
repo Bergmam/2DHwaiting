@@ -10,7 +10,6 @@ public static class SaveLoad{
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedMoves.mvs");
-        MonoBehaviour.print("Saving moves to to: " + Application.persistentDataPath + "/savedMoves.mvs");
         bf.Serialize(file, movesToSave);
         file.Close();
     }
@@ -20,7 +19,6 @@ public static class SaveLoad{
         if(File.Exists(Application.persistentDataPath + "/savedMoves.mvs"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            MonoBehaviour.print("Loading moves from: " + Application.persistentDataPath + "/savedMoves.mvs");
             FileStream file = File.Open(Application.persistentDataPath + "/savedMoves.mvs", FileMode.Open);
             AvailableMoves.SetMoves((List<Move>)bf.Deserialize(file));
             file.Close();

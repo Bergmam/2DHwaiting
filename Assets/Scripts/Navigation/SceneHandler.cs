@@ -11,6 +11,7 @@ using UnityEditor;
 /// </summary>
 public class SceneHandler
 {
+	private static bool alreadyInitialized;
 	private static Stack sceneStack;
 	private static AssetBundle myLoadedAssetBundle;
 	private static string[] scenePaths;
@@ -18,23 +19,23 @@ public class SceneHandler
 
 	public static void Init()
 	{
-		scenePathsList = new ArrayList ();
-		sceneStack = new Stack ();
-
-		//String path of folder containing all scenes
-		string sceneDirectoryPath = "Assets" + Path.DirectorySeparatorChar + "Scenes";
-		scenePaths = Directory.GetFiles (sceneDirectoryPath);
-
-		//Add all scene names to list scenePathsList
-		for (int i = 0; i < scenePaths.Length; i++)
+		if (!alreadyInitialized)
 		{
-			string path = scenePaths [i];
-            Debug.Log(path);
-			path = path.Split (Path.DirectorySeparatorChar) [2].ToString (); //Remove begining of path
-			path = path.Split ('.') [0].ToString (); //Remove file ending
-			if (!scenePathsList.Contains (path))
-			{
-				scenePathsList.Add (path);
+			scenePathsList = new ArrayList ();
+			sceneStack = new Stack ();
+
+			//String path of folder containing all scenes
+			string sceneDirectoryPath = "Assets" + Path.DirectorySeparatorChar + "Scenes";
+			scenePaths = Directory.GetFiles (sceneDirectoryPath);
+
+			//Add all scene names to list scenePathsList
+			for (int i = 0; i < scenePaths.Length; i++) {
+				string path = scenePaths [i];
+				path = path.Split (Path.DirectorySeparatorChar) [2].ToString (); //Remove begining of path
+				path = path.Split ('.') [0].ToString (); //Remove file ending
+				if (!scenePathsList.Contains (path)) {
+					scenePathsList.Add (path);
+				}
 			}
 		}
 	}

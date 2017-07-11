@@ -7,11 +7,16 @@ using UnityEngine;
 /// </summary>
 public class SetupScript : MonoBehaviour 
 {
+	private static bool alreadyInitialized = false;
+
 	void Start () 
 	{
-		SceneHandler.Init (); //Instantiate SceneHandler with list of existing scenes and return stack
-        SaveLoad.Load();
-		StaticCharacterHolder.Init ();
-		InputSettings.Init ();
+		if (!alreadyInitialized)
+		{
+			SceneHandler.Init (); //Instantiate SceneHandler with list of existing scenes and return stack
+			SaveLoad.Load ();
+			StaticCharacterHolder.Init ();
+			InputSettings.Init ();
+		}
 	}
 }
