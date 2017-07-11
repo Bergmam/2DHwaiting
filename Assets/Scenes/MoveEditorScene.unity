@@ -3816,7 +3816,7 @@ GameObject:
   - component: {fileID: 2078983859}
   - component: {fileID: 2078983858}
   m_Layer: 5
-  m_Name: ProgressBarFill
+  m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -15,7 +15,7 @@ public class ProgressBarBehaviour : MonoBehaviour
 
 	void Awake()
 	{
-		this.fill = transform.Find ("ProgressBarFill").gameObject.GetComponent<RectTransform>();
+		this.fill = transform.Find ("Fill").gameObject.GetComponent<RectTransform>();
 		this.twoByTwoVector = new Vector2 (2, 2);
 		this.oneByOneVector = new Vector2 (1, 1);
 		this.direction = 1;
