@@ -11,6 +11,8 @@ public class BodyPartTriggerHandler : MonoBehaviour {
     InputController inputController;
 	GameState gameState;
 
+    int triggerCounter;
+
     void Start ()
     {
         inputController = transform.root.GetComponent<InputController>();
@@ -55,8 +57,8 @@ public class BodyPartTriggerHandler : MonoBehaviour {
                 {
                     otherBody.AddForce(Vector2.left * 250);
                 }
+                transform.GetComponent<Collider2D>().enabled = false;
             }
-        }
-        
+        } 
     }
 }

@@ -38,7 +38,6 @@ public class InputController : MonoBehaviour {
     void Update() {
 		// Get information about the next position of the Character
         float horizontal = Input.GetAxisRaw(horizontalAxis);
-        print("Horizontal: " + horizontal);
         if (horizontal < 0)
         {
             //thisBody.AddForce(Vector2.left*20);
