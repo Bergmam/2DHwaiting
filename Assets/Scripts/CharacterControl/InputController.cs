@@ -43,19 +43,16 @@ public class InputController : MonoBehaviour
         float horizontal = Input.GetAxisRaw(horizontalAxis);
         if (horizontal < 0)
         {
-            //thisBody.AddForce(Vector2.left*20);
             thisBody.velocity = new Vector3(-10, thisBody.velocity.y);
         }
         else if (horizontal > 0)
         {
-            //thisBody.AddForce(Vector2.right*20);
             thisBody.velocity = new Vector3(10, thisBody.velocity.y);
         }
         else if (horizontal == 0)
         {
             thisBody.velocity = new Vector3(0, thisBody.velocity.y);
         }
-        //Vector3 newPosition = new Vector3(transform.position.x + speed * horizontal, transform.position.y, transform.position.z);
         pressedButton = "";
 
         // If previous animation is finished, reset isPlayingMove and enable the animator.
