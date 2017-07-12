@@ -11,6 +11,8 @@ public class BodyPartTriggerHandler : MonoBehaviour {
     InputController inputController;
 	GameState gameState;
 
+    int triggerCounter;
+
     void Start ()
     {
         inputController = transform.root.GetComponent<InputController>();
@@ -30,7 +32,7 @@ public class BodyPartTriggerHandler : MonoBehaviour {
         // If the collided object is not part of the same character
         if (move != null)
         {
-            if (otherGameObject.transform.root.name != transform.root.name)
+            if (otherGameObject.transform.root.name != transform.root.name && otherGameObject.transform.root.tag == "characterCollider")
             {
                 InputController otherInputController = otherGameObject.GetComponent<InputController>();
                 Character otherCharacter = otherInputController.GetCharacter();
@@ -55,8 +57,8 @@ public class BodyPartTriggerHandler : MonoBehaviour {
                 {
                     otherBody.AddForce(Vector2.left * 250);
                 }
+                transform.GetComponent<Collider2D>().enabled = false;
             }
-        }
-        
+        } 
     }
 }
