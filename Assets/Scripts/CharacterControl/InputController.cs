@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputController : MonoBehaviour {
-
-
-    
+public class InputController : MonoBehaviour
+{
     public float speed;
     public string horizontalAxis;
 	public int characterIndex;
+
+	private bool paused;
 
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
 	bool isPlayingMove = false;
@@ -32,10 +32,13 @@ public class InputController : MonoBehaviour {
         animator = GameObject.Find ("Character " + characterIndex +"/Torso").GetComponent<Animator> ();
 		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
         thisBody = gameObject.GetComponent<Rigidbody2D>();
-		
+		this.paused = false;
 	}
 
     void Update() {
+		if (paused) {
+			return;
+		}
 		// Get information about the next position of the Character
         float horizontal = Input.GetAxisRaw(horizontalAxis);
         print("Horizontal: " + horizontal);
@@ -128,4 +131,22 @@ public class InputController : MonoBehaviour {
     {
         return currentlyPlayedMove;
     }
+
+	/// <summary>
+	/// Pauses this instance, freezing all animation and disable buttons.
+	/// </summary>
+	public void Pause(){
+		this.paused = true;
+		this.animator.enabled = false;
+		characterMovePlayer.Pause ();
+	}
+
+	/// <summary>
+	/// Unpauses this instance, enabling buttons and resuming the animation that is currently playing.
+	/// </summary>
+	public void UnPause(){
+		this.paused = false;
+		this.animator.enabled = !characterMovePlayer.CheckIsPlaying ();
+		characterMovePlayer.UnPause ();
+	}
 }

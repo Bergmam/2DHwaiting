@@ -8,13 +8,17 @@ using UnityEngine.UI;
 /// </summary>
 public class GameState : MonoBehaviour
 {
-
 	private ProgressBarBehaviour[] healthBars;
 	private Text winnerText;
 	private bool gameOver;
+	private bool paused;
+	private ColorModifier pausePanelToggel;
 
 	void Start ()
 	{
+		pausePanelToggel = GameObject.Find ("PauseGreyPanel").GetComponent<ColorModifier> ();
+		pausePanelToggel.SetDefaultColor (new Color32 (0, 0, 0, 0));
+		pausePanelToggel.SetSelectedColor (new Color32 (120, 120, 120, 160));
 		healthBars = new ProgressBarBehaviour[StaticCharacterHolder.characters.Count];
 		ProgressBarBehaviour character1HealthBar = GameObject.Find ("Character1HealthBar").GetComponent<ProgressBarBehaviour> ();
 		healthBars [0] = character1HealthBar;
@@ -23,11 +27,22 @@ public class GameState : MonoBehaviour
 		healthBars[1] = character2HealthBar;
 		winnerText = GameObject.Find ("WinnerText").GetComponent<Text> ();
 		gameOver = false;
+		paused = false;
 	}
 
 	void Update()
 	{
-		if (gameOver && Input.anyKeyDown)
+		if (Input.GetKeyDown (KeyCode.Escape))
+		{
+			if (paused) {
+				UnPauseGame ();
+			} 
+			else
+			{
+				PauseGame ();
+			}
+		}
+		else if (gameOver && Input.anyKeyDown)
 		{
 			InputSettings.ClearRegisteredMoves ();
 			StaticCharacterHolder.ResetCharacters ();
@@ -59,8 +74,10 @@ public class GameState : MonoBehaviour
 	/// </summary>
 	public void PauseGame()
 	{
-		SetCharacterEnabled(GameObject.Find ("Character 1"), false);
-		SetCharacterEnabled(GameObject.Find ("Character 2"), false);
+		paused = true;
+		pausePanelToggel.Select ();
+		GameObject.Find ("Character 1").GetComponent<InputController> ().Pause ();
+		GameObject.Find ("Character 2").GetComponent<InputController> ().Pause ();
 	}
 
 	/// <summary>
@@ -69,38 +86,24 @@ public class GameState : MonoBehaviour
 	/// </summary>
 	public void UnPauseGame()
 	{
-		SetCharacterEnabled(GameObject.Find ("Character 1"), true);
-		SetCharacterEnabled(GameObject.Find ("Character 2"), true);
-	}
-
-	public void GameOver(Character winner)
-	{
-		PauseGame ();
-		int loserNbr = (winner.GetNbr () % 2) + 1;
-		Animator loserAnimator = GameObject.Find ("Character " + loserNbr).GetComponentInChildren<Animator> ();
-		loserAnimator.enabled = true;
-		loserAnimator.SetBool ("Dead", true);
-		winnerText.text = "PLAYER" + winner.GetNbr () + " WINS!";
-		winnerText.enabled = true;
-		gameOver = true;
+		paused = false;
+		pausePanelToggel.DeSelect ();
+		GameObject.Find ("Character 1").GetComponent<InputController> ().UnPause ();
+		GameObject.Find ("Character 2").GetComponent<InputController> ().UnPause ();
 	}
 
 	/// <summary>
-	/// Disable or enable the specified character according to the bool parameter.
-	/// The enabled bool should be true for enabling and false for disabling.
+	/// Call when game is over. The losing character's death animation is played and a text saying who won is displayed.
 	/// </summary>
-	/// <param name="characterObject">Character object.</param>
-	/// <param name="enabled">If set to <c>true</c> enabled.</param>
-	private void SetCharacterEnabled(GameObject characterObject, bool enabled)
+	/// <param name="winner">Winner.</param>
+	public void GameOver(Character winner)
 	{
-		characterObject.GetComponent<InputController> ().enabled = enabled; //Change state of character controls.
-		//Change state of collision detection.
-		foreach (BodyPartTriggerHandler collisionHandler in characterObject.GetComponentsInChildren<BodyPartTriggerHandler>()) {
-			collisionHandler.enabled = enabled;
-		}
-		//Change state of animation.
-		foreach (Animator animator in characterObject.GetComponentsInChildren<Animator>()) {
-			animator.enabled = enabled;
-		}
+		GameObject.Find ("Character 1").GetComponent<InputController> ().enabled = false;
+		GameObject.Find ("Character 2").GetComponent<InputController> ().enabled = false;
+		int loserNbr = (winner.GetNbr () % 2) + 1;
+		GameObject.Find ("Character " + loserNbr).GetComponentInChildren<Animator> ().SetBool ("Dead", true);
+		winnerText.text = "PLAYER" + winner.GetNbr () + " WINS!";
+		winnerText.enabled = true;
+		gameOver = true;
 	}
 }

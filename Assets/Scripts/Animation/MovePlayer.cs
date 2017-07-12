@@ -13,6 +13,7 @@ public class MovePlayer : MonoBehaviour
 	int frameIndex = 0;
 	private Dictionary<string,Transform> nameBodyPartDict = new Dictionary<string, Transform> ();
 	private bool autoLoop;
+	private bool paused;
   
 	void Awake()
 	{
@@ -23,17 +24,22 @@ public class MovePlayer : MonoBehaviour
 
 	void Update()
 	{
+		if (paused) {
+			return;
+		}
 		//While isPlaying is true, a new frame is displayed each update until animation is done playing.
-		if (isPlaying)
-		{
+		if (isPlaying) {
 			if (frameIndex < frames.Count)
 			{
 				Frame frame = frames [frameIndex];
 				FrameToCharacter (frame);
 				frameIndex++;
-			} else if(autoLoop){
+			}
+			else if (autoLoop)
+			{
 				frameIndex = 0;
-			} else
+			}
+			else
 			{
 				//Clean up and reset for new move
 				frameIndex = 0;
@@ -156,4 +162,14 @@ public class MovePlayer : MonoBehaviour
     {
         isPlaying = true;
     }
+
+	public void Pause()
+	{
+		this.paused = true;
+	}
+
+	public void UnPause()
+	{
+		this.paused = false;
+	}
 }
