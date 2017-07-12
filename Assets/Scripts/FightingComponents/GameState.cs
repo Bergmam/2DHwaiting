@@ -76,6 +76,10 @@ public class GameState : MonoBehaviour
 	public void GameOver(Character winner)
 	{
 		PauseGame ();
+		int loserNbr = (winner.GetNbr () % 2) + 1;
+		Animator loserAnimator = GameObject.Find ("Character " + loserNbr).GetComponentInChildren<Animator> ();
+		loserAnimator.enabled = true;
+		loserAnimator.SetBool ("Dead", true);
 		winnerText.text = "PLAYER" + winner.GetNbr () + " WINS!";
 		winnerText.enabled = true;
 		gameOver = true;
