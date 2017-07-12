@@ -11,7 +11,8 @@ public class Character
 	private Dictionary<string,Move> moves;
 	private Color color;
 	private int nbr; //Used for comparisons and, in some cases, as index in lists.
-    private int health = 100;
+	private int maxHealth = 100; //Used for calculating percentage of health in health bar.
+	private int health;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Character"/> class.
@@ -22,6 +23,7 @@ public class Character
 		moves = new Dictionary<string,Move> ();
 		this.color = color;
 		this.nbr = nbr;
+		this.health = maxHealth;
 	}
 
 	public Color GetColor()
@@ -131,5 +133,10 @@ public class Character
 
 		// Return true if the fields match:
 		return this.nbr == otherCharacter.nbr;
+	}
+
+	public int GetMaxHealth()
+	{
+		return this.maxHealth;
 	}
 }

@@ -58,7 +58,7 @@ public class ProgressBarBehaviour : MonoBehaviour
 	/// Sets the direction. A positive direction means the bar extends to the right, a negative means it extends to the left.
 	/// </summary>
 	/// <param name="newDirection">New direction.</param>
-	public void setDirection(int newDirection)
+	public void SetDirection(int newDirection)
 	{
 		this.direction = newDirection;
 	}

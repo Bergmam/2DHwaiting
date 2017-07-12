@@ -227,6 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 44573790}
   - component: {fileID: 44573789}
+  - component: {fileID: 44573791}
   m_Layer: 0
   m_Name: Handler
   m_TagString: Untagged
@@ -256,8 +257,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44573791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 44573788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7fefcb1f0234b41ac596f83a1eee1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &149053034
 GameObject:
   m_ObjectHideFlags: 0
@@ -2736,7 +2748,7 @@ Transform:
   m_Children:
   - {fileID: 1015446535}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1172354570
 MonoBehaviour:
@@ -3529,7 +3541,7 @@ Transform:
   m_Children:
   - {fileID: 875336375}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1468355796
 MonoBehaviour:
@@ -3594,7 +3606,7 @@ GameObject:
   - component: {fileID: 1521452259}
   - component: {fileID: 1521452258}
   m_Layer: 5
-  m_Name: Player1HealthBar
+  m_Name: Character1HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3675,7 +3687,7 @@ GameObject:
   - component: {fileID: 1590393910}
   - component: {fileID: 1590393909}
   m_Layer: 5
-  m_Name: Player2HealthBar
+  m_Name: Character2HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

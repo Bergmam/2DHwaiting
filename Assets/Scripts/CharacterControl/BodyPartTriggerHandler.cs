@@ -9,12 +9,13 @@ public class BodyPartTriggerHandler : MonoBehaviour {
 
     Character character;
     InputController inputController;
-    
+	GameState gameState;
 
     void Start ()
     {
         inputController = transform.root.GetComponent<InputController>();
         character = inputController.GetCharacter();	
+		this.gameState = GameObject.Find ("Handler").GetComponent<GameState> ();
 	}
 
     /// <summary>
@@ -36,6 +37,7 @@ public class BodyPartTriggerHandler : MonoBehaviour {
 
                 // Do damage to the other character
                 otherCharacter.ApplyMoveTo(move);
+				gameState.UpdateCharacterHealth (otherCharacter); //Update health bars and check winner.
 
                 // TODO: Remove once healthbars are implemented
                 print("Move '" + inputController.GetCurretlyPlayedMove().GetName() + "' applied to character " + otherCharacter.GetNbr());
