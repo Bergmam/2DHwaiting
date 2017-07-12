@@ -8,7 +8,6 @@ public class InputController : MonoBehaviour {
     
     public float speed;
     public string horizontalAxis;
-	public int MaxHorizontalDiff;
 	public int characterIndex;
 
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
@@ -21,6 +20,7 @@ public class InputController : MonoBehaviour {
 
 	Animator animator;
 	MovePlayer characterMovePlayer;
+    Rigidbody2D thisBody;
 
 	// stupidCounter exists to make sure that the transition between unity animations and a MovePlayer animation does not happen too fast.
 	// TODO: Remove the counter
@@ -31,14 +31,29 @@ public class InputController : MonoBehaviour {
         character = StaticCharacterHolder.characters[characterIndex - 1];
         animator = GameObject.Find ("Character " + characterIndex +"/Torso").GetComponent<Animator> ();
 		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
-			
+        thisBody = gameObject.GetComponent<Rigidbody2D>();
 		
 	}
 
     void Update() {
 		// Get information about the next position of the Character
-        float horizontal = Input.GetAxis(horizontalAxis);
-        Vector3 newPosition = new Vector3(transform.position.x + speed * horizontal, transform.position.y, transform.position.z);
+        float horizontal = Input.GetAxisRaw(horizontalAxis);
+        print("Horizontal: " + horizontal);
+        if (horizontal < 0)
+        {
+            //thisBody.AddForce(Vector2.left*20);
+            thisBody.velocity = new Vector3(-10, thisBody.velocity.y);
+        }
+        else if (horizontal > 0)
+        {
+            //thisBody.AddForce(Vector2.right*20);
+            thisBody.velocity = new Vector3(10, thisBody.velocity.y);
+        }
+        else if (horizontal == 0)
+        {
+            thisBody.velocity = new Vector3(0, thisBody.velocity.y);
+        }
+        //Vector3 newPosition = new Vector3(transform.position.x + speed * horizontal, transform.position.y, transform.position.z);
         pressedButton = "";
 
         // If previous animation is finished, reset isPlayingMove and enable the animator.
@@ -91,11 +106,6 @@ public class InputController : MonoBehaviour {
 
 		// Check isPlayingMove again since it can be set to true in the if-block above.
 		if (!isPlayingMove){
-			// Make sure the character is inside the specified area.
-			if(Mathf.Abs(newPosition.x) <= MaxHorizontalDiff)
-			{
-				transform.position = newPosition;
-			}
 			if (Mathf.Abs(horizontal) > 0)
 			{
 				animator.SetBool("Running", true);
