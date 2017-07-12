@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Game state. Updates controls and GUI based on the current state of the game.
@@ -9,6 +10,8 @@ public class GameState : MonoBehaviour
 {
 
 	private ProgressBarBehaviour[] healthBars;
+	private Text winnerText;
+	private bool gameOver;
 
 	void Start ()
 	{
@@ -18,6 +21,18 @@ public class GameState : MonoBehaviour
 		ProgressBarBehaviour character2HealthBar = GameObject.Find ("Character2HealthBar").GetComponent<ProgressBarBehaviour> ();
 		character2HealthBar.SetDirection (-1); //Flip the health bar on the right.
 		healthBars[1] = character2HealthBar;
+		winnerText = GameObject.Find ("WinnerText").GetComponent<Text> ();
+		gameOver = false;
+	}
+
+	void Update()
+	{
+		if (gameOver && Input.anyKeyDown)
+		{
+			InputSettings.ClearRegisteredMoves ();
+			StaticCharacterHolder.ResetCharacters ();
+			SceneHandler.GoBack ();
+		}
 	}
 
 	/// <summary>
@@ -35,7 +50,7 @@ public class GameState : MonoBehaviour
 		//Freeze game if a player dies.
 		if (health <= 0)
 		{
-			PauseGame ();
+			GameOver (StaticCharacterHolder.characters [(characterIndex + 1) % 2]); //Other player wins
 		}
 	}
 
@@ -56,6 +71,14 @@ public class GameState : MonoBehaviour
 	{
 		SetCharacterEnabled(GameObject.Find ("Character 1"), true);
 		SetCharacterEnabled(GameObject.Find ("Character 2"), true);
+	}
+
+	public void GameOver(Character winner)
+	{
+		PauseGame ();
+		winnerText.text = "PLAYER" + winner.GetNbr () + " WINS!";
+		winnerText.enabled = true;
+		gameOver = true;
 	}
 
 	/// <summary>

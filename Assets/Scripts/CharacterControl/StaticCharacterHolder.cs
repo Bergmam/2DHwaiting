@@ -21,4 +21,13 @@ public class StaticCharacterHolder{
 			characters.Add (character2);
 		}
 	}
+
+	public static void ResetCharacters()
+	{
+		foreach (Character character in characters)
+		{
+			character.ClearMoves ();
+			character.SetHealth (character.GetMaxHealth ());
+		}
+	}
 }

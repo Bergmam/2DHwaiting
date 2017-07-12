@@ -139,4 +139,8 @@ public class Character
 	{
 		return this.maxHealth;
 	}
+
+	public void ClearMoves(){
+		this.moves.Clear ();
+	}
 }

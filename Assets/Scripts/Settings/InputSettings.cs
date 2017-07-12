@@ -127,4 +127,12 @@ public static class InputSettings
 		}
 		return allButtonsAssigned;
 	}
+
+	public static void ClearRegisteredMoves()
+	{
+		foreach (CharacterInput characterInput in characterInputs)
+		{
+			characterInput.ClearAssignedButtons ();
+		}
+	}
 }

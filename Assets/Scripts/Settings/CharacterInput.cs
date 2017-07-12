@@ -91,6 +91,12 @@ public class CharacterInput
 		return assignedButtons [button];
 	}
 
+	public void ClearAssignedButtons()
+	{
+		assignedButtons.Clear ();
+	}
+
+
 	/// <summary>
 	/// Checks if all buttons have a move assigned.
 	/// </summary>
