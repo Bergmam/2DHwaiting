@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Rotatable
   - alreadyExists
+  - characterCollider
   layers:
   - Default
   - TransparentFX
