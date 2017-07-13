@@ -12,7 +12,14 @@ public class SceneReturnScript : MonoBehaviour
 		//Press Escape to go back
 		if (Input.GetKeyDown (KeyCode.Escape)) 
 		{
+            float fadeTime = GameObject.Find("Canvas").GetComponent<SceneFade>().BeginFade(1);
+            Wait(fadeTime);
 			SceneHandler.GoBack ();
 		}
 	}
+
+    IEnumerator Wait(float time)
+    {
+        yield return new WaitForSeconds(time);
+    }
 }
