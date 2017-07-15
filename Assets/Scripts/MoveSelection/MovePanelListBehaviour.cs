@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 ﻿using System.IO;
+using UnityEngine.UI;
 
 /// <summary>
 ///  Class for handling the list of available moves in the MoveSelectionScene.
@@ -28,6 +29,12 @@ public class MovePanelListBehaviour : MonoBehaviour
 		if (moves.Count == 0) { //Don't view anything if there are no moves.
 			return;
 		}
+
+		//Make list items as high as the MeasuingPanel which is 1/7 of the viewport.
+		RectTransform measuringPanel = GameObject.Find ("MeasuringPanel").GetComponent<RectTransform> ();
+		listItemHeight = measuringPanel.rect.height;
+		nbrOfVisiblePanels = 7;
+
         listItems = new MovePanelBehaviour[moves.Count];
         for (int i = 0; i < moves.Count; i++)
 		{
@@ -35,11 +42,6 @@ public class MovePanelListBehaviour : MonoBehaviour
 			GameObject previewPanel = CreateMovePanel (move, transform);
 			listItems[i] = previewPanel.GetComponent<MovePanelBehaviour> (); //Get the interaction script from the created list item.
         }
-
-		//Calculate the number of visible panels in the scroll view.
-        float viewPortHeight = transform.parent.GetComponent<RectTransform>().rect.height;
-        listItemHeight = listItems[0].gameObject.GetComponent<RectTransform>().rect.height;
-        nbrOfVisiblePanels = (int)Mathf.Round(viewPortHeight / listItemHeight);
 
 		//Get a reference to the interaction script of each panel viewing the currently selected moves of each character and place them in a list.
 		selectedMovesPanels = new SelectionPanelBahviour[2];
@@ -138,10 +140,12 @@ public class MovePanelListBehaviour : MonoBehaviour
 	/// <returns>The move panel.</returns>
 	/// <param name="move">Move.</param>
 	/// <param name="parent">Parent.</param>
-	public GameObject CreateMovePanel(Move move, Transform parent){
+	public GameObject CreateMovePanel(Move move, Transform parent)
+	{
 		string previewPath = "Prefabs" + Path.DirectorySeparatorChar + "MovePanel";
-		GameObject previewPanelObject = (GameObject)Resources.Load(previewPath);
+		GameObject previewPanelObject = (GameObject)Resources.Load (previewPath);
 		GameObject previewPanel = Instantiate (previewPanelObject, previewPanelObject.transform.position, previewPanelObject.transform.rotation, parent);
+		previewPanel.GetComponent<LayoutElement> ().preferredHeight = listItemHeight; //Set the preferred height to 1/7 the height of the viewport.
 		MovePanelBehaviour panelBehaviour = previewPanel.GetComponent<MovePanelBehaviour> ();
 		panelBehaviour.setMove (move);
 		return previewPanel;
