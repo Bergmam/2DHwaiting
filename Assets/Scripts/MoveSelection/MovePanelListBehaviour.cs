@@ -47,7 +47,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 		selectedMovesPanels = new SelectionPanelBahviour[2];
 		for (int i = 0; i < selectedMovesPanels.Length; i++) {
 			// (Panel(i+1) is used becuase the panels are named Panel1 and Panel2, not Panel0 and Panel1)
-			selectedMovesPanels[i] = GameObject.Find ("Panel" + (i+1)).GetComponent<SelectionPanelBahviour> ();
+			selectedMovesPanels[i] = GameObject.Find ("SelectedMovesPanel" + (i+1)).GetComponent<SelectionPanelBahviour> ();
 			Character character = StaticCharacterHolder.characters [i];
 			//Make sure there is actually a characters present for each selected moves panel.
 			if (character == null) {
