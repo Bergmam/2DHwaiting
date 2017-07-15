@@ -10,12 +10,16 @@ public class GameState : MonoBehaviour
 {
 	private ProgressBarBehaviour[] healthBars;
 	private Text winnerText;
+	private Text pressAnyKeyText;
 	private bool gameOver;
+	private bool pressAnyKeyToContinue;
 	private bool paused;
 	private ColorModifier pausePanelToggel;
+	private float timeUntilPressAnyKey;
 
 	void Start ()
 	{
+		timeUntilPressAnyKey = 2.5f;
 		pausePanelToggel = GameObject.Find ("PauseGreyPanel").GetComponent<ColorModifier> ();
 		pausePanelToggel.SetDefaultColor (new Color32 (0, 0, 0, 0));
 		pausePanelToggel.SetSelectedColor (new Color32 (120, 120, 120, 160));
@@ -26,12 +30,27 @@ public class GameState : MonoBehaviour
 		character2HealthBar.SetDirection (-1); //Flip the health bar on the right.
 		healthBars[1] = character2HealthBar;
 		winnerText = GameObject.Find ("WinnerText").GetComponent<Text> ();
+		pressAnyKeyText = GameObject.Find ("PressAnyKeyText").GetComponent<Text> ();
 		gameOver = false;
 		paused = false;
 	}
 
 	void Update()
 	{
+		//Wait for 2.5 seconds then show the text saying "Press any key to continue".
+		if (gameOver)
+		{
+			if (timeUntilPressAnyKey > 0)
+			{
+				timeUntilPressAnyKey -= Time.deltaTime;
+			}
+			else
+			{
+				pressAnyKeyText.enabled = true;
+				pressAnyKeyToContinue = true;
+			}
+		}
+		//Pause game when a player presses the escape key.
 		if (Input.GetKeyDown (KeyCode.Escape))
 		{
 			if (paused) {
@@ -42,7 +61,8 @@ public class GameState : MonoBehaviour
 				PauseGame ();
 			}
 		}
-		else if (gameOver && Input.anyKeyDown)
+		//If presAnyKeyToContinue is true (which it is 2.5 seconds after a player dies), go back to move selection on key press.
+		else if (pressAnyKeyToContinue && Input.anyKeyDown)
 		{
 			InputSettings.ClearRegisteredMoves ();
 			StaticCharacterHolder.ResetCharacters ();
