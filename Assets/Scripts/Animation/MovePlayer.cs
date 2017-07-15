@@ -94,17 +94,20 @@ public class MovePlayer : MonoBehaviour
 			float toRot = toFrame.getRotation (name);
             //Make sure rotation around zero does not result in a loop in the wrong direction.
             //Make the angle right of zero (the smaller angle) bigger.
-            if (RotationUtils.ZeroInSmallerLimit(fromRot,toRot))
-            {
-                if(fromRot < toRot)
-                {
-                    fromRot += 360;
-                }else
-                {
-                    toRot += 360;
-                }
-            }
+			if (RotationUtils.ZeroInSmallerLimit (fromRot, toRot)) {
+				if (fromRot < toRot) {
+					fromRot += 360;
+				} else if (fromRot > toRot) {
+					toRot += 360;
+				}
+			//Make sure rotation 0 <=> [180-359] does not rotate the wrong way.
+			} else if (fromRot == 0 && toRot > 180) {
+				fromRot += 360;
+			} else if (toRot == 0 && fromRot > 180) {
+				toRot += 360;
+			}
 			newRotation = fromRot + (float)percentage/(float)100 * (toRot- fromRot);
+
 			newFrame.AddBodyPartRotation (name, newRotation);
 		}
 		return newFrame;
