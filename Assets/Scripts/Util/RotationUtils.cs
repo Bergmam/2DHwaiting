@@ -30,11 +30,11 @@ public class RotationUtils
 	/// <param name="high">The High angle.</param>
 	public static float MiddleOfRotations(float low, float high)
 	{
-        //return ((high + 360 - low) / 2) % 360;
-        if (InCounterClockwiseLimits(0.0f, low, high))
-        {
-            high += 360;
-        }
+		//High has to be highter than low. Need to check if high is equal to or has passed zero.
+		if (InCounterClockwiseLimits (0.0f, low, high) || high == 0)
+		{
+			high += 360;
+		}
         return ((high+low)/2) % 360;
 	}
 
