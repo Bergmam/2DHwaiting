@@ -105,7 +105,6 @@ GameObject:
   m_Component:
   - component: {fileID: 32211298}
   - component: {fileID: 32211299}
-  - component: {fileID: 32211302}
   - component: {fileID: 32211301}
   - component: {fileID: 32211300}
   m_Layer: 0
@@ -207,17 +206,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &32211302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 32211297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &44573788
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +258,6 @@ GameObject:
   - component: {fileID: 149053036}
   - component: {fileID: 149053038}
   - component: {fileID: 149053037}
-  - component: {fileID: 149053039}
   m_Layer: 0
   m_Name: Upper Right Leg
   m_TagString: Rotatable
@@ -370,17 +357,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &149053039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 149053034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &235055894
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +367,6 @@ GameObject:
   m_Component:
   - component: {fileID: 235055895}
   - component: {fileID: 235055896}
-  - component: {fileID: 235055899}
   - component: {fileID: 235055898}
   - component: {fileID: 235055897}
   m_Layer: 0
@@ -493,17 +468,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &235055899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 235055894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &246140542
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,7 +587,6 @@ GameObject:
   - component: {fileID: 293192109}
   - component: {fileID: 293192111}
   - component: {fileID: 293192110}
-  - component: {fileID: 293192112}
   m_Layer: 0
   m_Name: Left Foot
   m_TagString: Rotatable
@@ -722,17 +685,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &293192112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 293192107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &337612464
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,7 +695,6 @@ GameObject:
   m_Component:
   - component: {fileID: 337612465}
   - component: {fileID: 337612466}
-  - component: {fileID: 337612469}
   - component: {fileID: 337612468}
   - component: {fileID: 337612467}
   m_Layer: 0
@@ -845,17 +796,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &337612469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 337612464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &526316140
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,7 +808,6 @@ GameObject:
   - component: {fileID: 526316142}
   - component: {fileID: 526316144}
   - component: {fileID: 526316143}
-  - component: {fileID: 526316145}
   m_Layer: 0
   m_Name: Right Foot
   m_TagString: Rotatable
@@ -967,17 +906,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &526316145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 526316140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &645557988
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,7 +918,6 @@ GameObject:
   - component: {fileID: 645557990}
   - component: {fileID: 645557992}
   - component: {fileID: 645557991}
-  - component: {fileID: 645557993}
   m_Layer: 0
   m_Name: Left Hand
   m_TagString: Rotatable
@@ -1088,17 +1015,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &645557993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 645557988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &648480799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,7 +1027,6 @@ GameObject:
   - component: {fileID: 648480801}
   - component: {fileID: 648480803}
   - component: {fileID: 648480802}
-  - component: {fileID: 648480804}
   m_Layer: 0
   m_Name: Upper Left Arm
   m_TagString: Rotatable
@@ -1211,17 +1126,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &648480804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 648480799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &721560630
 GameObject:
   m_ObjectHideFlags: 0
@@ -1232,7 +1136,6 @@ GameObject:
   m_Component:
   - component: {fileID: 721560631}
   - component: {fileID: 721560632}
-  - component: {fileID: 721560635}
   - component: {fileID: 721560634}
   - component: {fileID: 721560633}
   m_Layer: 0
@@ -1334,17 +1237,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &721560635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 721560630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &733829136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1513,7 +1405,6 @@ GameObject:
   - component: {fileID: 875336375}
   - component: {fileID: 875336376}
   - component: {fileID: 875336377}
-  - component: {fileID: 875336380}
   - component: {fileID: 875336379}
   - component: {fileID: 875336378}
   m_Layer: 0
@@ -1636,17 +1527,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &875336380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 875336374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &982757189
 GameObject:
   m_ObjectHideFlags: 0
@@ -1657,7 +1537,6 @@ GameObject:
   m_Component:
   - component: {fileID: 982757190}
   - component: {fileID: 982757191}
-  - component: {fileID: 982757194}
   - component: {fileID: 982757193}
   - component: {fileID: 982757192}
   m_Layer: 0
@@ -1759,17 +1638,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &982757194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 982757189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1015446534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1781,10 +1649,8 @@ GameObject:
   - component: {fileID: 1015446535}
   - component: {fileID: 1015446536}
   - component: {fileID: 1015446537}
-  - component: {fileID: 1015446540}
   - component: {fileID: 1015446539}
   - component: {fileID: 1015446538}
-  - component: {fileID: 1015446541}
   m_Layer: 0
   m_Name: Torso
   m_TagString: Rotatable
@@ -1905,28 +1771,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1015446540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1015446534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1015446541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1015446534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1017906095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,9 +1782,7 @@ GameObject:
   - component: {fileID: 1017906096}
   - component: {fileID: 1017906097}
   - component: {fileID: 1017906100}
-  - component: {fileID: 1017906098}
   - component: {fileID: 1017906099}
-  - component: {fileID: 1017906101}
   m_Layer: 0
   m_Name: Right Hand
   m_TagString: Rotatable
@@ -2003,17 +1845,6 @@ SpriteRenderer:
   m_Size: {x: 0.42, y: 0.41}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
---- !u!114 &1017906098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1017906095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &1017906099
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2049,17 +1880,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1017906101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1017906095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1022065137
 GameObject:
   m_ObjectHideFlags: 0
@@ -2070,7 +1890,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1022065138}
   - component: {fileID: 1022065139}
-  - component: {fileID: 1022065142}
   - component: {fileID: 1022065141}
   - component: {fileID: 1022065140}
   m_Layer: 0
@@ -2171,17 +1990,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1022065142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1022065137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1089801397
 GameObject:
   m_ObjectHideFlags: 0
@@ -2194,7 +2002,6 @@ GameObject:
   - component: {fileID: 1089801399}
   - component: {fileID: 1089801401}
   - component: {fileID: 1089801400}
-  - component: {fileID: 1089801402}
   m_Layer: 0
   m_Name: Lower Right Leg
   m_TagString: Rotatable
@@ -2294,17 +2101,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1089801402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1089801397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1097934276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,7 +2113,6 @@ GameObject:
   - component: {fileID: 1097934278}
   - component: {fileID: 1097934280}
   - component: {fileID: 1097934279}
-  - component: {fileID: 1097934281}
   m_Layer: 0
   m_Name: Lower Left leg
   m_TagString: Rotatable
@@ -2417,17 +2212,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1097934281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1097934276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1099718439
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,7 +2222,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1099718440}
   - component: {fileID: 1099718441}
-  - component: {fileID: 1099718444}
   - component: {fileID: 1099718443}
   - component: {fileID: 1099718442}
   m_Layer: 0
@@ -2538,17 +2321,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1099718444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1099718439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1124092136
 GameObject:
   m_ObjectHideFlags: 0
@@ -2559,7 +2331,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1124092137}
   - component: {fileID: 1124092138}
-  - component: {fileID: 1124092141}
   - component: {fileID: 1124092140}
   - component: {fileID: 1124092139}
   m_Layer: 0
@@ -2661,17 +2432,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1124092141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1124092136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1172354566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2685,6 +2445,7 @@ GameObject:
   - component: {fileID: 1172354570}
   - component: {fileID: 1172354571}
   - component: {fileID: 1172354567}
+  - component: {fileID: 1172354572}
   m_Layer: 0
   m_Name: Character 1
   m_TagString: characterCollider
@@ -2768,6 +2529,17 @@ BoxCollider2D:
   m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 1.5, y: 6}
+--- !u!114 &1172354572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1172354566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aa3361114cd942e0b07f39aa8e516dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1215908443
 GameObject:
   m_ObjectHideFlags: 0
@@ -2852,10 +2624,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1230264209}
   - component: {fileID: 1230264210}
-  - component: {fileID: 1230264213}
   - component: {fileID: 1230264212}
   - component: {fileID: 1230264211}
-  - component: {fileID: 1230264214}
   m_Layer: 0
   m_Name: Lower Right Arm
   m_TagString: Rotatable
@@ -2955,28 +2725,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1230264213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1230264208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1230264214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1230264208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1235416539
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,7 +2735,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1235416540}
   - component: {fileID: 1235416541}
-  - component: {fileID: 1235416544}
   - component: {fileID: 1235416543}
   - component: {fileID: 1235416542}
   m_Layer: 0
@@ -3089,17 +2836,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1235416544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1235416539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1323251157
 GameObject:
   m_ObjectHideFlags: 0
@@ -3112,7 +2848,6 @@ GameObject:
   - component: {fileID: 1323251159}
   - component: {fileID: 1323251161}
   - component: {fileID: 1323251160}
-  - component: {fileID: 1323251162}
   m_Layer: 0
   m_Name: Lower Left Arm
   m_TagString: Rotatable
@@ -3212,17 +2947,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1323251162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1323251157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1382264290
 GameObject:
   m_ObjectHideFlags: 0
@@ -3233,7 +2957,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1382264291}
   - component: {fileID: 1382264292}
-  - component: {fileID: 1382264295}
   - component: {fileID: 1382264294}
   - component: {fileID: 1382264293}
   m_Layer: 0
@@ -3333,17 +3056,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1382264295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1382264290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1385264013
 GameObject:
   m_ObjectHideFlags: 0
@@ -3571,6 +3283,7 @@ GameObject:
   - component: {fileID: 1468355796}
   - component: {fileID: 1468355798}
   - component: {fileID: 1468355797}
+  - component: {fileID: 1468355799}
   m_Layer: 0
   m_Name: Character 2
   m_TagString: characterCollider
@@ -3654,6 +3367,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1468355799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468355793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aa3361114cd942e0b07f39aa8e516dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1521452256
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,7 +3626,6 @@ GameObject:
   - component: {fileID: 1607347991}
   - component: {fileID: 1607347993}
   - component: {fileID: 1607347992}
-  - component: {fileID: 1607347994}
   m_Layer: 0
   m_Name: Upper Left Leg
   m_TagString: Rotatable
@@ -4002,17 +3725,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1607347994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1607347989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1610793439
 GameObject:
   m_ObjectHideFlags: 0
@@ -4091,10 +3803,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1626061520}
   - component: {fileID: 1626061521}
-  - component: {fileID: 1626061524}
   - component: {fileID: 1626061523}
   - component: {fileID: 1626061522}
-  - component: {fileID: 1626061525}
   m_Layer: 0
   m_Name: Head
   m_TagString: Rotatable
@@ -4192,28 +3902,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1626061524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1626061519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1626061525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1626061519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1690260428
 GameObject:
   m_ObjectHideFlags: 0
@@ -4477,7 +4165,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1935427036}
   - component: {fileID: 1935427037}
-  - component: {fileID: 1935427040}
   - component: {fileID: 1935427039}
   - component: {fileID: 1935427038}
   m_Layer: 0
@@ -4578,17 +4265,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1935427040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1935427035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1976565920
 GameObject:
   m_ObjectHideFlags: 0
@@ -4601,7 +4277,6 @@ GameObject:
   - component: {fileID: 1976565922}
   - component: {fileID: 1976565924}
   - component: {fileID: 1976565923}
-  - component: {fileID: 1976565925}
   m_Layer: 0
   m_Name: Right Hand
   m_TagString: Rotatable
@@ -4699,17 +4374,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1976565925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1976565920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2073425911
 GameObject:
   m_ObjectHideFlags: 0
@@ -4720,7 +4384,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2073425912}
   - component: {fileID: 2073425913}
-  - component: {fileID: 2073425916}
   - component: {fileID: 2073425915}
   - component: {fileID: 2073425914}
   m_Layer: 0
@@ -4822,17 +4485,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2073425916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2073425911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2123543282
 GameObject:
   m_ObjectHideFlags: 0
@@ -4843,10 +4495,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2123543283}
   - component: {fileID: 2123543284}
-  - component: {fileID: 2123543287}
   - component: {fileID: 2123543286}
   - component: {fileID: 2123543285}
-  - component: {fileID: 2123543288}
   m_Layer: 0
   m_Name: Upper Right Arm
   m_TagString: Rotatable
@@ -4946,25 +4596,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2123543287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2123543282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2123543288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2123543282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa037a582a77fdd49931af305e48d50b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
