@@ -14,15 +14,18 @@ public class GameState : MonoBehaviour
 	private bool gameOver;
 	private bool pressAnyKeyToContinue;
 	private bool paused;
-	private ColorModifier pausePanelToggel;
+	private ColorModifier pauseBackgroundToggel;
 	private float timeUntilPressAnyKey;
+	private GameObject pauseMenu;
 
 	void Start ()
 	{
+		pauseMenu = GameObject.Find ("PauseMenu");
+		pauseMenu.SetActive (false);
 		timeUntilPressAnyKey = 2.5f;
-		pausePanelToggel = GameObject.Find ("PauseGreyPanel").GetComponent<ColorModifier> ();
-		pausePanelToggel.SetDefaultColor (new Color32 (0, 0, 0, 0));
-		pausePanelToggel.SetSelectedColor (new Color32 (120, 120, 120, 160));
+		pauseBackgroundToggel = GameObject.Find ("PauseBackground").GetComponent<ColorModifier> ();
+		pauseBackgroundToggel.SetDefaultColor (new Color32 (0, 0, 0, 0));
+		pauseBackgroundToggel.SetSelectedColor (new Color32 (120, 120, 120, 160));
 		healthBars = new ProgressBarBehaviour[StaticCharacterHolder.characters.Count];
 		ProgressBarBehaviour character1HealthBar = GameObject.Find ("Character1HealthBar").GetComponent<ProgressBarBehaviour> ();
 		healthBars [0] = character1HealthBar;
@@ -95,7 +98,8 @@ public class GameState : MonoBehaviour
 	public void PauseGame()
 	{
 		paused = true;
-		pausePanelToggel.Select ();
+		pauseBackgroundToggel.Select ();
+		pauseMenu.SetActive (true);
 		GameObject.Find ("Character 1").GetComponent<InputController> ().Pause ();
 		GameObject.Find ("Character 2").GetComponent<InputController> ().Pause ();
 	}
@@ -107,7 +111,8 @@ public class GameState : MonoBehaviour
 	public void UnPauseGame()
 	{
 		paused = false;
-		pausePanelToggel.DeSelect ();
+		pauseBackgroundToggel.DeSelect ();
+		pauseMenu.SetActive (false);
 		GameObject.Find ("Character 1").GetComponent<InputController> ().UnPause ();
 		GameObject.Find ("Character 2").GetComponent<InputController> ().UnPause ();
 	}
