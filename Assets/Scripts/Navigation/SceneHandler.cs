@@ -60,6 +60,8 @@ public class SceneHandler
 	{
 		if (sceneStack.Count > 0) 
 		{
+			float fadeTime = GameObject.Find("Canvas").GetComponent<SceneFade>().BeginFade(1);
+			Wait(fadeTime);
             if (SceneManager.GetActiveScene().name == "MoveEditorScene")
             {
                 if (!EditorUtility.DisplayDialog("Quit while editing move?", "Do you want to quit while still editing a move?", "Yes", "No"))
@@ -74,5 +76,31 @@ public class SceneHandler
                 SceneManager.LoadScene(previousSceneName);
             }
 		}
+	}
+
+	/// <summary>
+	/// Goes the back to the specified scene, poping scene stack until it is reached or until the stack only contains one element.
+	/// </summary>
+	/// <param name="sceneName">Scene name.</param>
+	public static void GoBackToScene(string sceneName)
+	{
+		//Pop stack until a matching scene is found.
+		while (!sceneName.Equals ((string)sceneStack.Peek ()) && sceneStack.Count > 1)
+		{
+			sceneStack.Pop ();
+		}
+		//Fade between scenes.
+		float fadeTime = GameObject.Find("Canvas").GetComponent<SceneFade>().BeginFade(1);
+		Wait(fadeTime);
+		string newSceneName = (string)sceneStack.Pop ();
+		if (scenePathsList.Contains(newSceneName))
+		{
+			SceneManager.LoadScene(newSceneName);
+		}
+	}
+
+	static IEnumerator Wait(float time)
+	{
+		yield return new WaitForSeconds(time);
 	}
 }
