@@ -6,16 +6,19 @@ public class CharacterCollisionDetector : MonoBehaviour
 {
 	private Character thisCharacter;
 	private GameState gameState;
+	private Rigidbody2D thisRigidbody;
 
 	void Start ()
 	{
-		thisCharacter = transform.root.gameObject.GetComponent<InputController> ().GetCharacter ();
+		thisCharacter = GetComponent<InputController> ().GetCharacter ();
+		thisRigidbody = GetComponent<Rigidbody2D> ();
 		this.gameState = GameObject.Find ("Handler").GetComponent<GameState> ();
 	}
 	
 	void OnTriggerEnter2D (Collider2D otherCollider)
 	{
-		GameObject otherCharacterObject = otherCollider.transform.root.gameObject;
+		Transform otherRootTransform = otherCollider.transform.root;
+		GameObject otherCharacterObject = otherRootTransform.gameObject;
 		InputController otherInputController = otherCharacterObject.GetComponent<InputController> (); //Get attacking character's InputController
 		if (otherInputController == null)
 		{
@@ -29,8 +32,19 @@ public class CharacterCollisionDetector : MonoBehaviour
 		}
 		thisCharacter.ApplyMoveTo (move); //Apply damage in model.
 		gameState.UpdateCharacterHealth (thisCharacter); //Update health bars and check winner.
-		otherCollider.enabled = false;
 
-		//TODO: Implement knockback.
+		//Apply knockback.
+		Vector3 thisPosition = transform.position;
+		Vector3 otherPosition = otherRootTransform.position;
+		if (otherPosition.x < thisPosition.x)
+		{
+			thisRigidbody.AddForce (Vector2.right * 1000f);
+		}
+		else
+		{
+			thisRigidbody.AddForce (Vector2.left * 1000f);
+		}
+
+		otherCollider.enabled = false;
 	}
 }
