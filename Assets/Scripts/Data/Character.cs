@@ -108,7 +108,7 @@ public class Character
 
     public void ApplyMoveTo(Move move)
     {
-        SubHealth(move.GetStrength());
+		SubHealth(move.GetStrength() + 1); //Change range of move damage [0-100] -> [1-101]
     }
 
 	public override bool Equals(System.Object obj)
