@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class Recorder : MonoBehaviour 
 {
-	ProgressBarBehaviour progressBarBehaviour;
+	private ProgressBarBehaviour progressBarBehaviour;
 	private Move move; //The move being built by the recorder.
 	private List<GameObject> endPoints;
 	public bool reverseOnWayBack = true;
@@ -104,7 +104,11 @@ public class Recorder : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown ("space")) 
+		//User is not allowed to record a frame if left mouse button is down.
+		//If the user drags a bodypart quickly while pressing space, sometimes the limits are updated without the frame being added.
+		bool leftMouseButtonDown = Input.GetMouseButton (0);
+		bool spacePressed = Input.GetKeyDown ("space");
+		if (!leftMouseButtonDown && spacePressed)
 		{
 			RecordFrame ();
 		}
