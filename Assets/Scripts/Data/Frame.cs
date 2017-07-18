@@ -78,7 +78,7 @@ public class Frame : ICloneable
 		Frame clone = new Frame ();
 		foreach (string key in bodyPartRotations.Keys) 
 		{
-			clone.AddBodyPartRotation (key, bodyPartRotations [key]);
+			clone.AddBodyPartRotation ((string)key.Clone (), bodyPartRotations [key]);
 		}
 		return clone;
 	}

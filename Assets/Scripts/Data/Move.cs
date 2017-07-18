@@ -135,4 +135,19 @@ public class Move
 	{
 		return currentNbrOfFrames;
 	}
+
+	public object Clone()
+	{
+		Move clone = new Move ();
+		clone.speed = this.speed;
+		clone.strength = this.strength;
+		clone.frames = (Frame[])this.frames.Clone ();
+		clone.nextIndex = this.nextIndex;
+		clone.done = this.done;
+		clone.defaultNrOfFrames = 12;
+		clone.name = (string)this.name.Clone ();
+		clone.damageDealerName = (string)this.damageDealerName.Clone ();
+		clone.currentNbrOfFrames = this.currentNbrOfFrames;
+		return clone;
+	}
 }
