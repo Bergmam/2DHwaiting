@@ -90,7 +90,7 @@ public class MoveCreator : MonoBehaviour
 	{
 		if (!AvailableMoves.ContainsName (move.GetName ()) && !move.GetName().Equals(string.Empty))
 		{
-			AvailableMoves.AddMove (move);
+			AvailableMoves.AddMove ((Move)move.Clone ());
 			ResetMoveEditor ();
 		}
 		else
