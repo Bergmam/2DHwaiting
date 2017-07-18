@@ -12,6 +12,7 @@ public class InputController : MonoBehaviour
 	private bool knockedBack;
 	private float previousPushedVelocity = 0; //Used to compare when the character has been knocked back and is approaching velocity 0 again.
 	private bool paused;
+	private Vector2 prePauseVelocity;
 
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
 	bool isPlayingMove = false;
@@ -163,7 +164,8 @@ public class InputController : MonoBehaviour
 	/// Pauses this instance, freezing all animation and disable buttons.
 	/// </summary>
 	public void Pause(){
-		this.thisBody.velocity = Vector2.zero;
+		prePauseVelocity = thisBody.velocity;
+		thisBody.velocity = Vector2.zero;
 		this.paused = true;
 		this.animator.enabled = false;
 		characterMovePlayer.Pause ();
@@ -174,6 +176,7 @@ public class InputController : MonoBehaviour
 	/// </summary>
 	public void UnPause()
 	{
+		thisBody.velocity = prePauseVelocity;
 		this.paused = false;
 		this.animator.enabled = !characterMovePlayer.CheckIsPlaying ();
 		characterMovePlayer.UnPause ();
