@@ -64,10 +64,6 @@ public class SceneHandler
 			Wait(fadeTime);
             if (SceneManager.GetActiveScene().name == "MoveEditorScene")
             {
-                if (!EditorUtility.DisplayDialog("Quit while editing move?", "Do you want to quit while still editing a move?", "Yes", "No"))
-                {
-                    return;
-                }
 				SaveLoad.Save(AvailableMoves.GetMoves());
             }
             string previousSceneName = (string)sceneStack.Pop();
