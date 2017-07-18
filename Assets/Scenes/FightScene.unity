@@ -2988,8 +2988,6 @@ MonoBehaviour:
   speed: 0.1
   horizontalAxis: Horizontal
   characterIndex: 1
-  collisionLeft: 0
-  collisionRight: 0
 --- !u!61 &1172354571
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3882,8 +3880,6 @@ MonoBehaviour:
   speed: 0.1
   horizontalAxis: Horizontal2
   characterIndex: 2
-  collisionLeft: 0
-  collisionRight: 0
 --- !u!61 &1468355797
 BoxCollider2D:
   m_ObjectHideFlags: 0

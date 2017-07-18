@@ -9,7 +9,8 @@ public class InputController : MonoBehaviour
 	public int characterIndex;
 	private bool collisionLeft;
 	private bool collisionRight;
-
+	private bool knockedBack;
+	private float previousPushedVelocity = 0; //Used to compare when the character has been knocked back and is approaching velocity 0 again.
 	private bool paused;
 
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
@@ -43,19 +44,29 @@ public class InputController : MonoBehaviour
 		}
 		// Get information about the next position of the Character
         float horizontal = Input.GetAxisRaw(horizontalAxis);
-		if (horizontal < 0 && !collisionLeft)
+		//Check if player has been knocked back and is now standing still again.
+		//Without previousPushedVelocity, the velocity is zero in the first frame and no knockback is applied.
+		if (Mathf.Abs (thisBody.velocity.x) < 0.1 && knockedBack && previousPushedVelocity > Mathf.Abs (thisBody.velocity.x)) {
+			//Remove any colision that was detected before the character was knocked back.
+			this.collisionLeft = false;
+			this.collisionRight = false;
+			//Reset for the first comparison next time KnockBack is called.
+			knockedBack = false;
+			previousPushedVelocity = 0;
+		}
+		if (horizontal < 0 && !collisionLeft && !knockedBack)
         {
             thisBody.velocity = new Vector3(-10, thisBody.velocity.y);
 			collisionRight = false; //If moving left, there is no longer a collision to the right.
         }
-		else if (horizontal > 0 && !collisionRight)
+		else if (horizontal > 0 && !collisionRight && !knockedBack)
         {
 			thisBody.velocity = new Vector3(10, thisBody.velocity.y);
-			collisionLeft = false; //If moving right, there is no longer a collision to the left.
+			collisionLeft = false; //If moving right, there is no longer a collision to the left
         }
-        else if (horizontal == 0)
+		else if (horizontal == 0 && !knockedBack)
         {
-            thisBody.velocity = new Vector3(0, thisBody.velocity.y);
+            thisBody.velocity = new Vector3(0, thisBody.velocity.y); //Without the knockedBack bool, this stops the character.
         }
         pressedButton = "";
 
@@ -73,20 +84,26 @@ public class InputController : MonoBehaviour
             }
         }
 
-		if (!isPlayingMove) {
-			if (Input.anyKeyDown) {
-				foreach (string button in InputSettings.allUsedButtons) {
-					if (Input.GetKeyDown (button)) {
+		if (!isPlayingMove)
+		{
+			if (Input.anyKeyDown)
+			{
+				foreach (string button in InputSettings.allUsedButtons)
+				{
+					if (Input.GetKeyDown (button))
+					{
 						pressedButton = button;
 					}
 				}
-				if (InputSettings.HasButton (characterIndex, pressedButton)) {
+				if (InputSettings.HasButton (characterIndex, pressedButton))
+				{
 					string moveName = InputSettings.GetMoveName (pressedButton);
 					currentlyPlayedMove = character.GetMove (moveName);
 
 					Move move = character.GetMove (moveName);
 					// ### TEST ### TODO: Remove below
-					if (currentlyPlayedMove == null) {
+					if (currentlyPlayedMove == null)
+					{
 						print ("Move " + moveName + " is null! Character index is " + characterIndex + ", characterNbr = " + character.GetNbr ());
 						print ("StaticCharacterHolder.characters.Count = " + StaticCharacterHolder.characters.Count);
 					}
@@ -108,7 +125,8 @@ public class InputController : MonoBehaviour
 		}
 
 		// Check isPlayingMove again since it can be set to true in the if-block above.
-		if (!isPlayingMove){
+		if (!isPlayingMove)
+		{
 			if (Mathf.Abs(horizontal) > 0)
 			{
 				animator.SetBool("Running", true);
@@ -119,8 +137,17 @@ public class InputController : MonoBehaviour
 				animator.SetBool("Running", false);
 			}
 			stupidCounter--;
-        }
+		}
     }
+
+	//Check previous velocity after update has run.
+	void LateUpdate()
+	{
+		if (knockedBack)
+		{
+			previousPushedVelocity = Mathf.Abs (thisBody.velocity.x);
+		}
+	}
 
     public Character GetCharacter()
     {
@@ -136,6 +163,7 @@ public class InputController : MonoBehaviour
 	/// Pauses this instance, freezing all animation and disable buttons.
 	/// </summary>
 	public void Pause(){
+		this.thisBody.velocity = Vector2.zero;
 		this.paused = true;
 		this.animator.enabled = false;
 		characterMovePlayer.Pause ();
@@ -144,7 +172,8 @@ public class InputController : MonoBehaviour
 	/// <summary>
 	/// Unpauses this instance, enabling buttons and resuming the animation that is currently playing.
 	/// </summary>
-	public void UnPause(){
+	public void UnPause()
+	{
 		this.paused = false;
 		this.animator.enabled = !characterMovePlayer.CheckIsPlaying ();
 		characterMovePlayer.UnPause ();
@@ -158,5 +187,10 @@ public class InputController : MonoBehaviour
 	public void CollisionRight()
 	{
 		this.collisionRight = true;
+	}
+
+	public void KnockBack()
+	{
+		this.knockedBack = true;
 	}
 }
