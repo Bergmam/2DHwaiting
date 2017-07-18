@@ -554,7 +554,7 @@ GameObject:
   - component: {fileID: 246140546}
   - component: {fileID: 246140545}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2988,6 +2988,8 @@ MonoBehaviour:
   speed: 0.1
   horizontalAxis: Horizontal
   characterIndex: 1
+  collisionLeft: 0
+  collisionRight: 0
 --- !u!61 &1172354571
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3543,7 +3545,7 @@ GameObject:
   - component: {fileID: 1385264015}
   - component: {fileID: 1385264014}
   m_Layer: 0
-  m_Name: New Sprite (2)
+  m_Name: Left Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3650,7 +3652,7 @@ GameObject:
   - component: {fileID: 1409642075}
   - component: {fileID: 1409642074}
   m_Layer: 0
-  m_Name: New Sprite (1)
+  m_Name: Right Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3880,6 +3882,8 @@ MonoBehaviour:
   speed: 0.1
   horizontalAxis: Horizontal2
   characterIndex: 2
+  collisionLeft: 0
+  collisionRight: 0
 --- !u!61 &1468355797
 BoxCollider2D:
   m_ObjectHideFlags: 0

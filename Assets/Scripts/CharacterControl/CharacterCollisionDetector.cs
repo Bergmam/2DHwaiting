@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class CharacterCollisionDetector : MonoBehaviour
 {
-	private Character thisCharacter;
+	private Character character;
 	private GameState gameState;
-	private Rigidbody2D thisRigidbody;
+	private Rigidbody2D rigidBody;
+	private InputController inputController;
 
 	void Start ()
 	{
-		thisCharacter = GetComponent<InputController> ().GetCharacter ();
-		thisRigidbody = GetComponent<Rigidbody2D> ();
+		this.inputController = GetComponent<InputController> ();
+		this.character = inputController.GetCharacter ();
+		this.rigidBody = GetComponent<Rigidbody2D> ();
 		this.gameState = GameObject.Find ("Handler").GetComponent<GameState> ();
 	}
 	
@@ -19,32 +21,53 @@ public class CharacterCollisionDetector : MonoBehaviour
 	{
 		Transform otherRootTransform = otherCollider.transform.root;
 		GameObject otherCharacterObject = otherRootTransform.gameObject;
-		InputController otherInputController = otherCharacterObject.GetComponent<InputController> (); //Get attacking character's InputController
+		InputController otherInputController = otherCharacterObject.GetComponent<InputController> ();
 		if (otherInputController == null)
 		{
 			return; //If colliding object's root does not have an InputController, it is not a character.
 		}
 		Character otherCharacter = otherInputController.GetCharacter ();
 		Move move = otherInputController.GetCurretlyPlayedMove ();
-		if (otherCharacter == null || move == null || otherCharacter.Equals (thisCharacter))
+		if (otherCharacter == null || move == null || otherCharacter.Equals (this.character))
 		{
 			return; //Make sure other character object has all necessary info.
 		}
-		thisCharacter.ApplyMoveTo (move); //Apply damage in model.
-		gameState.UpdateCharacterHealth (thisCharacter); //Update health bars and check winner.
+		this.character.ApplyMoveTo (move); //Apply damage in model.
+		gameState.UpdateCharacterHealth (this.character); //Update health bars and check winner.
 
 		//Apply knockback.
 		Vector3 thisPosition = transform.position;
 		Vector3 otherPosition = otherRootTransform.position;
 		if (otherPosition.x < thisPosition.x)
 		{
-			thisRigidbody.AddForce (Vector2.right * 1000f);
+			this.rigidBody.AddForce (Vector2.right * 1000f);
 		}
 		else
 		{
-			thisRigidbody.AddForce (Vector2.left * 1000f);
+			this.rigidBody.AddForce (Vector2.left * 1000f);
 		}
 
 		otherCollider.enabled = false;
+	}
+		
+	//Detect collisions with other non-trigger colliders.
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		Collider2D otherCollider = collision.collider; //The collider the object this script is attached to collides with.
+		GameObject otherCharacterObject = otherCollider.gameObject;
+		InputController otherInputController = otherCharacterObject.GetComponent<InputController> ();
+		if (otherInputController == null)
+		{
+			return; //If colliding object's root does not have an InputController, it is not a character.
+		}
+		//Tell this inputcontroller something is blocking the way in the right direction.
+		if (otherCollider.transform.position.x < transform.position.x)
+		{
+			inputController.CollisionLeft ();
+		}
+		else
+		{
+			inputController.CollisionRight ();
+		}
 	}
 }

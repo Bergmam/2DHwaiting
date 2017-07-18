@@ -7,6 +7,8 @@ public class InputController : MonoBehaviour
     public float speed;
     public string horizontalAxis;
 	public int characterIndex;
+	private bool collisionLeft;
+	private bool collisionRight;
 
 	private bool paused;
 
@@ -41,13 +43,15 @@ public class InputController : MonoBehaviour
 		}
 		// Get information about the next position of the Character
         float horizontal = Input.GetAxisRaw(horizontalAxis);
-        if (horizontal < 0)
+		if (horizontal < 0 && !collisionLeft)
         {
             thisBody.velocity = new Vector3(-10, thisBody.velocity.y);
+			collisionRight = false; //If moving left, there is no longer a collision to the right.
         }
-        else if (horizontal > 0)
+		else if (horizontal > 0 && !collisionRight)
         {
-            thisBody.velocity = new Vector3(10, thisBody.velocity.y);
+			thisBody.velocity = new Vector3(10, thisBody.velocity.y);
+			collisionLeft = false; //If moving right, there is no longer a collision to the left.
         }
         else if (horizontal == 0)
         {
@@ -144,5 +148,15 @@ public class InputController : MonoBehaviour
 		this.paused = false;
 		this.animator.enabled = !characterMovePlayer.CheckIsPlaying ();
 		characterMovePlayer.UnPause ();
+	}
+
+	public void CollisionLeft()
+	{
+		this.collisionLeft = true;
+	}
+
+	public void CollisionRight()
+	{
+		this.collisionRight = true;
 	}
 }
