@@ -43,47 +43,20 @@ public class InputController : MonoBehaviour
 		if (paused) {
 			return;
 		}
-		// Get information about the next position of the Character
-        float horizontal = Input.GetAxisRaw(horizontalAxis);
-		//Check if player has been knocked back and is now standing still again.
-		//Without previousPushedVelocity, the velocity is zero in the first frame and no knockback is applied.
-		if (Mathf.Abs (thisBody.velocity.x) < 0.1 && knockedBack && previousPushedVelocity > Mathf.Abs (thisBody.velocity.x)) {
-			//Remove any colision that was detected before the character was knocked back.
-			this.collisionLeft = false;
-			this.collisionRight = false;
-			//Reset for the first comparison next time KnockBack is called.
-			knockedBack = false;
-			previousPushedVelocity = 0;
+
+		// If previous animation is finished, reset isPlayingMove and enable the animator.
+		if (!characterMovePlayer.CheckIsPlaying())
+		{
+			isPlayingMove = false;
+			animator.enabled = true;
+			currentlyPlayedMove = null;
+
+			// Only set the collider to false if we have enabled it once before
+			if(damageDealerCollider != null)
+			{
+				damageDealerCollider.enabled = false;
+			}
 		}
-		if (horizontal < 0 && !collisionLeft && !knockedBack)
-        {
-            thisBody.velocity = new Vector3(-10, thisBody.velocity.y);
-			collisionRight = false; //If moving left, there is no longer a collision to the right.
-        }
-		else if (horizontal > 0 && !collisionRight && !knockedBack)
-        {
-			thisBody.velocity = new Vector3(10, thisBody.velocity.y);
-			collisionLeft = false; //If moving right, there is no longer a collision to the left
-        }
-		else if (horizontal == 0 && !knockedBack)
-        {
-            thisBody.velocity = new Vector3(0, thisBody.velocity.y); //Without the knockedBack bool, this stops the character.
-        }
-        pressedButton = "";
-
-        // If previous animation is finished, reset isPlayingMove and enable the animator.
-        if (!characterMovePlayer.CheckIsPlaying())
-        {
-            isPlayingMove = false;
-            animator.enabled = true;
-            currentlyPlayedMove = null;
-
-            // Only set the collider to false if we have enabled it once before
-            if(damageDealerCollider != null)
-            {
-                damageDealerCollider.enabled = false;
-            }
-        }
 
 		if (!isPlayingMove)
 		{
@@ -102,28 +75,51 @@ public class InputController : MonoBehaviour
 					currentlyPlayedMove = character.GetMove (moveName);
 
 					Move move = character.GetMove (moveName);
-					// ### TEST ### TODO: Remove below
-					if (currentlyPlayedMove == null)
-					{
-						print ("Move " + moveName + " is null! Character index is " + characterIndex + ", characterNbr = " + character.GetNbr ());
-						print ("StaticCharacterHolder.characters.Count = " + StaticCharacterHolder.characters.Count);
-					}
 
 					//Make sure the character cannot start playing another animation until this one is finished.
 					isPlayingMove = true;
+					thisBody.velocity = Vector2.zero;
 					animator.enabled = false;
 					// Sets MovePlayer.isPlaying before calling MovePlayer.PlayMove() to avoid concurrency issues.
 					characterMovePlayer.SetIsPlaying ();
 					characterMovePlayer.PlayMove (currentlyPlayedMove);
-                    // Get the name of the move assigned to do damage.
-                    damageDealerName = currentlyPlayedMove.GetDamageDealer();
-                    Transform damageDealer = UnityUtils.RecursiveFind(transform,damageDealerName);
-                    damageDealerCollider = damageDealer.GetComponent<Collider2D>();
-                    // Enables the Collider component of the 
-                    damageDealerCollider.enabled = true;
+					// Get the name of the move assigned to do damage.
+					damageDealerName = currentlyPlayedMove.GetDamageDealer();
+					Transform damageDealer = UnityUtils.RecursiveFind(transform,damageDealerName);
+					damageDealerCollider = damageDealer.GetComponent<Collider2D>();
+					// Enables the Collider component of the 
+					damageDealerCollider.enabled = true;
 				}
 			}
 		}
+
+		// Get information about the next position of the Character
+        float horizontal = Input.GetAxisRaw(horizontalAxis);
+		//Check if player has been knocked back and is now standing still again.
+		//Without previousPushedVelocity, the velocity is zero in the first frame and no knockback is applied.
+		if (Mathf.Abs (thisBody.velocity.x) < 0.1 && knockedBack && previousPushedVelocity > Mathf.Abs (thisBody.velocity.x)) {
+			//Remove any colision that was detected before the character was knocked back.
+			this.collisionLeft = false;
+			this.collisionRight = false;
+			//Reset for the first comparison next time KnockBack is called.
+			knockedBack = false;
+			previousPushedVelocity = 0;
+		}
+		if (horizontal < 0 && !collisionLeft && !knockedBack && !isPlayingMove)
+        {
+            thisBody.velocity = new Vector3(-10, thisBody.velocity.y);
+			collisionRight = false; //If moving left, there is no longer a collision to the right.
+        }
+		else if (horizontal > 0 && !collisionRight && !knockedBack && !isPlayingMove)
+        {
+			thisBody.velocity = new Vector3(10, thisBody.velocity.y);
+			collisionLeft = false; //If moving right, there is no longer a collision to the left
+        }
+		else if (horizontal == 0 && !knockedBack && !isPlayingMove)
+        {
+            thisBody.velocity = new Vector3(0, thisBody.velocity.y); //Without the knockedBack bool, this stops the character.
+        }
+        pressedButton = "";
 
 		// Check isPlayingMove again since it can be set to true in the if-block above.
 		if (!isPlayingMove)
