@@ -64,9 +64,16 @@ public class MovePlayer : MonoBehaviour
 		{
 			Frame firstFrame = moveFrames [i];
 			Frame secondFrame = moveFrames [i + 1];
-			for (int p = 0; p <= 100; p += speed)
+			int p = 0;
+			for (p = 0; p <= 100; p += speed)
 			{
 				Frame newFrame = BlendFrames (firstFrame, secondFrame, p);
+				frames.Add (newFrame);
+			}
+			//Make sure absolute last frame is included to return character to it's original stance.
+			if (i == (moveFrames.Length - 2) && p != 100)
+			{
+				Frame newFrame = BlendFrames (firstFrame, secondFrame, 100);
 				frames.Add (newFrame);
 			}
 		}
