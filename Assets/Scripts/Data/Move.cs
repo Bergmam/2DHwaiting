@@ -17,6 +17,7 @@ public class Move
 	private string name;
 	private string damageDealerName; //Name of the body part dealing damage when move is performed.
 	private int currentNbrOfFrames;
+	private bool blockMove;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Move"/> class.
@@ -149,5 +150,13 @@ public class Move
 		clone.damageDealerName = (string)this.damageDealerName.Clone ();
 		clone.currentNbrOfFrames = this.currentNbrOfFrames;
 		return clone;
+	}
+
+	public void SetBlockMove(bool blockMove){
+		this.blockMove = blockMove;
+	}
+
+	public bool IsBlockMove(){
+		return this.blockMove;
 	}
 }
