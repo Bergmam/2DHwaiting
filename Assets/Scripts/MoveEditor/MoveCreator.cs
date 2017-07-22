@@ -98,4 +98,26 @@ public class MoveCreator : MonoBehaviour
             saveButton.interactable = false;
         }
 	}
+
+	public void SetBlockMove(bool blockMove)
+	{
+		if (blockMove) {
+			SetBlockMoveTexts ();
+		} else {
+			SetAttackMoveTexts ();
+		}
+		this.move.SetBlockMove (blockMove);
+	}
+
+	private void SetAttackMoveTexts()
+	{
+		sliders.SetSliderStrings ("Strength", "Speed");
+		dropDown.SetLabelText ("Damage Dealer");
+	}
+
+	private void SetBlockMoveTexts()
+	{
+		sliders.SetSliderStrings ("Coverage", "Speed & Block");
+		dropDown.SetLabelText ("Shield");
+	}
 }

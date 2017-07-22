@@ -9,8 +9,12 @@ public class DropdownBehaviour : MonoBehaviour
 	private string highLightedLabelText;
 	private string damageDealer;
 
+
+	private Text label;
+
 	void Start ()
 	{
+		this.label = GameObject.Find ("DamageDealerLabelText").GetComponent<Text> ();
 		dropdown = gameObject.GetComponent<Dropdown> ();
 		dropdown.ClearOptions (); //Clear dropdown of any default items.
 		GameObject character = GameObject.Find ("Character");
@@ -67,5 +71,9 @@ public class DropdownBehaviour : MonoBehaviour
 	public string GetDamageDealer()
 	{
 		return this.damageDealer;
+	}
+
+	public void SetLabelText(string text){
+		this.label.text = text;
 	}
 }

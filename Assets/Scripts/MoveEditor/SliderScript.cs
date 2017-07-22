@@ -18,6 +18,9 @@ public class SliderScript : MonoBehaviour
     private int strengthValue;
     private int speedValue;
 
+	private string topSliderString;
+	private string botSliderString;
+
     void Start ()
     {
 		strengthSlider = GameObject.Find("StrengthSlider").GetComponent<Slider>();
@@ -29,8 +32,7 @@ public class SliderScript : MonoBehaviour
         strengthValue = (int)strengthSlider.value;
         speedValue = (int)speedSlider.value;
 
-        strengthText.text = "Strength: " + strengthValue.ToString();
-        speedText.text = "Speed: " + speedValue.ToString();
+		SetSliderStrings ("Strength", "Speed");
 	}
 
 
@@ -70,8 +72,8 @@ public class SliderScript : MonoBehaviour
         strengthSlider.value = strengthValue;
         speedSlider.value = speedValue;
 
-        speedText.text = "Speed: " + speedValue.ToString();
-        strengthText.text = "Strength: " + strengthValue.ToString();
+        speedText.text = botSliderString + ":" + speedValue.ToString();
+        strengthText.text = topSliderString + ":" + strengthValue.ToString();
     }
 
 
@@ -105,5 +107,13 @@ public class SliderScript : MonoBehaviour
 	public void ResetSliders()
 	{
 		StrengthSliderChanged (50); //Automatically updates speed as well.
+	}
+
+	public void SetSliderStrings(string top, string bot)
+	{
+		this.topSliderString = top;
+		this.botSliderString = bot;
+		strengthText.text = topSliderString + ": " + strengthValue.ToString();
+		speedText.text = botSliderString + ": " + speedValue.ToString();
 	}
 }
