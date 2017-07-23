@@ -26,6 +26,7 @@ public class MoveCreator : MonoBehaviour
 		nameInputField = GameObject.Find ("NameInputField").GetComponent<InputField> ();
 		PlaceCharacter (0.5f, 0.5f);
 		move = new Move ();
+		dropDown.SetBlockMove (move.IsBlockMove ());
 		recorder.SetMove (move);
 	}
 
@@ -35,18 +36,33 @@ public class MoveCreator : MonoBehaviour
 		if (sliders.GetSpeed () != move.GetSpeed () || sliders.GetStrength () != move.GetStrength ()) 
 		{
 			updateStrengthAndSpeed (sliders.GetSpeed (), sliders.GetStrength ());
+			UpdateShieldScale ();
 		}
-		//Update damage dealing bodypart.
-		if (!dropDown.GetDamageDealer ().Equals (move.GetDamageDealer ()))
+		//Update active bodypart.
+		if (!dropDown.GetActiveBodypart ().Equals (move.GetActiveBodypart ()))
 		{
-			move.SetDamageDealer (dropDown.GetDamageDealer ());
+			move.SetActiveBodypart (dropDown.GetActiveBodypart ());
+			UpdateShieldScale ();
 		}
 		//All frames recorded and a new, non-empty, move name has been entered.
-		if (recorder.IsDoneRecording () && nameValidator.IsNameValid ()) {
+		if (recorder.IsDoneRecording () && nameValidator.IsNameValid ())
+		{
 			move.SetName (nameValidator.GetName ());
 			saveButton.interactable = true;
-		} else {
+		}
+		else
+		{
 			saveButton.interactable = false; //hide button again if name is no longer valid.
+		}
+	}
+
+	private void UpdateShieldScale()
+	{
+		if (move.IsBlockMove () && GameObject.Find (move.GetActiveBodypart ().Replace (" ", "") + "Shield") != null)
+		{
+			GameObject shield = GameObject.Find (move.GetActiveBodypart ().Replace (" ", "") + "Shield");
+			Vector3 previousScale = shield.transform.localScale;
+			shield.transform.localScale = new Vector3 (previousScale.x, 0.5f + 0.015f * move.GetStrength (), previousScale.z);
 		}
 	}
 
@@ -99,25 +115,30 @@ public class MoveCreator : MonoBehaviour
         }
 	}
 
+	/// <summary>
+	/// Sets whether the move is a block move or not.
+	/// </summary>
+	/// <param name="blockMove">If set to <c>true</c> move is a block.</param>
 	public void SetBlockMove(bool blockMove)
 	{
-		if (blockMove) {
-			SetBlockMoveTexts ();
-		} else {
-			SetAttackMoveTexts ();
-		}
 		this.move.SetBlockMove (blockMove);
-	}
-
-	private void SetAttackMoveTexts()
-	{
-		sliders.SetSliderStrings ("Strength", "Speed");
-		dropDown.SetLabelText ("Damage Dealer");
-	}
-
-	private void SetBlockMoveTexts()
-	{
-		sliders.SetSliderStrings ("Coverage", "Speed & Block");
-		dropDown.SetLabelText ("Shield");
+		dropDown.SetBlockMove (blockMove);
+		if (blockMove)
+		{
+			GameObject.Find (move.GetActiveBodypart ()).GetComponent<ColorModifier> ().DeSelect ();
+			//Change gui labels to match move type.
+			sliders.SetSliderStrings ("Coverage", "Speed & Block");
+			dropDown.SetLabelText ("Shield");
+		}
+		else
+		{
+			GameObject.Find (move.GetActiveBodypart ()).GetComponent<ColorModifier> ().Select ();
+			//Change gui labels to match move type.
+			sliders.SetSliderStrings ("Strength", "Speed");
+			dropDown.SetLabelText ("Damage Dealer");
+		}
+		GameObject shield = GameObject.Find (move.GetActiveBodypart ().Replace (" ", "") + "Shield");
+		shield.GetComponent<SpriteRenderer> ().enabled = blockMove;
+		UpdateShieldScale ();
 	}
 }

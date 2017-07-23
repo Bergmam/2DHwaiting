@@ -84,7 +84,7 @@ public class InputController : MonoBehaviour
 					characterMovePlayer.SetIsPlaying ();
 					characterMovePlayer.PlayMove (currentlyPlayedMove);
 					// Get the name of the move assigned to do damage.
-					damageDealerName = currentlyPlayedMove.GetDamageDealer();
+					damageDealerName = currentlyPlayedMove.GetActiveBodypart();
 					Transform damageDealer = UnityUtils.RecursiveFind(transform,damageDealerName);
 					damageDealerCollider = damageDealer.GetComponent<Collider2D>();
 					// Enables the Collider component of the 

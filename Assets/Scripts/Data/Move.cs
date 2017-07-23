@@ -15,7 +15,7 @@ public class Move
 	private bool done;
 	private int defaultNrOfFrames = 12; //C# requires default constructor. In default constructor, this number is used to create the frame array.
 	private string name;
-	private string damageDealerName; //Name of the body part dealing damage when move is performed.
+	private string activeBodypart; //Name of the body part dealing damage or blocking when move is performed.
 	private int currentNbrOfFrames;
 	private bool blockMove;
 
@@ -122,14 +122,14 @@ public class Move
         return name;
 	}
 
-	public void SetDamageDealer(string newDamageDealerName)
+	public void SetActiveBodypart(string newActiveBodypart)
 	{
-		this.damageDealerName = newDamageDealerName;
+		this.activeBodypart = newActiveBodypart;
 	}
 
-	public string GetDamageDealer()
+	public string GetActiveBodypart()
 	{
-		return this.damageDealerName;
+		return this.activeBodypart;
 	}
 
 	public int GetCurrentNbrOfFrames()
@@ -147,7 +147,7 @@ public class Move
 		clone.done = this.done;
 		clone.defaultNrOfFrames = 12;
 		clone.name = (string)this.name.Clone ();
-		clone.damageDealerName = (string)this.damageDealerName.Clone ();
+		clone.activeBodypart = (string)this.activeBodypart.Clone ();
 		clone.currentNbrOfFrames = this.currentNbrOfFrames;
 		return clone;
 	}

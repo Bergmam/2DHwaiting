@@ -6,11 +6,10 @@ using UnityEngine.UI;
 public class DropdownBehaviour : MonoBehaviour
 {
 	private Dropdown dropdown;
-	private string highLightedLabelText;
-	private string damageDealer;
-
-
-	private Text label;
+	private bool blockMove; //True if the move is a block, false otherwise.
+	private string highlightedLabelText; //The text of the label in the dropdown that has been selected but not yet pressed.
+	private string activeBodypart;
+	private Text label; //The label of the panel. Used to swich label text depending on move type.
 
 	void Start ()
 	{
@@ -18,7 +17,7 @@ public class DropdownBehaviour : MonoBehaviour
 		dropdown = gameObject.GetComponent<Dropdown> ();
 		dropdown.ClearOptions (); //Clear dropdown of any default items.
 		GameObject character = GameObject.Find ("Character");
-		//Find all parent objects of objects with a <see cref="DragAndDrop"/> script attached (bodyparts)
+		//Find all parent objects of objects with a DragAndDrop script attached (bodyparts)
 		// and add their names to the dropdown list.
 		DragAndDrop[] dragAndDropInstances = character.GetComponentsInChildren<DragAndDrop> ();
 		List<string> bodyPartNames = new List<string> ();
@@ -33,24 +32,39 @@ public class DropdownBehaviour : MonoBehaviour
 	}
 
 	/// <summary>
-	/// When a new bodypart is highlighted in the list, deselect the currrent bodypart on the character and select the new one.
+	/// When a new bodypart is highlighted in the list, deselect the currrent active bodypart on the character and select the new one.
+	/// If move is a block, show the shield.
 	/// </summary>
 	/// <param name="highlightedLabel">Highlighted label.</param>
 	public void HighlightChanged(string newHighlightedLabelText)
 	{
-		if (!newHighlightedLabelText.Equals (highLightedLabelText))
-		{
-			if (highLightedLabelText != null)
-			{
-				GameObject.Find (highLightedLabelText).GetComponent<ColorModifier> ().DeSelect ();
-			}
-			GameObject.Find (newHighlightedLabelText).GetComponent<ColorModifier> ().Select ();
-			highLightedLabelText = newHighlightedLabelText; //The damage dealer is always the currently selected bodypart.
+		if (newHighlightedLabelText.Equals (highlightedLabelText)) {
+			return; //Do nothing if the mouse moves out and back in of the same label.
 		}
+		if (highlightedLabelText != null) {
+			GameObject.Find (highlightedLabelText).GetComponent<ColorModifier> ().DeSelect (); //Deselect any previous attacking bodypart.
+			GameObject previousShield = GameObject.Find (highlightedLabelText.Replace (" ", "") + "Shield"); //Shields use camel case naming without spaces.
+			if (previousShield != null) {
+				previousShield.GetComponent<SpriteRenderer> ().enabled = false; //Hide any previous shield.
+			}
+		}
+		if (blockMove) {
+			string noSpaceText = newHighlightedLabelText.Replace (" ", ""); //Shields use camel case naming without spaces.
+			GameObject newShield = GameObject.Find (noSpaceText + "Shield");
+			if (newShield != null) {
+				newShield.GetComponent<SpriteRenderer> ().enabled = true; //Show the new shield.
+				//Keep the scale.
+				Vector3 shieldScale = GameObject.Find (activeBodypart.Replace (" ", "") + "Shield").transform.localScale;
+				newShield.transform.localScale = shieldScale;
+			}
+		} else { //If move is not a block move, change color of attacking bodypart.
+			GameObject.Find (newHighlightedLabelText).GetComponent<ColorModifier> ().Select ();
+		}
+		highlightedLabelText = newHighlightedLabelText;
 	}
 
 	/// <summary>
-	/// When an item is selected in the dropdown, it becomes the new damage dealer.
+	/// When an item is selected in the dropdown, it becomes the new active bodypart.
 	/// </summary>
 	public void DropdownValueChanged(){
 		//Make sure mouse does not hover on a list item after method has executed, highlighting the wrong bodypart.
@@ -58,22 +72,37 @@ public class DropdownBehaviour : MonoBehaviour
 		{
 			itemBehaviour.enabled = false;
 		}
-		string damageDealer = dropdown.options [dropdown.value].text;
-		damageDealer.Replace (" ", string.Empty); //Label automatically inserts spaces when it reads camel case. This removes those spaces.
-		GameObject.Find (damageDealer).GetComponent<ColorModifier> ().Select ();
-		SetDamageDealer (damageDealer);
+		string activeBodypart = dropdown.options [dropdown.value].text;
+
+		if (blockMove) {
+			GameObject newShield = GameObject.Find (activeBodypart.Replace (" ", "") + "Shield");
+			if (newShield != null) {
+				newShield.GetComponent<SpriteRenderer> ().enabled = true;
+			}
+		} else {
+			GameObject.Find (activeBodypart).GetComponent<ColorModifier> ().Select ();
+		}
+
+
+
+		SetActiveBodypart (activeBodypart);
 	}
 
-	public void SetDamageDealer(string newDamageDealer){
-		this.damageDealer = newDamageDealer;
+	public void SetActiveBodypart(string newActiveBodypart){
+		this.activeBodypart = newActiveBodypart;
 	}
 
-	public string GetDamageDealer()
+	public string GetActiveBodypart()
 	{
-		return this.damageDealer;
+		return this.activeBodypart;
 	}
 
 	public void SetLabelText(string text){
 		this.label.text = text;
+	}
+
+	public void SetBlockMove(bool blockMove)
+	{
+		this.blockMove = blockMove;
 	}
 }
