@@ -125,18 +125,17 @@ public class MoveCreator : MonoBehaviour
 		dropDown.SetBlockMove (blockMove);
 		if (blockMove)
 		{
-			GameObject.Find (move.GetActiveBodypart ()).GetComponent<ColorModifier> ().DeSelect ();
 			//Change gui labels to match move type.
 			sliders.SetSliderStrings ("Coverage", "Speed & Block");
 			dropDown.SetLabelText ("Shield");
 		}
 		else
 		{
-			GameObject.Find (move.GetActiveBodypart ()).GetComponent<ColorModifier> ().Select ();
 			//Change gui labels to match move type.
 			sliders.SetSliderStrings ("Strength", "Speed");
 			dropDown.SetLabelText ("Damage Dealer");
 		}
+		GameObject.Find (move.GetActiveBodypart ()).GetComponent<ColorModifier> ().SetSelected (!blockMove);
 		GameObject shield = GameObject.Find (move.GetActiveBodypart ().Replace (" ", "") + "Shield");
 		shield.GetComponent<SpriteRenderer> ().enabled = blockMove;
 		UpdateShieldScale ();

@@ -38,26 +38,33 @@ public class DropdownBehaviour : MonoBehaviour
 	/// <param name="highlightedLabel">Highlighted label.</param>
 	public void HighlightChanged(string newHighlightedLabelText)
 	{
-		if (newHighlightedLabelText.Equals (highlightedLabelText)) {
+		if (newHighlightedLabelText.Equals (highlightedLabelText))
+		{
 			return; //Do nothing if the mouse moves out and back in of the same label.
 		}
-		if (highlightedLabelText != null) {
+		if (highlightedLabelText != null)
+		{
 			GameObject.Find (highlightedLabelText).GetComponent<ColorModifier> ().DeSelect (); //Deselect any previous attacking bodypart.
 			GameObject previousShield = GameObject.Find (highlightedLabelText.Replace (" ", "") + "Shield"); //Shields use camel case naming without spaces.
-			if (previousShield != null) {
+			if (previousShield != null)
+			{
 				previousShield.GetComponent<SpriteRenderer> ().enabled = false; //Hide any previous shield.
 			}
 		}
-		if (blockMove) {
+		if (blockMove)
+		{
 			string noSpaceText = newHighlightedLabelText.Replace (" ", ""); //Shields use camel case naming without spaces.
 			GameObject newShield = GameObject.Find (noSpaceText + "Shield");
-			if (newShield != null) {
+			if (newShield != null)
+			{
 				newShield.GetComponent<SpriteRenderer> ().enabled = true; //Show the new shield.
 				//Keep the scale.
 				Vector3 shieldScale = GameObject.Find (activeBodypart.Replace (" ", "") + "Shield").transform.localScale;
 				newShield.transform.localScale = shieldScale;
 			}
-		} else { //If move is not a block move, change color of attacking bodypart.
+		}
+		else
+		{ //If move is not a block move, change color of attacking bodypart.
 			GameObject.Find (newHighlightedLabelText).GetComponent<ColorModifier> ().Select ();
 		}
 		highlightedLabelText = newHighlightedLabelText;
@@ -66,7 +73,8 @@ public class DropdownBehaviour : MonoBehaviour
 	/// <summary>
 	/// When an item is selected in the dropdown, it becomes the new active bodypart.
 	/// </summary>
-	public void DropdownValueChanged(){
+	public void DropdownValueChanged()
+	{
 		//Make sure mouse does not hover on a list item after method has executed, highlighting the wrong bodypart.
 		foreach (DropdownItemBehaviour itemBehaviour in GetComponentsInChildren<DropdownItemBehaviour>())
 		{
@@ -74,21 +82,17 @@ public class DropdownBehaviour : MonoBehaviour
 		}
 		string activeBodypart = dropdown.options [dropdown.value].text;
 
-		if (blockMove) {
-			GameObject newShield = GameObject.Find (activeBodypart.Replace (" ", "") + "Shield");
-			if (newShield != null) {
-				newShield.GetComponent<SpriteRenderer> ().enabled = true;
-			}
-		} else {
-			GameObject.Find (activeBodypart).GetComponent<ColorModifier> ().Select ();
+		GameObject newShield = GameObject.Find (activeBodypart.Replace (" ", "") + "Shield");
+		if (newShield != null)
+		{
+			newShield.GetComponent<SpriteRenderer> ().enabled = blockMove;
 		}
-
-
-
+		GameObject.Find (activeBodypart).GetComponent<ColorModifier> ().SetSelected (!blockMove);
 		SetActiveBodypart (activeBodypart);
 	}
 
-	public void SetActiveBodypart(string newActiveBodypart){
+	public void SetActiveBodypart(string newActiveBodypart)
+	{
 		this.activeBodypart = newActiveBodypart;
 	}
 
@@ -97,7 +101,8 @@ public class DropdownBehaviour : MonoBehaviour
 		return this.activeBodypart;
 	}
 
-	public void SetLabelText(string text){
+	public void SetLabelText(string text)
+	{
 		this.label.text = text;
 	}
 

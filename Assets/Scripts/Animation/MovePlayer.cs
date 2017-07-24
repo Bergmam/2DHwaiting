@@ -45,6 +45,7 @@ public class MovePlayer : MonoBehaviour
 				frameIndex = 0;
 				isPlaying = false;
 				frames.Clear ();
+				ShowActiveBodypart (false);
 			}
 		}
 	}
@@ -55,9 +56,11 @@ public class MovePlayer : MonoBehaviour
 	/// <param name="move">The move to be displayed.</param>
 	public void PlayMove(Move move)
 	{
+		ShowActiveBodypart (false);
 		isPlaying = true;
         frames = new List<Frame>();
 		moveToPlay = move;
+		ShowActiveBodypart (true);
 		int speed = move.GetSpeed () + 1; // +1 to avoid speed = 0 causing infinite loops.
 		Frame[] moveFrames = move.GetFrames ();
 		for (int i = 0; i < (moveFrames.Length - 1); i++)
@@ -78,7 +81,6 @@ public class MovePlayer : MonoBehaviour
 			}
 		}
 		frameIndex = 0; //Make sure the animation starts from the first frame.
-
 	}
 
 	/// <summary>
@@ -181,5 +183,28 @@ public class MovePlayer : MonoBehaviour
 	public void UnPause()
 	{
 		this.paused = false;
+	}
+
+	/// <summary>
+	/// Shows or hides the active bodypart of the current move to play.
+	/// </summary>
+	/// <param name="show">If set to <c>true</c> show.</param>
+	public void ShowActiveBodypart(bool show){
+		if(this.moveToPlay == null)
+		{
+			return; //Do nothing if there is no move to play.
+		}
+		Transform bodypart = UnityUtils.RecursiveFind (transform, this.moveToPlay.GetActiveBodypart ());
+		Transform shield = UnityUtils.RecursiveFind (transform, this.moveToPlay.GetActiveBodypart ().Replace (" ", "") + "Shield");
+		if (bodypart != null && bodypart.gameObject.GetComponent<ColorModifier> () != null)
+		{
+			//Highlight damage dealer if move is not a block move and show true, hide otherwise.
+			bodypart.gameObject.GetComponent<ColorModifier> ().SetSelected (!moveToPlay.IsBlockMove () && show);
+		}
+		if (shield != null) 
+		{
+			//Show shield if move is a block move and show true, hide otherwise.
+			shield.gameObject.GetComponent<SpriteRenderer> ().enabled = moveToPlay.IsBlockMove () && show;
+		}
 	}
 }

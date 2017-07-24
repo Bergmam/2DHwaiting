@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterCollisionDetector : MonoBehaviour
 {
+	public int characterIndex;
 	private Character character;
 	private GameState gameState;
 	private Rigidbody2D rigidBody;
@@ -12,7 +13,7 @@ public class CharacterCollisionDetector : MonoBehaviour
 	void Start ()
 	{
 		this.inputController = GetComponent<InputController> ();
-		this.character = inputController.GetCharacter ();
+		this.character = StaticCharacterHolder.characters[characterIndex - 1];
 		this.rigidBody = GetComponent<Rigidbody2D> ();
 		this.gameState = GameObject.Find ("Handler").GetComponent<GameState> ();
 	}

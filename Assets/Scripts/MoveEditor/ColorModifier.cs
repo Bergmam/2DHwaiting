@@ -46,6 +46,18 @@ public class ColorModifier : MonoBehaviour
 		SetColor (defaultColor);
 	}
 
+	public void SetSelected(bool selected)
+	{
+		if (selected)
+		{
+			Select ();
+		}
+		else
+		{
+			DeSelect ();
+		}
+	}
+
 	/// <summary>
 	/// Sets the color of the GameObject this script is attached to.
 	/// </summary>
