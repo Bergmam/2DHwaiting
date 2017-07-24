@@ -149,6 +149,7 @@ public class Move
 		clone.name = (string)this.name.Clone ();
 		clone.activeBodypart = (string)this.activeBodypart.Clone ();
 		clone.currentNbrOfFrames = this.currentNbrOfFrames;
+		clone.blockMove = this.blockMove;
 		return clone;
 	}
 
