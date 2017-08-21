@@ -17,8 +17,8 @@ public class InputController : MonoBehaviour
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
 	bool isPlayingMove = false;
 	string pressedButton = "";
-    string damageDealerName;
-    Collider2D damageDealerCollider;
+    string activeBodypartName;
+    Collider2D activeBodypartCollider;
     Character character;
     Move currentlyPlayedMove;
 
@@ -52,9 +52,9 @@ public class InputController : MonoBehaviour
 			currentlyPlayedMove = null;
 
 			// Only set the collider to false if we have enabled it once before
-			if(damageDealerCollider != null)
+			if(activeBodypartCollider != null)
 			{
-				damageDealerCollider.enabled = false;
+				activeBodypartCollider.enabled = false;
 			}
 		}
 
@@ -84,11 +84,14 @@ public class InputController : MonoBehaviour
 					characterMovePlayer.SetIsPlaying ();
 					characterMovePlayer.PlayMove (currentlyPlayedMove);
 					// Get the name of the move assigned to do damage.
-					damageDealerName = currentlyPlayedMove.GetActiveBodypart();
-					Transform damageDealer = UnityUtils.RecursiveFind(transform,damageDealerName);
-					damageDealerCollider = damageDealer.GetComponent<Collider2D>();
-					// Enables the Collider component of the 
-					damageDealerCollider.enabled = true;
+					activeBodypartName = currentlyPlayedMove.GetActiveBodypart();
+					if (currentlyPlayedMove.IsBlockMove ()) {
+						activeBodypartName = activeBodypartName.Replace (" ", "") + "Shield";
+					}
+					//Enable the collider of the active bodypart or shield.
+					Transform activeBodypart = UnityUtils.RecursiveFind (transform, activeBodypartName);
+					activeBodypartCollider = activeBodypart.GetComponent<Collider2D> ();
+					activeBodypartCollider.enabled = true;
 				}
 			}
 		}

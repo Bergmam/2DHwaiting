@@ -109,7 +109,20 @@ public class Character
     public void ApplyMoveTo(Move move)
     {
 		SubHealth(move.GetStrength() + 1); //Change range of move damage [0-100] -> [1-101]
-    }
+	}
+
+	/// <summary>
+	/// Used for dealing damage to the character while a block move is defending it.
+	/// </summary>
+	/// <param name="damagingMove">Damaging move.</param>
+	/// <param name="blockingMove">Blocking move.</param>
+	public void ApplyMoveTo(Move damagingMove, Move blockingMove)
+	{
+		int damage = damagingMove.GetStrength () - blockingMove.GetSpeed ();
+		if (damage > 0) {
+			SubHealth(damage + 1); //Change range of move damage [0-100] -> [1-101]
+		}
+	}
 
 	public override bool Equals(System.Object obj)
 	{
