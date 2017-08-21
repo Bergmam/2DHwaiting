@@ -48,7 +48,7 @@ public class InputController : MonoBehaviour
 		if (!characterMovePlayer.CheckIsPlaying())
 		{
 			isPlayingMove = false;
-			animator.enabled = true;
+			SetAnimatorEnabled (true);
 			currentlyPlayedMove = null;
 
 			// Only set the collider to false if we have enabled it once before
@@ -79,7 +79,7 @@ public class InputController : MonoBehaviour
 					//Make sure the character cannot start playing another animation until this one is finished.
 					isPlayingMove = true;
 					thisBody.velocity = Vector2.zero;
-					animator.enabled = false;
+					SetAnimatorEnabled (false);
 					// Sets MovePlayer.isPlaying before calling MovePlayer.PlayMove() to avoid concurrency issues.
 					characterMovePlayer.SetIsPlaying ();
 					characterMovePlayer.PlayMove (currentlyPlayedMove);
@@ -129,12 +129,12 @@ public class InputController : MonoBehaviour
 		{
 			if (Mathf.Abs(horizontal) > 0)
 			{
-				animator.SetBool("Running", true);
+				SetAnimatorBool ("Running", true);
 				stupidCounter = 1;
 			}
 			else if (stupidCounter == 0)
 			{
-				animator.SetBool("Running", false);
+				SetAnimatorBool ("Running", false);
 			}
 			stupidCounter--;
 		}
@@ -166,7 +166,7 @@ public class InputController : MonoBehaviour
 		prePauseVelocity = thisBody.velocity;
 		thisBody.velocity = Vector2.zero;
 		this.paused = true;
-		this.animator.enabled = false;
+		SetAnimatorEnabled (false);
 		characterMovePlayer.Pause ();
 	}
 
@@ -177,7 +177,7 @@ public class InputController : MonoBehaviour
 	{
 		thisBody.velocity = prePauseVelocity;
 		this.paused = false;
-		this.animator.enabled = !characterMovePlayer.CheckIsPlaying ();
+		SetAnimatorEnabled (!characterMovePlayer.CheckIsPlaying ());
 		characterMovePlayer.UnPause ();
 	}
 
@@ -194,5 +194,19 @@ public class InputController : MonoBehaviour
 	public void KnockBack()
 	{
 		this.knockedBack = true;
+	}
+
+	private void SetAnimatorEnabled(bool enabled)
+	{
+		if (this.animator != null) {
+			this.animator.enabled = enabled;
+		}
+	}
+
+	private void SetAnimatorBool(string boolName, bool enabled)
+	{
+		if (this.animator != null) {
+			this.animator.SetBool (boolName, enabled);
+		}
 	}
 }
