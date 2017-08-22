@@ -10,13 +10,18 @@ public class CharacterCollisionDetector : MonoBehaviour
 	private Rigidbody2D rigidBody;
 	private InputController inputController;
 
-	void Start ()
+    AudioSource audioCenter;
+    AudioClip punch;
+
+    void Start ()
 	{
 		this.inputController = GetComponent<InputController> ();
 		this.character = StaticCharacterHolder.characters[characterIndex - 1];
 		this.rigidBody = GetComponent<Rigidbody2D> ();
 		this.gameState = GameObject.Find ("Handler").GetComponent<GameState> ();
-	}
+
+        audioCenter = GameObject.Find("AudioCenter").GetComponent<AudioSource>();
+    }
 	
 	void OnTriggerEnter2D (Collider2D otherCollider)
 	{
@@ -33,7 +38,9 @@ public class CharacterCollisionDetector : MonoBehaviour
 		{
 			return; //Make sure other character object has all necessary info.
 		}
-		this.character.ApplyMoveTo (move); //Apply damage in model.
+        audioCenter.Play();
+
+        this.character.ApplyMoveTo (move); //Apply damage in model.
 		gameState.UpdateCharacterHealth (this.character); //Update health bars and check winner.
 
 		//Apply knockback.
