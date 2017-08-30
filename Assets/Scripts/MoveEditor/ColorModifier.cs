@@ -11,7 +11,7 @@ public class ColorModifier : MonoBehaviour
 	private SpriteRenderer spriteRenderer;
 	private Image image;
 	private Color selectedColor = new Color32 (135, 0, 0, 255);
-	private Color defaultColor = Color.black;
+	private Color defaultColor = Color.white;
 
 	void Start ()
 	{
