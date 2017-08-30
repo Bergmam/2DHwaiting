@@ -28,7 +28,7 @@ public class DragAndDrop : MonoBehaviour {
 	public float lowHardTwistLimit;
 
 	public PivotDirection pivotDirection = PivotDirection.North;
-	public int pivotRotationOffset;
+	private int pivotRotationOffset;
 
 	void Start(){
 		UpdateFrameLimits ();
