@@ -6,6 +6,7 @@ public class InputController : MonoBehaviour
 {
     public float speed;
     public string horizontalAxis;
+    public string verticalAxis;
 	public int characterIndex;
 	private bool collisionLeft;
 	private bool collisionRight;
@@ -98,8 +99,14 @@ public class InputController : MonoBehaviour
 
 		// Get information about the next position of the Character
         float horizontal = Input.GetAxisRaw(horizontalAxis);
+        float vertical = Input.GetAxisRaw(verticalAxis);
 		//Check if player has been knocked back and is now standing still again.
 		//Without previousPushedVelocity, the velocity is zero in the first frame and no knockback is applied.
+        if (vertical > 0)
+        {
+            thisBody.velocity = new Vector3(thisBody.velocity.x, 3);
+        }
+
 		if (Mathf.Abs (thisBody.velocity.x) < 0.1 && knockedBack && previousPushedVelocity > Mathf.Abs (thisBody.velocity.x)) {
 			//Remove any colision that was detected before the character was knocked back.
 			this.collisionLeft = false;
@@ -190,6 +197,16 @@ public class InputController : MonoBehaviour
 	{
 		this.collisionRight = true;
 	}
+
+    public void CollisionExitLeft()
+    {
+        this.collisionLeft = false;
+    }
+
+    public void CollisionExitRight()
+    {
+        this.collisionRight = false;
+    }
 
 	public void KnockBack()
 	{

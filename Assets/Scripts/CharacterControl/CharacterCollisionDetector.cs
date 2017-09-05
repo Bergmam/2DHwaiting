@@ -80,4 +80,24 @@ public class CharacterCollisionDetector : MonoBehaviour
 			inputController.CollisionRight ();
 		}
 	}
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        Collider2D otherCollider = collision.collider; //The collider the object this script is attached to collides with.
+        GameObject otherCharacterObject = otherCollider.gameObject;
+        InputController otherInputController = otherCharacterObject.GetComponent<InputController>();
+        if (otherInputController == null)
+        {
+            return; //If colliding object's root does not have an InputController, it is not a character.
+        }
+        //Tell this inputcontroller something is blocking the way in the right direction.
+        if (otherCollider.transform.position.x < transform.position.x)
+        {
+            inputController.CollisionExitLeft();
+        }
+        else
+        {
+            inputController.CollisionExitRight();
+        }
+    }
 }
