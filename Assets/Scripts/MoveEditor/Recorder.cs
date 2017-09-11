@@ -25,12 +25,12 @@ public class Recorder : MonoBehaviour
 		movePlayer = gameObject.GetComponent<MovePlayer> ();
         FindEndPoints ();
 		initialPoseFrame = GetCurrentPoseFrame ();
+		progressBarBehaviour = GameObject.Find ("ProgressBar").GetComponent<ProgressBarBehaviour> ();
     }
 		
 	public void SetMove(Move move)
 	{
 		this.move = move;
-		progressBarBehaviour = GameObject.Find ("ProgressBar").GetComponent<ProgressBarBehaviour> ();
 		RecordFrame (); //Add initial pose as first frame in move.
 	}
 
@@ -174,12 +174,11 @@ public class Recorder : MonoBehaviour
 		{
 			return;
 		}
-        this.move = newMove;
 		movePlayer.SetAutoLoopEnabled (false);
-		Destroy(progressBarBehaviour);
 		progressBarBehaviour.UpdateFill (0);
 		movePlayer.FrameToCharacter (initialPoseFrame); //Reset character pose
 		UpdateFrameTwistLimits();
+		SetMove (newMove); //SetMove sets new move and records the first frame from current pose.
 	}
 
 	/// <summary>
