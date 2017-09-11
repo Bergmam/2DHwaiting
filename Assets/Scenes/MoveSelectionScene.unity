@@ -232,6 +232,7 @@ GameObject:
   - component: {fileID: 54306126}
   - component: {fileID: 54306125}
   - component: {fileID: 54306124}
+  - component: {fileID: 54306128}
   m_Layer: 9
   m_Name: UpperRightArmShield
   m_TagString: Untagged
@@ -342,6 +343,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &54306128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 54306122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &71469605
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +736,7 @@ GameObject:
   - component: {fileID: 128038661}
   - component: {fileID: 128038660}
   - component: {fileID: 128038659}
+  - component: {fileID: 128038663}
   m_Layer: 9
   m_Name: TorsoShield
   m_TagString: Untagged
@@ -834,6 +847,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &128038663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 128038657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &128799563
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,6 +871,7 @@ GameObject:
   - component: {fileID: 128799567}
   - component: {fileID: 128799566}
   - component: {fileID: 128799565}
+  - component: {fileID: 128799569}
   m_Layer: 9
   m_Name: LowerLeftLegShield
   m_TagString: Untagged
@@ -957,6 +982,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &128799569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 128799563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &132908865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,6 +1678,7 @@ GameObject:
   - component: {fileID: 358768154}
   - component: {fileID: 358768153}
   - component: {fileID: 358768152}
+  - component: {fileID: 358768156}
   m_Layer: 9
   m_Name: HeadShield
   m_TagString: Untagged
@@ -1752,6 +1789,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &358768156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 358768150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &362560365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,6 +1938,7 @@ GameObject:
   - component: {fileID: 458865587}
   - component: {fileID: 458865586}
   - component: {fileID: 458865585}
+  - component: {fileID: 458865589}
   m_Layer: 9
   m_Name: RightHandShield
   m_TagString: Untagged
@@ -2000,6 +2049,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &458865589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 458865583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &488742259
 GameObject:
   m_ObjectHideFlags: 0
@@ -2137,6 +2197,7 @@ GameObject:
   - component: {fileID: 513078378}
   - component: {fileID: 513078377}
   - component: {fileID: 513078376}
+  - component: {fileID: 513078380}
   m_Layer: 9
   m_Name: LowerLeftArmShield
   m_TagString: Untagged
@@ -2247,6 +2308,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &513078380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 513078374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &524404106
 GameObject:
   m_ObjectHideFlags: 0
@@ -2260,6 +2332,7 @@ GameObject:
   - component: {fileID: 524404110}
   - component: {fileID: 524404109}
   - component: {fileID: 524404108}
+  - component: {fileID: 524404112}
   m_Layer: 9
   m_Name: LowerRightArmShield
   m_TagString: Untagged
@@ -2370,6 +2443,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &524404112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 524404106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &524447371
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,6 +2594,7 @@ GameObject:
   - component: {fileID: 556689681}
   - component: {fileID: 556689680}
   - component: {fileID: 556689679}
+  - component: {fileID: 556689683}
   m_Layer: 9
   m_Name: UpperLeftLegShield
   m_TagString: Untagged
@@ -2620,6 +2705,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &556689683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 556689677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &576150599
 GameObject:
   m_ObjectHideFlags: 0
@@ -2988,6 +3084,7 @@ GameObject:
   - component: {fileID: 674599467}
   - component: {fileID: 674599466}
   - component: {fileID: 674599465}
+  - component: {fileID: 674599469}
   m_Layer: 9
   m_Name: LeftHandShield
   m_TagString: Untagged
@@ -3098,6 +3195,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &674599469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 674599463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &690201019
 GameObject:
   m_ObjectHideFlags: 0
@@ -3361,6 +3469,7 @@ GameObject:
   - component: {fileID: 753359426}
   - component: {fileID: 753359425}
   - component: {fileID: 753359424}
+  - component: {fileID: 753359428}
   m_Layer: 9
   m_Name: RightHandShield
   m_TagString: Untagged
@@ -3471,6 +3580,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &753359428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 753359422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &781798939
 GameObject:
   m_ObjectHideFlags: 0
@@ -4035,6 +4155,7 @@ GameObject:
   - component: {fileID: 1028547089}
   - component: {fileID: 1028547088}
   - component: {fileID: 1028547087}
+  - component: {fileID: 1028547091}
   m_Layer: 9
   m_Name: LeftHandShield
   m_TagString: Untagged
@@ -4145,6 +4266,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1028547091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1028547085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1036690461
 GameObject:
   m_ObjectHideFlags: 0
@@ -4158,6 +4290,7 @@ GameObject:
   - component: {fileID: 1036690465}
   - component: {fileID: 1036690464}
   - component: {fileID: 1036690463}
+  - component: {fileID: 1036690467}
   m_Layer: 9
   m_Name: UpperLeftLegShield
   m_TagString: Untagged
@@ -4268,6 +4401,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1036690467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1036690461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1041614996
 GameObject:
   m_ObjectHideFlags: 0
@@ -4364,6 +4508,7 @@ GameObject:
   - component: {fileID: 1063625691}
   - component: {fileID: 1063625690}
   - component: {fileID: 1063625689}
+  - component: {fileID: 1063625693}
   m_Layer: 9
   m_Name: HeadShield
   m_TagString: Untagged
@@ -4474,6 +4619,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1063625693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1063625687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1144730551
 GameObject:
   m_ObjectHideFlags: 0
@@ -4527,6 +4683,7 @@ GameObject:
   - component: {fileID: 1157204195}
   - component: {fileID: 1157204194}
   - component: {fileID: 1157204193}
+  - component: {fileID: 1157204197}
   m_Layer: 9
   m_Name: RightFootShield
   m_TagString: Untagged
@@ -4637,6 +4794,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1157204197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1157204191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1177670178
 GameObject:
   m_ObjectHideFlags: 0
@@ -4843,6 +5011,7 @@ GameObject:
   - component: {fileID: 1286526398}
   - component: {fileID: 1286526397}
   - component: {fileID: 1286526396}
+  - component: {fileID: 1286526400}
   m_Layer: 9
   m_Name: UpperRightLegShield
   m_TagString: Untagged
@@ -4953,6 +5122,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1286526400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1286526394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1287445952
 GameObject:
   m_ObjectHideFlags: 0
@@ -4966,6 +5146,7 @@ GameObject:
   - component: {fileID: 1287445956}
   - component: {fileID: 1287445955}
   - component: {fileID: 1287445954}
+  - component: {fileID: 1287445958}
   m_Layer: 9
   m_Name: UpperLeftArmShield
   m_TagString: Untagged
@@ -5076,6 +5257,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1287445958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1287445952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1335228891
 GameObject:
   m_ObjectHideFlags: 0
@@ -5089,6 +5281,7 @@ GameObject:
   - component: {fileID: 1335228895}
   - component: {fileID: 1335228894}
   - component: {fileID: 1335228893}
+  - component: {fileID: 1335228897}
   m_Layer: 9
   m_Name: LowerRightLegShield
   m_TagString: Untagged
@@ -5199,6 +5392,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1335228897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1335228891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1363038416
 GameObject:
   m_ObjectHideFlags: 0
@@ -5212,6 +5416,7 @@ GameObject:
   - component: {fileID: 1363038420}
   - component: {fileID: 1363038419}
   - component: {fileID: 1363038418}
+  - component: {fileID: 1363038422}
   m_Layer: 9
   m_Name: UpperRightArmShield
   m_TagString: Untagged
@@ -5322,6 +5527,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1363038422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1363038416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1434045293
 GameObject:
   m_ObjectHideFlags: 0
@@ -5335,6 +5551,7 @@ GameObject:
   - component: {fileID: 1434045297}
   - component: {fileID: 1434045296}
   - component: {fileID: 1434045295}
+  - component: {fileID: 1434045299}
   m_Layer: 9
   m_Name: UpperRightLegShield
   m_TagString: Untagged
@@ -5445,6 +5662,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1434045299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1434045293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1436416020
 GameObject:
   m_ObjectHideFlags: 0
@@ -6223,6 +6451,7 @@ GameObject:
   - component: {fileID: 1590071919}
   - component: {fileID: 1590071918}
   - component: {fileID: 1590071917}
+  - component: {fileID: 1590071921}
   m_Layer: 9
   m_Name: UpperLeftArmShield
   m_TagString: Untagged
@@ -6333,6 +6562,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1590071921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1590071915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1609953548
 GameObject:
   m_ObjectHideFlags: 0
@@ -6469,6 +6709,7 @@ GameObject:
   - component: {fileID: 1619742811}
   - component: {fileID: 1619742810}
   - component: {fileID: 1619742809}
+  - component: {fileID: 1619742813}
   m_Layer: 9
   m_Name: LowerRightArmShield
   m_TagString: Untagged
@@ -6579,6 +6820,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1619742813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1619742807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1641105540
 GameObject:
   m_ObjectHideFlags: 0
@@ -6840,6 +7092,7 @@ GameObject:
   - component: {fileID: 1707928657}
   - component: {fileID: 1707928656}
   - component: {fileID: 1707928655}
+  - component: {fileID: 1707928659}
   m_Layer: 9
   m_Name: LowerLeftArmShield
   m_TagString: Untagged
@@ -6950,6 +7203,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1707928659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1707928653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1775519123
 GameObject:
   m_ObjectHideFlags: 0
@@ -6963,6 +7227,7 @@ GameObject:
   - component: {fileID: 1775519127}
   - component: {fileID: 1775519126}
   - component: {fileID: 1775519125}
+  - component: {fileID: 1775519129}
   m_Layer: 9
   m_Name: LowerRightLegShield
   m_TagString: Untagged
@@ -7073,6 +7338,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1775519129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1775519123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1808181981
 GameObject:
   m_ObjectHideFlags: 0
@@ -7491,6 +7767,7 @@ GameObject:
   - component: {fileID: 1995400878}
   - component: {fileID: 1995400877}
   - component: {fileID: 1995400876}
+  - component: {fileID: 1995400880}
   m_Layer: 9
   m_Name: LeftFootShield
   m_TagString: Untagged
@@ -7601,6 +7878,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1995400880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1995400874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1997700083
 GameObject:
   m_ObjectHideFlags: 0
@@ -7737,6 +8025,7 @@ GameObject:
   - component: {fileID: 2037005565}
   - component: {fileID: 2037005564}
   - component: {fileID: 2037005563}
+  - component: {fileID: 2037005567}
   m_Layer: 9
   m_Name: LowerLeftLegShield
   m_TagString: Untagged
@@ -7847,6 +8136,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &2037005567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2037005561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2077167231
 GameObject:
   m_ObjectHideFlags: 0
@@ -7860,6 +8160,7 @@ GameObject:
   - component: {fileID: 2077167235}
   - component: {fileID: 2077167234}
   - component: {fileID: 2077167233}
+  - component: {fileID: 2077167237}
   m_Layer: 9
   m_Name: TorsoShield
   m_TagString: Untagged
@@ -7970,6 +8271,17 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &2077167237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2077167231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2109246378
 GameObject:
   m_ObjectHideFlags: 0
@@ -7983,6 +8295,7 @@ GameObject:
   - component: {fileID: 2109246382}
   - component: {fileID: 2109246381}
   - component: {fileID: 2109246380}
+  - component: {fileID: 2109246384}
   m_Layer: 9
   m_Name: RightFootShield
   m_TagString: Untagged
@@ -8093,3 +8406,14 @@ SpriteRenderer:
   m_Size: {x: 0.19, y: 1.22}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &2109246384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2109246378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8bf8f7ceef94e15a095c1a1d43b027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

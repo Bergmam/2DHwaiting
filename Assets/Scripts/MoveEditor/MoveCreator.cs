@@ -61,8 +61,10 @@ public class MoveCreator : MonoBehaviour
 		if (move.IsBlockMove () && GameObject.Find (move.GetActiveBodypart ().Replace (" ", "") + "Shield") != null)
 		{
 			GameObject shield = GameObject.Find (move.GetActiveBodypart ().Replace (" ", "") + "Shield");
-			Vector3 previousScale = shield.transform.localScale;
-			shield.transform.localScale = new Vector3 (previousScale.x, 0.5f + 0.015f * move.GetStrength (), previousScale.z);
+			ShieldControl shieldControl = shield.GetComponent<ShieldControl> ();
+			if (shieldControl != null) {
+				shieldControl.UpdateScale (move);
+			}
 		}
 	}
 

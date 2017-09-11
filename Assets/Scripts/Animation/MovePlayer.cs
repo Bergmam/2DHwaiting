@@ -201,10 +201,14 @@ public class MovePlayer : MonoBehaviour
 			//Highlight damage dealer if move is not a block move and show true, hide otherwise.
 			bodypart.gameObject.GetComponent<ColorModifier> ().SetSelected (!moveToPlay.IsBlockMove () && show);
 		}
-		if (shield != null) 
+		if (shield != null && moveToPlay.IsBlockMove ()) 
 		{
 			//Show shield if move is a block move and show true, hide otherwise.
-			shield.gameObject.GetComponent<SpriteRenderer> ().enabled = moveToPlay.IsBlockMove () && show;
+			shield.gameObject.GetComponent<SpriteRenderer> ().enabled = show;
+			ShieldControl shieldControl = shield.GetComponent<ShieldControl> ();
+			if (shieldControl != null) {
+				shieldControl.UpdateScale (moveToPlay);
+			}
 		}
 	}
 }
