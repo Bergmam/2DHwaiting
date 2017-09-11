@@ -11,7 +11,7 @@ public class Character
 	private Dictionary<string,Move> moves;
 	private Color color;
 	private int nbr; //Used for comparisons and, in some cases, as index in lists.
-	private int maxHealth = 100; //Used for calculating percentage of health in health bar.
+	private int maxHealth = 400; //Used for calculating percentage of health in health bar.
 	private int health;
 
 	/// <summary>

@@ -14,6 +14,7 @@ public class InputController : MonoBehaviour
 	private float previousPushedVelocity = 0; //Used to compare when the character has been knocked back and is approaching velocity 0 again.
 	private bool paused;
 	private Vector2 prePauseVelocity;
+    private LayerHandler layerHandler;
 
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
 	bool isPlayingMove = false;
@@ -38,6 +39,7 @@ public class InputController : MonoBehaviour
 		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
         thisBody = gameObject.GetComponent<Rigidbody2D>();
 		this.paused = false;
+        layerHandler = GameObject.Find("Handler").GetComponent<LayerHandler>();
 	}
 
     void Update() {
@@ -79,7 +81,8 @@ public class InputController : MonoBehaviour
 
 					//Make sure the character cannot start playing another animation until this one is finished.
 					isPlayingMove = true;
-					thisBody.velocity = Vector2.zero;
+                    layerHandler.sendToCharacterLayer(this.gameObject);
+                    thisBody.velocity = Vector2.zero;
 					SetAnimatorEnabled (false);
 					// Sets MovePlayer.isPlaying before calling MovePlayer.PlayMove() to avoid concurrency issues.
 					characterMovePlayer.SetIsPlaying ();

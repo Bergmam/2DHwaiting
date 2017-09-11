@@ -50,6 +50,9 @@ TagManager:
   - name: Character
     uniqueID: 2036428969
     locked: 0
+  - name: MovePlaying
+    uniqueID: 2206293661
+    locked: 0
   - name: Foreground
     uniqueID: 3034236617
     locked: 0
