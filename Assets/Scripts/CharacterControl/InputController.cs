@@ -139,6 +139,7 @@ public class InputController : MonoBehaviour
 		{
 			if (Mathf.Abs(horizontal) > 0)
 			{
+                print("baaaajs");
 				SetAnimatorBool ("Running", true);
 				stupidCounter = 1;
 			}
