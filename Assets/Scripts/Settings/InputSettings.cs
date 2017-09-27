@@ -30,10 +30,10 @@ public static class InputSettings
 			}
 
 			//Register some buttons for each character TODO: Read buttons from file
-			foreach (char c in "qwe") {
+			foreach (char c in "iop") {
 				AddButton (c + "", StaticCharacterHolder.characters [0]);
 			}
-			foreach (char c in "iop") {
+			foreach (char c in "cvb") {
 				AddButton (c + "", StaticCharacterHolder.characters [1]);
 			}
 		}
