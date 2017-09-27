@@ -40,7 +40,6 @@ public class CameraZoomControl : MonoBehaviour {
 
         if (charDistance > 4.5f) //Don't update cam height if chars are close to each other.
         {
-            print("Updating camera bounds, moving x and y.");
             gameCamera.orthographicSize = halfCamHeight;
             camY = gameCamera.orthographicSize - startHeight;
             camX = middleOfChars;

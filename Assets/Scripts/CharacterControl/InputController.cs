@@ -8,6 +8,8 @@ public class InputController : MonoBehaviour
     public string horizontalAxis;
     public string verticalAxis;
 	public int characterIndex;
+
+    private int jumpFrameDelay; // Used to make sure the character does not accidentally jump two frames in a row
 	private bool collisionLeft;
 	private bool collisionRight;
 	private bool knockedBack;
@@ -34,6 +36,7 @@ public class InputController : MonoBehaviour
 
 	void Start () {
         // characterIndex-1 to make character 1 have index 1 etc.
+        jumpFrameDelay = 0;
         character = StaticCharacterHolder.characters[characterIndex - 1];
         animator = GameObject.Find ("Character " + characterIndex +"/Torso").GetComponent<Animator> ();
 		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
@@ -43,6 +46,10 @@ public class InputController : MonoBehaviour
 	}
 
     void Update() {
+        if (jumpFrameDelay != 0)
+        {
+            jumpFrameDelay--;
+        }
 		if (paused) {
 			return;
 		}
@@ -103,12 +110,8 @@ public class InputController : MonoBehaviour
 		// Get information about the next position of the Character
         float horizontal = Input.GetAxisRaw(horizontalAxis);
         float vertical = Input.GetAxisRaw(verticalAxis);
-		//Check if player has been knocked back and is now standing still again.
-		//Without previousPushedVelocity, the velocity is zero in the first frame and no knockback is applied.
-        if (vertical > 0)
-        {
-            thisBody.velocity = new Vector3(thisBody.velocity.x, 3);
-        }
+        //Check if player has been knocked back and is now standing still again.
+        //Without previousPushedVelocity, the velocity is zero in the first frame and no knockback is applied.
 
 		if (Mathf.Abs (thisBody.velocity.x) < 0.1 && knockedBack && previousPushedVelocity > Mathf.Abs (thisBody.velocity.x)) {
 			//Remove any colision that was detected before the character was knocked back.
@@ -120,26 +123,31 @@ public class InputController : MonoBehaviour
 		}
 		if (horizontal < 0 && !collisionLeft && !knockedBack && !isPlayingMove)
         {
-            thisBody.velocity = new Vector3(-10, thisBody.velocity.y);
+            thisBody.velocity = new Vector2(-6, thisBody.velocity.y);
 			collisionRight = false; //If moving left, there is no longer a collision to the right.
         }
 		else if (horizontal > 0 && !collisionRight && !knockedBack && !isPlayingMove)
         {
-			thisBody.velocity = new Vector3(10, thisBody.velocity.y);
+			thisBody.velocity = new Vector2(6, thisBody.velocity.y);
 			collisionLeft = false; //If moving right, there is no longer a collision to the left
         }
 		else if (horizontal == 0 && !knockedBack && !isPlayingMove)
         {
-            thisBody.velocity = new Vector3(0, thisBody.velocity.y); //Without the knockedBack bool, this stops the character.
+            thisBody.velocity = new Vector2(0, thisBody.velocity.y); //Without the knockedBack bool, this stops the character.
         }
         pressedButton = "";
 
-		// Check isPlayingMove again since it can be set to true in the if-block above.
-		if (!isPlayingMove)
+        if (vertical > 0 && thisBody.velocity.y >= -0.01 && thisBody.velocity.y <= 0.01 && jumpFrameDelay == 0)
+        {
+            jumpFrameDelay = 3;
+            thisBody.AddForce(Vector2.up * 300f);
+        }
+
+        // Check isPlayingMove again since it can be set to true in the if-block above.
+        if (!isPlayingMove)
 		{
 			if (Mathf.Abs(horizontal) > 0)
 			{
-                print("baaaajs");
 				SetAnimatorBool ("Running", true);
 				stupidCounter = 1;
 			}
