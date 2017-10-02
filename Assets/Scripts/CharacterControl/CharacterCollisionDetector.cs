@@ -34,7 +34,7 @@ public class CharacterCollisionDetector : MonoBehaviour
 		}
 		Character otherCharacter = otherInputController.GetCharacter ();
 		Move move = otherInputController.GetCurretlyPlayedMove ();
-		if (otherCharacter == null || move == null || otherCharacter.Equals (this.character))
+		if (otherCharacter == null || move == null || otherCharacter.Equals (this.character) || move.IsBlockMove())
 		{
 			return; //Make sure other character object has all necessary info.
 		}

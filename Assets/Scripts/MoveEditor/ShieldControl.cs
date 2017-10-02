@@ -19,8 +19,7 @@ public class ShieldControl : MonoBehaviour {
 	{
 		//TODO: Remove magic numbers
 		Vector3 previousScale = transform.localScale;
-		transform.localScale = new Vector3 (previousScale.x, 0.5f + 0.015f * move.GetStrength (), previousScale.z);
-		Vector3 previousPosition = transform.localPosition;
-		transform.localPosition = new Vector3 (previousPosition.x, initialPosY + 0.015f * move.GetStrength (), previousPosition.z);
+		float newScale = 0.25f + (1f - 0.25f) * move.GetStrength () / 100f; // min + (max-min) * percentage. Makes scale go [0.25 - 1.0].
+		transform.localScale = new Vector3 (previousScale.x, newScale, previousScale.z);
 	}
 }
