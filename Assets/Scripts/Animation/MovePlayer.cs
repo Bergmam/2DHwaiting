@@ -61,7 +61,8 @@ public class MovePlayer : MonoBehaviour
         frames = new List<Frame>();
 		moveToPlay = move;
 		ShowActiveBodypart (true);
-		int speed = (int) Mathf.Round(move.GetSpeed () * Parameters.speedModifyer) + 1; // +1 to avoid speed = 0 causing infinite loops.
+        int speed = (int) Mathf.Round(Parameters.minSpeed + (float) move.GetSpeed() / 100 
+            * (Parameters.maxSpeed - Parameters.minSpeed));
 		Frame[] moveFrames = move.GetFrames ();
 		for (int i = 0; i < (moveFrames.Length - 1); i++)
 		{

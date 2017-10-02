@@ -108,7 +108,8 @@ public class Character
 
     public void ApplyMoveTo(Move move)
     {
-		SubHealth((int)Mathf.Round(move.GetStrength()*Parameters.strengthModifyer) + 1); //Change range of move damage [0-100] -> [1-101]
+		SubHealth((int)Mathf.Round(Parameters.minStrength + (float)move.GetStrength() / 100
+            * (Parameters.maxStrength - Parameters.minStrength)));
 	}
 
 	/// <summary>
@@ -118,8 +119,10 @@ public class Character
 	/// <param name="blockingMove">Blocking move.</param>
 	public void ApplyMoveTo(Move damagingMove, Move blockingMove)
 	{
-        int strength = (int) Mathf.Round(damagingMove.GetStrength() * Parameters.strengthModifyer);
-        int speed = (int)Mathf.Round(blockingMove.GetSpeed() * Parameters.shieldModifyer);
+        int strength = (int)Mathf.Round(Parameters.minStrength + (float)damagingMove.GetStrength() / 100
+            * (Parameters.maxStrength - Parameters.minStrength));
+        int speed = (int)Mathf.Round(Parameters.minSpeed + (float)blockingMove.GetSpeed() / 100
+            * (Parameters.maxSpeed - Parameters.minSpeed));
         int damage = strength - speed;
 		if (damage > 0) {
 			SubHealth(damage + 1); //Change range of move damage [0-100] -> [1-101]

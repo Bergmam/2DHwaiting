@@ -12,5 +12,11 @@ public static class Parameters {
     public static float moveSpeed = 6.0f; // 
     public static float shieldModifyer = 1.0f;
     public static float knockbackModifyer = 100.0f;
+
+    public static int minSpeed = 1; // 
+    public static int maxSpeed = 101; // 
+
+    public static int minStrength = 1; // 
+    public static int maxStrength = 101; // 
     // Stun?
 }
