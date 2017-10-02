@@ -121,8 +121,8 @@ public class Character
 	{
         int strength = (int)Mathf.Round(Parameters.minStrength + (float)damagingMove.GetStrength() / 100
             * (Parameters.maxStrength - Parameters.minStrength));
-        int speed = (int)Mathf.Round(Parameters.minSpeed + (float)blockingMove.GetSpeed() / 100
-            * (Parameters.maxSpeed - Parameters.minSpeed));
+        int speed = (int)Mathf.Round(Parameters.minBlock + (float)blockingMove.GetSpeed() / 100
+            * (Parameters.maxBlock - Parameters.minBlock));
         int damage = strength - speed;
 		if (damage > 0) {
 			SubHealth(damage + 1); //Change range of move damage [0-100] -> [1-101]
