@@ -29,7 +29,8 @@ public class ShieldCollisionDetector : MonoBehaviour {
 		}
 		Character otherCharacter = otherInputController.GetCharacter ();
 		Move damagingMove = otherInputController.GetCurretlyPlayedMove ();
-		if (otherCharacter == null || damagingMove == null || otherCharacter.Equals (this.character))
+		if (otherCharacter == null || damagingMove == null || damagingMove.IsBlockMove() 
+            || otherCharacter.Equals (this.character) || otherCollider.transform.tag.Equals("characterCollider"))
 		{
 			return; //Make sure other character object has all necessary info.
 		}
@@ -40,9 +41,8 @@ public class ShieldCollisionDetector : MonoBehaviour {
 		}
 
 		this.character.ApplyMoveTo (damagingMove, blockMove); //Apply damage in model.
-
 		otherCollider.enabled = false; //Make sure the other character's damaging bodypart does not also collide with character behind shield.
-
+        
 		gameState.UpdateCharacterHealth (this.character); //Update health bars and check winner.
 
 		//Apply knockback.
