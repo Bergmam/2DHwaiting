@@ -11,7 +11,7 @@ public class Character
 	private Dictionary<string,Move> moves;
 	private Color color;
 	private int nbr; //Used for comparisons and, in some cases, as index in lists.
-	private int maxHealth = 400; //Used for calculating percentage of health in health bar.
+	private int maxHealth = Parameters.health; //Used for calculating percentage of health in health bar.
 	private int health;
 
 	/// <summary>
@@ -108,7 +108,7 @@ public class Character
 
     public void ApplyMoveTo(Move move)
     {
-		SubHealth(move.GetStrength() + 1); //Change range of move damage [0-100] -> [1-101]
+		SubHealth((int)Mathf.Round(move.GetStrength()*Parameters.strengthModifyer) + 1); //Change range of move damage [0-100] -> [1-101]
 	}
 
 	/// <summary>
@@ -118,7 +118,9 @@ public class Character
 	/// <param name="blockingMove">Blocking move.</param>
 	public void ApplyMoveTo(Move damagingMove, Move blockingMove)
 	{
-		int damage = damagingMove.GetStrength () - blockingMove.GetSpeed ();
+        int strength = (int) Mathf.Round(damagingMove.GetStrength() * Parameters.strengthModifyer);
+        int speed = (int)Mathf.Round(blockingMove.GetSpeed() * Parameters.shieldModifyer);
+        int damage = strength - speed;
 		if (damage > 0) {
 			SubHealth(damage + 1); //Change range of move damage [0-100] -> [1-101]
 		}

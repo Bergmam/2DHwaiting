@@ -48,12 +48,12 @@ public class CharacterCollisionDetector : MonoBehaviour
 		Vector3 otherPosition = otherRootTransform.position;
 		if (otherPosition.x < thisPosition.x)
 		{
-			this.rigidBody.AddForce (Vector2.right * 50f);
+			this.rigidBody.AddForce (Vector2.right * Parameters.knockbackModifyer);
 			this.inputController.KnockBack (); //Make the character unable to move while being knocked back.
 		}
 		else
 		{
-			this.rigidBody.AddForce (Vector2.left * 50f);
+            this.rigidBody.AddForce (Vector2.left * Parameters.knockbackModifyer);
 			this.inputController.KnockBack (); //Make the character unable to move while being knocked back.
 		}
 

@@ -41,6 +41,7 @@ public class InputController : MonoBehaviour
         animator = GameObject.Find ("Character " + characterIndex +"/Torso").GetComponent<Animator> ();
 		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
         thisBody = gameObject.GetComponent<Rigidbody2D>();
+        thisBody.mass = Parameters.mass;
 		this.paused = false;
         layerHandler = GameObject.Find("Handler").GetComponent<LayerHandler>();
 	}
@@ -123,12 +124,12 @@ public class InputController : MonoBehaviour
 		}
 		if (horizontal < 0 && !collisionLeft && !knockedBack && !isPlayingMove)
         {
-            thisBody.velocity = new Vector2(-6, thisBody.velocity.y);
+            thisBody.velocity = new Vector2(-Parameters.moveSpeed, thisBody.velocity.y);
 			collisionRight = false; //If moving left, there is no longer a collision to the right.
         }
 		else if (horizontal > 0 && !collisionRight && !knockedBack && !isPlayingMove)
         {
-			thisBody.velocity = new Vector2(6, thisBody.velocity.y);
+			thisBody.velocity = new Vector2(Parameters.moveSpeed, thisBody.velocity.y);
 			collisionLeft = false; //If moving right, there is no longer a collision to the left
         }
 		else if (horizontal == 0 && !knockedBack && !isPlayingMove)
@@ -140,7 +141,7 @@ public class InputController : MonoBehaviour
         if (vertical > 0 && thisBody.velocity.y >= -0.01 && thisBody.velocity.y <= 0.01 && jumpFrameDelay == 0)
         {
             jumpFrameDelay = 3;
-            thisBody.AddForce(Vector2.up * 300f);
+            thisBody.AddForce(Vector2.up * Parameters.jumpForce);
         }
 
         // Check isPlayingMove again since it can be set to true in the if-block above.
