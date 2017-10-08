@@ -128,7 +128,7 @@ public class MoveCreator : MonoBehaviour
 		if (blockMove)
 		{
 			//Change gui labels to match move type.
-			sliders.SetSliderStrings ("Coverage", "Speed & Block");
+			sliders.SetSliderStrings ("Coverage", "Block");
 			dropDown.SetLabelText ("Shield");
 		}
 		else
