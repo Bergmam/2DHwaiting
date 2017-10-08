@@ -45,17 +45,17 @@ public class ShieldCollisionDetector : MonoBehaviour {
         otherInputController.PauseSeconds(Parameters.stunTimeModifier * damagingMove.GetStrength());
 		gameState.UpdateCharacterHealth (this.character); //Update health bars and check winner.
 
-		//Apply knockback.
+		//Apply knockbacks.
 		Vector3 thisPosition = transform.position;
 		Vector3 otherPosition = otherRootTransform.position;
 		if (otherPosition.x < thisPosition.x)
 		{
-			this.rigidBody.AddForce (Vector2.right * 50f);
+			this.rigidBody.AddForce (Vector2.right * Parameters.blockKnockbackModifier);
 			this.inputController.KnockBack (); //Make the character unable to move while being knocked back.
 		}
 		else
 		{
-			this.rigidBody.AddForce (Vector2.left * 50f);
+			this.rigidBody.AddForce (Vector2.left * Parameters.blockKnockbackModifier);
 			this.inputController.KnockBack (); //Make the character unable to move while being knocked back.
 		}
 	}
