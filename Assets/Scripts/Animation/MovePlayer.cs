@@ -64,12 +64,29 @@ public class MovePlayer : MonoBehaviour
 
 		float speedPercentage = (float)move.GetSpeed () / 100f;
 		if (move.IsBlockMove ()) {
-			speedPercentage = 1.0f; //Block moves always extend at max speed
+			speedPercentage = Parameters.blockSpeedPercentage;
 		}
 		float fSpeed = Parameters.minSpeed + speedPercentage * (Parameters.maxSpeed - Parameters.minSpeed);
 		int speed = (int)Mathf.Round (fSpeed);
 
 		Frame[] moveFrames = move.GetFrames ();
+
+		//Repeat middle frame Parameters.blockTime times for block moves to make them remain extended for a fixed amount of time.
+		if (move.IsBlockMove ()) 
+		{
+			Frame[] blockMoveFrames = new Frame[moveFrames.Length + Parameters.blockTime]; //Make room for extra frames.
+			int nbrOfMoveFrames = moveFrames.Length;
+			int x = 0;
+			for (int i = 0; i < blockMoveFrames.Length; i++)
+			{
+				blockMoveFrames [i] = moveFrames [x]; //Transfer frames.
+				if (i < nbrOfMoveFrames / 2 || i > (nbrOfMoveFrames / 2) - 1 + Parameters.blockTime) { //Make x the same for a blockTime size gap in the middle.
+					x++;
+				}
+			}
+			moveFrames = blockMoveFrames;
+		}
+
 		for (int i = 0; i < (moveFrames.Length - 1); i++)
 		{
 			Frame firstFrame = moveFrames [i];
