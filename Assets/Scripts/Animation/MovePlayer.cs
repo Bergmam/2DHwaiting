@@ -61,8 +61,14 @@ public class MovePlayer : MonoBehaviour
         frames = new List<Frame>();
 		moveToPlay = move;
 		ShowActiveBodypart (true);
-        int speed = (int) Mathf.Round(Parameters.minSpeed + (float) move.GetSpeed() / 100 
-            * (Parameters.maxSpeed - Parameters.minSpeed));
+
+		float speedPercentage = (float)move.GetSpeed () / 100f;
+		if (move.IsBlockMove ()) {
+			speedPercentage = 1.0f; //Block moves always extend at max speed
+		}
+		float fSpeed = Parameters.minSpeed + speedPercentage * (Parameters.maxSpeed - Parameters.minSpeed);
+		int speed = (int)Mathf.Round (fSpeed);
+
 		Frame[] moveFrames = move.GetFrames ();
 		for (int i = 0; i < (moveFrames.Length - 1); i++)
 		{
