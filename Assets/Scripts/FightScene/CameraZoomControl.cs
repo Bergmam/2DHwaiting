@@ -1,54 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CameraZoomControl : MonoBehaviour {
 
     public GameObject character1;
     public GameObject character2;
-
     private float leftCharPos;
     private float rightCharPos;
-
     private float extraCanvasSpace = 5.6f;
     private float minCharDistance;
     private float startHeight;
-
     private Camera gameCamera;
+	private float backgroundPosLeftX;
+	private float backgroundPosRightX;
 
-	// Use this for initialization
 	void Start () {
         gameCamera = GetComponent<Camera>();
         startHeight = gameCamera.orthographicSize;
     }
-	
-	// Update is called once per frame
+
+
 	void Update () {
 
         //TODO: Check case where characters switch places.
+		//TODO: Give camera a speed so there is a delay to the scaling and it always scale at a constant speed.
+		//TODO: Find edge of screen dynmiaclly instead of with magic numbers.
 
-        leftCharPos = character1.transform.position.x;
-        rightCharPos = character2.transform.position.x;
-        float charDistance = Mathf.Abs(rightCharPos - leftCharPos);
-        float zoomSize = charDistance + extraCanvasSpace;
-        float halfCamHeight = (zoomSize / gameCamera.aspect) / 2;
+		//edge of screen in world coordinates
+		backgroundPosLeftX = -8.9f;
+		backgroundPosRightX = 8.9f;
 
-        float camY = gameCamera.transform.position.y;
-        float camX = gameCamera.transform.position.x;
+		leftCharPos = character1.transform.position.x - Parameters.characterCamMargin;
+		rightCharPos = character2.transform.position.x + Parameters.characterCamMargin;
 
-        float middleOfChars = ((rightCharPos - leftCharPos) / 2) + leftCharPos;
+		//Check which of character or edge of background is closest to the center (camera bound)
+		float leftX = Math.Max (backgroundPosLeftX, leftCharPos);
+		float rightX = Math.Min (backgroundPosRightX, rightCharPos);
 
-        if (charDistance > 4.5f) //Don't update cam height if chars are close to each other.
-        {
-            gameCamera.orthographicSize = halfCamHeight;
-            camY = gameCamera.orthographicSize - startHeight;
-            camX = middleOfChars;
-        }
-        else
-        {
-            //TODO: Update camera x position if characters are close to each other but not close to the edge of the world.
-        }
-
-        gameCamera.transform.position = new Vector3(camX, camY, gameCamera.transform.position.z);
+		float middleX = leftX + (rightX - leftX) / 2f;
+		gameCamera.orthographicSize = ((rightX - leftX) / gameCamera.aspect) / 2f; //orthographicSize is halv of screen height.
+		float camPosY = gameCamera.orthographicSize - startHeight; //Make camera lower edge always be at ground level.
+		Vector3 camPos = new Vector3 (middleX, camPosY, transform.position.z);
+		transform.position = camPos; //Update camera object's position.
     }
 }
