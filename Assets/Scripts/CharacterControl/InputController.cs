@@ -90,7 +90,7 @@ public class InputController : MonoBehaviour
 					//Make sure the character cannot start playing another animation until this one is finished.
 					isPlayingMove = true;
                     layerHandler.sendToCharacterLayer(this.gameObject);
-                    thisBody.velocity = Vector2.zero;
+                    thisBody.velocity = new Vector2(0, thisBody.velocity.y);
 					SetAnimatorEnabled (false);
 					// Sets MovePlayer.isPlaying before calling MovePlayer.PlayMove() to avoid concurrency issues.
 					characterMovePlayer.SetIsPlaying ();
