@@ -43,13 +43,24 @@ public class ShieldCollisionDetector : MonoBehaviour {
 		this.character.ApplyMoveTo (damagingMove, blockMove); //Apply damage in model.
 		otherCollider.enabled = false; //Make sure the other character's damaging bodypart does not also collide with character behind shield.
 
+        transform.root.GetComponent<MovePlayer>().reset();
         otherCharacterObject.GetComponent<MovePlayer>().reset();
         otherCharacterObject.GetComponent<Animator>().enabled = true;
         otherCharacterObject.GetComponent<Animator>().SetBool("Stunned", true);
 
-        otherInputController.PauseSeconds(Parameters.stunTimeModifier * damagingMove.GetStrength());
+        //Translate percentage strength of damaging move and translate to stun
+        float minStrength = Parameters.minStrength;
+        float maxStrength = Parameters.maxStrength;
+        float stunPercentage = (damagingMove.GetStrength() - minStrength) / (maxStrength - minStrength);
+        float minStun = Parameters.minStun;
+        float maxStun = Parameters.maxStun;
+        float stunTime = minStun + (maxStun - minStun) * stunPercentage;
+
+        otherInputController.PauseSeconds(stunTime);
+
         
-		gameState.UpdateCharacterHealth (this.character); //Update health bars and check winner.
+
+        gameState.UpdateCharacterHealth (this.character); //Update health bars and check winner.
 
 		//Apply knockbacks.
 		Vector3 thisPosition = transform.position;
