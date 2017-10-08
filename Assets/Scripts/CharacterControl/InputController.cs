@@ -38,8 +38,8 @@ public class InputController : MonoBehaviour
         // characterIndex-1 to make character 1 have index 1 etc.
         jumpFrameDelay = 0;
         character = StaticCharacterHolder.characters[characterIndex - 1];
-        animator = GameObject.Find ("Character " + characterIndex +"/Torso").GetComponent<Animator> ();
-		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
+        animator = GameObject.Find("Character " + characterIndex).GetComponent<Animator>();
+        characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
         thisBody = gameObject.GetComponent<Rigidbody2D>();
         thisBody.mass = Parameters.mass;
 		this.paused = false;
