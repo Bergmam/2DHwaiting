@@ -126,7 +126,8 @@ public class GameState : MonoBehaviour
 		GameObject.Find ("Character 1").GetComponent<InputController> ().enabled = false;
 		GameObject.Find ("Character 2").GetComponent<InputController> ().enabled = false;
 		int loserNbr = (winner.GetNbr () % 2) + 1;
-		GameObject.Find ("Character " + loserNbr).GetComponent<Animator> ().SetBool ("Dead", true);
+        GameObject.Find("Character " + loserNbr).GetComponent<Animator>().enabled = true;
+        GameObject.Find ("Character " + loserNbr).GetComponent<Animator> ().SetBool ("Dead", true);
 		winnerText.text = "PLAYER" + winner.GetNbr () + " WINS!";
 		winnerText.enabled = true;
 		gameOver = true;

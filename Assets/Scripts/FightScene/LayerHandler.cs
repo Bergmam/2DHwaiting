@@ -16,7 +16,6 @@ public class LayerHandler : MonoBehaviour {
     {
         if (!go.Equals(character) && character != null)
         {
-            print("Switching to character layer");
             foreach (SpriteRenderer sprite in character.GetComponentsInChildren<SpriteRenderer>())
             {
                 sprite.sortingLayerName = characterLayer;
