@@ -18,7 +18,8 @@ public static class Parameters {
 
     public static int minBlock = 30; // 
     public static int maxBlock = 121; //
-    // Stun?
+
+    public static float stunTimeModifier = 0.01f; // Seconds
 
 	public static float characterCamMargin = 5f;
 }
