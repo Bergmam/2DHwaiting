@@ -65,6 +65,7 @@ public class InputController : MonoBehaviour
         {
             UnPause();
             pausedForTime = false;
+            animator.SetBool("Stunned", false);
         }
 
 		if (paused) {
@@ -198,11 +199,11 @@ public class InputController : MonoBehaviour
 	/// <summary>
 	/// Pauses this instance, freezing all animation and disable buttons.
 	/// </summary>
-	public void Pause(){
+	public void Pause(bool stopAnimator){
 		prePauseVelocity = thisBody.velocity;
 		thisBody.velocity = Vector2.zero;
 		this.paused = true;
-		SetAnimatorEnabled (false);
+		SetAnimatorEnabled (!stopAnimator);
 		characterMovePlayer.Pause ();
 	}
 
@@ -212,7 +213,7 @@ public class InputController : MonoBehaviour
     public void PauseSeconds(float ms)
     {
         pausedForTime = true;
-        Pause();
+        Pause(false);
         pauseTime = ms;
     }
     

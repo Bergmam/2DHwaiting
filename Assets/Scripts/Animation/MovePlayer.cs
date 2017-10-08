@@ -218,4 +218,12 @@ public class MovePlayer : MonoBehaviour
 			}
 		}
 	}
+
+    public void reset()
+    {
+        isPlaying = false;
+        ShowActiveBodypart(false);
+        frames = new List<Frame>();
+        frameIndex = 0;
+    }
 }

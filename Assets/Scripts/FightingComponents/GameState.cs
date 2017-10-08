@@ -100,8 +100,8 @@ public class GameState : MonoBehaviour
 		paused = true;
 		pauseBackgroundToggel.Select ();
 		pauseMenu.SetActive (true);
-		GameObject.Find ("Character 1").GetComponent<InputController> ().Pause ();
-		GameObject.Find ("Character 2").GetComponent<InputController> ().Pause ();
+		GameObject.Find ("Character 1").GetComponent<InputController> ().Pause (true);
+		GameObject.Find ("Character 2").GetComponent<InputController> ().Pause (true);
 	}
 
 	/// <summary>

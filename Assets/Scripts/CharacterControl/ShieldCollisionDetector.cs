@@ -42,7 +42,13 @@ public class ShieldCollisionDetector : MonoBehaviour {
 
 		this.character.ApplyMoveTo (damagingMove, blockMove); //Apply damage in model.
 		otherCollider.enabled = false; //Make sure the other character's damaging bodypart does not also collide with character behind shield.
+
+        otherCharacterObject.GetComponent<MovePlayer>().reset();
+        otherCharacterObject.GetComponent<Animator>().enabled = true;
+        otherCharacterObject.GetComponent<Animator>().SetBool("Stunned", true);
+
         otherInputController.PauseSeconds(Parameters.stunTimeModifier * damagingMove.GetStrength());
+        
 		gameState.UpdateCharacterHealth (this.character); //Update health bars and check winner.
 
 		//Apply knockbacks.
