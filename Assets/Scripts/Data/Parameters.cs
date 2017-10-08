@@ -26,4 +26,7 @@ public static class Parameters {
 
 	public static int blockTime = 30; // Last frame of a move will be added blockTime*2 times (forward & reversed) extra to block moves.
 	public static float blockSpeedPercentage = 0.9f; //How fast a block move extends [0.0 - 1.0].
+
+	public static float minShieldScale = 0.25f;
+	public static float maxShieldScale = 1.0f;
 }
