@@ -10,6 +10,8 @@ public class InputController : MonoBehaviour
 	public int characterIndex;
 
     private int jumpFrameDelay; // Used to make sure the character does not accidentally jump two frames in a row
+    private float pauseTime;
+    private bool pausedForTime;
 	private bool collisionLeft;
 	private bool collisionRight;
 	private bool knockedBack;
@@ -37,6 +39,8 @@ public class InputController : MonoBehaviour
 	void Start () {
         // characterIndex-1 to make character 1 have index 1 etc.
         jumpFrameDelay = 0;
+        pauseTime = 0;
+        pausedForTime = false;
         character = StaticCharacterHolder.characters[characterIndex - 1];
         animator = GameObject.Find("Character " + characterIndex).GetComponent<Animator>();
         characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
@@ -51,6 +55,18 @@ public class InputController : MonoBehaviour
         {
             jumpFrameDelay--;
         }
+
+        if (pauseTime > 0)
+        {
+            pauseTime -= Time.deltaTime;
+        }
+
+        if (pauseTime <= 0 && pausedForTime)
+        {
+            UnPause();
+            pausedForTime = false;
+        }
+
 		if (paused) {
 			return;
 		}
@@ -189,6 +205,17 @@ public class InputController : MonoBehaviour
 		SetAnimatorEnabled (false);
 		characterMovePlayer.Pause ();
 	}
+
+    /// <summary>
+    /// Calls the pause method of this class for a set amount of time
+    /// </summary>
+    public void PauseSeconds(float ms)
+    {
+        pausedForTime = true;
+        Pause();
+        pauseTime = ms;
+    }
+    
 
 	/// <summary>
 	/// Unpauses this instance, enabling buttons and resuming the animation that is currently playing.
