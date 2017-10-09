@@ -5531,9 +5531,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4de2946ce26d477c8e081a823c31fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frameTwistLimit: 10
+  frameTwistLimit: 15
   highHardTwistLimit: 20
-  lowHardTwistLimit: 320
+  lowHardTwistLimit: 300
   pivotDirection: 2
 --- !u!58 &1268070609
 CircleCollider2D:
