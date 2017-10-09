@@ -238,6 +238,11 @@ public class MovePlayer : MonoBehaviour
 
     public void reset()
     {
+        if(moveToPlay != null)
+        {
+            FrameToCharacter(moveToPlay.GetFrames()[0]);
+        }
+        SetAutoLoopEnabled(false);
         isPlaying = false;
         ShowActiveBodypart(false);
         frames = new List<Frame>();

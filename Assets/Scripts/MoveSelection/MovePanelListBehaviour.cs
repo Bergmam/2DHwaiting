@@ -17,7 +17,8 @@ public class MovePanelListBehaviour : MonoBehaviour
 	private MovePanelBehaviour[] listItems; //Object used for interacting with the underlying list items.
 	private SelectionPanelBahviour[] selectedMovesPanels;
 	private MovePlayer character1; //used for displaying the selected move on one of the visible characters.
-	private GameObject playButton;
+    private MovePlayer character2;
+    private GameObject playButton;
     private float scrollDelay;
 
 	void Start () 
@@ -60,11 +61,17 @@ public class MovePanelListBehaviour : MonoBehaviour
 
 		listItems[0].Select(); //Select the top list item.
 		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
-		PlayAnimation (); //Start previewing the animation corresponding to the first list item.
+        character2 = GameObject.Find("Character 2").GetComponent<MovePlayer>();
+        PlayAnimation (1); //Start previewing the animation corresponding to the first list item.
     }
     
 	void Update () 
 	{
+        bool vertical1Up = Input.GetAxisRaw("Vertical") > 0;
+        bool vertical1Down = Input.GetAxisRaw("Vertical") < 0;
+        bool vertical2Up = Input.GetAxisRaw("Vertical2") > 0;
+        bool vertical2Down = Input.GetAxisRaw("Vertical2") < 0;
+
         if (scrollDelay > 0)
         {
             scrollDelay -= Time.deltaTime;
@@ -72,7 +79,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 
         else
         {
-            if ((Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical2") > 0) && scrollDelay <= 0) //Up arrow pressed
+            if ((vertical1Up || vertical2Up) && scrollDelay <= 0) //Up arrow pressed
             {
                 scrollDelay = Parameters.scrollDelay;
                 bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
@@ -82,9 +89,8 @@ public class MovePanelListBehaviour : MonoBehaviour
                 {
                     ScrollList(-1);
                 }
-                PlayAnimation();
             }
-            else if (Input.GetAxisRaw("Vertical") < 0 || Input.GetAxisRaw("Vertical2") < 0 && scrollDelay <= 0) //Down arrow pressed
+            else if ((vertical1Down || vertical2Down) && scrollDelay <= 0) //Down arrow pressed
             {
                 scrollDelay = Parameters.scrollDelay;
                 bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
@@ -94,7 +100,14 @@ public class MovePanelListBehaviour : MonoBehaviour
                 {
                     ScrollList(1);
                 }
-                PlayAnimation();
+            }
+            if (vertical1Up || vertical1Down)
+            {
+                PlayAnimation(1);
+            }
+            else if (vertical2Up || vertical2Down)
+            {
+                PlayAnimation(2);
             }
         }
 
@@ -142,10 +155,21 @@ public class MovePanelListBehaviour : MonoBehaviour
 	/// <summary>
 	/// Plays the move animation of the currently selected list item on one of the characters in the scene.
 	/// </summary>
-	private void PlayAnimation()
+	private void PlayAnimation(int characterNumber)
 	{
-		character1.SetAutoLoopEnabled(true);
-		character1.PlayMove(moves[selectedListIndex]);
+        if (characterNumber == 1)
+        {
+            character2.reset();
+            character1.SetAutoLoopEnabled(true);
+            character1.PlayMove(moves[selectedListIndex]);
+        }
+        else if (characterNumber == 2)
+        {
+            character1.reset();
+            character2.SetAutoLoopEnabled(true);
+            character2.PlayMove(moves[selectedListIndex]);
+        }
+		
 	}
 
 	/// <summary>
