@@ -30,4 +30,6 @@ public static class Parameters {
 
 	public static float minShieldScale = 0.25f;
 	public static float maxShieldScale = 1.0f;
+
+    public static float scrollDelay = 0.15f;
 }

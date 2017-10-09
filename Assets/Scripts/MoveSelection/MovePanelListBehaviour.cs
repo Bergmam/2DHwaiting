@@ -18,9 +18,11 @@ public class MovePanelListBehaviour : MonoBehaviour
 	private SelectionPanelBahviour[] selectedMovesPanels;
 	private MovePlayer character1; //used for displaying the selected move on one of the visible characters.
 	private GameObject playButton;
+    private float scrollDelay;
 
 	void Start () 
 	{
+        scrollDelay = 0;
 		//Hide the play button untill each character has a move assigned to each of its used buttons.
 		playButton = GameObject.Find ("PlayButton");
 		playButton.SetActive (false);
@@ -63,29 +65,41 @@ public class MovePanelListBehaviour : MonoBehaviour
     
 	void Update () 
 	{
-        if (Input.GetKeyDown (KeyCode.UpArrow)) //Up arrow pressed
+        if (scrollDelay > 0)
         {
-			bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
-			MoveSelection (-1);
-			bool movedIntoBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
-            if (!movedOutOfTopPanels && !movedIntoBotPanels)
-            {
-				ScrollList (-1);
-			}
-			PlayAnimation ();
+            scrollDelay -= Time.deltaTime;
         } 
-		else if (Input.GetKeyDown (KeyCode.DownArrow)) //Down arrow pressed
+
+        else
         {
-			bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
-			MoveSelection (1);
-			bool moveIntoTopPanels = selectedListIndex <= nbrOfVisiblePanels / 2;
-            if (!moveIntoTopPanels && !movedOutOfBotPanels)
+            if ((Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical2") > 0) && scrollDelay <= 0) //Up arrow pressed
             {
-				ScrollList (1);
+                scrollDelay = Parameters.scrollDelay;
+                bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
+                MoveSelection(-1);
+                bool movedIntoBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
+                if (!movedOutOfTopPanels && !movedIntoBotPanels)
+                {
+                    ScrollList(-1);
+                }
+                PlayAnimation();
             }
-			PlayAnimation ();
-		}
-		else if (Input.anyKeyDown)
+            else if (Input.GetAxisRaw("Vertical") < 0 || Input.GetAxisRaw("Vertical2") < 0 && scrollDelay <= 0) //Down arrow pressed
+            {
+                scrollDelay = Parameters.scrollDelay;
+                bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
+                MoveSelection(1);
+                bool moveIntoTopPanels = selectedListIndex <= nbrOfVisiblePanels / 2;
+                if (!moveIntoTopPanels && !movedOutOfBotPanels)
+                {
+                    ScrollList(1);
+                }
+                PlayAnimation();
+            }
+        }
+
+        
+		if (Input.anyKeyDown)
 		{
 			//Check if any button used in the game has been pressed.
 			foreach (string button in InputSettings.allUsedButtons)
