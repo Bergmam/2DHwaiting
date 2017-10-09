@@ -20,8 +20,10 @@ public class MovePanelListBehaviour : MonoBehaviour
     private MovePlayer character2;
     private GameObject playButton;
     private float scrollDelay;
+    SceneButtonBehaviour playButtonBehaviour;
 
-	void Start () 
+
+    void Start () 
 	{
         scrollDelay = 0;
 		//Hide the play button untill each character has a move assigned to each of its used buttons.
@@ -63,6 +65,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
         character2 = GameObject.Find("Character 2").GetComponent<MovePlayer>();
         PlayAnimation (1); //Start previewing the animation corresponding to the first list item.
+        playButtonBehaviour = GameObject.Find("Handler").GetComponent<SceneButtonBehaviour>(); //Used to switch scene by pressing Enter.
     }
     
 	void Update () 
@@ -111,7 +114,10 @@ public class MovePanelListBehaviour : MonoBehaviour
             }
         }
 
-        
+        if ((Input.GetKeyDown("enter") || Input.GetKeyDown("return")) && InputSettings.AllButtonsAssigned())
+        {
+            playButtonBehaviour.SwitchScene("FightScene");
+        }
 		if (Input.anyKeyDown)
 		{
 			//Check if any button used in the game has been pressed.
