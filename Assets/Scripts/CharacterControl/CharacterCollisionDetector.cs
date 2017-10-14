@@ -38,6 +38,11 @@ public class CharacterCollisionDetector : MonoBehaviour
 		{
 			return; //Make sure other character object has all necessary info.
 		}
+		if (!move.GetActiveBodypart ().Equals (otherCollider.transform.name)) {
+			return; //Make sure other collider is actually the damaging move.
+			//This should not be necessary but if another collider is on, it will do damage even if
+			// it is not the damaging move. This is just to be absolutely sure.
+		}
         audioCenter.Play();
 
         this.character.ApplyMoveTo (move); //Apply damage in model.
@@ -56,7 +61,6 @@ public class CharacterCollisionDetector : MonoBehaviour
             this.rigidBody.AddForce (Vector2.left * Parameters.knockbackModifyer);
 			this.inputController.KnockBack (); //Make the character unable to move while being knocked back.
 		}
-
 		otherCollider.enabled = false;
 	}
 		
