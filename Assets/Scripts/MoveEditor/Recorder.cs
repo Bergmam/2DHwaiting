@@ -14,6 +14,7 @@ public class Recorder : MonoBehaviour
 	public bool reverseOnWayBack = true;
 	private MovePlayer movePlayer;
 	private bool doneRecording;
+	private InputField nameInputField;
 
 	private Frame initialPoseFrame;
 
@@ -26,6 +27,7 @@ public class Recorder : MonoBehaviour
         FindEndPoints ();
 		initialPoseFrame = GetCurrentPoseFrame ();
 		progressBarBehaviour = GameObject.Find ("ProgressBar").GetComponent<ProgressBarBehaviour> ();
+		nameInputField = GameObject.Find ("NameInputField").GetComponent<InputField> ();
     }
 		
 	public void SetMove(Move move)
@@ -108,7 +110,7 @@ public class Recorder : MonoBehaviour
 		//If the user drags a bodypart quickly while pressing space, sometimes the limits are updated without the frame being added.
 		bool leftMouseButtonDown = Input.GetMouseButton (0);
 		bool spacePressed = Input.GetKeyDown ("space");
-		if (!leftMouseButtonDown && spacePressed)
+		if (!leftMouseButtonDown && spacePressed && !nameInputField.isFocused)
 		{
 			RecordFrame ();
 		}
