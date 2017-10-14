@@ -174,6 +174,7 @@ public class Recorder : MonoBehaviour
 		{
 			return;
 		}
+		doneRecording = false;
 		movePlayer.SetAutoLoopEnabled (false);
 		progressBarBehaviour.UpdateFill (0);
 		movePlayer.FrameToCharacter (initialPoseFrame); //Reset character pose
