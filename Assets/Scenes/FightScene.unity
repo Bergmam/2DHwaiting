@@ -3243,7 +3243,7 @@ GameObject:
   - component: {fileID: 525704245}
   - component: {fileID: 525704244}
   m_Layer: 0
-  m_Name: Lower Left leg
+  m_Name: Lower Left Leg
   m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7969,7 +7969,7 @@ GameObject:
   - component: {fileID: 1558121725}
   - component: {fileID: 1558121724}
   m_Layer: 0
-  m_Name: Lower Left leg
+  m_Name: Lower Left Leg
   m_TagString: Rotatable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

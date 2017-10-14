@@ -22,7 +22,7 @@ public class GameState : MonoBehaviour
 	{
 		pauseMenu = GameObject.Find ("PauseMenu");
 		pauseMenu.SetActive (false);
-		timeUntilPressAnyKey = 2.5f;
+		timeUntilPressAnyKey = 1.0f;
 		pauseBackgroundToggel = GameObject.Find ("PauseBackground").GetComponent<ColorModifier> ();
 		pauseBackgroundToggel.SetDefaultColor (new Color32 (0, 0, 0, 0));
 		pauseBackgroundToggel.SetSelectedColor (new Color32 (120, 120, 120, 160));
