@@ -33,7 +33,7 @@ public static class InputSettings
 			foreach (char c in "uiojkl") {
 				AddButton (c + "", StaticCharacterHolder.characters [0]);
 			}
-			foreach (char c in "fghvbn") {
+			foreach (char c in "fghrty") {
 				AddButton (c + "", StaticCharacterHolder.characters [1]);
 			}
 		}
