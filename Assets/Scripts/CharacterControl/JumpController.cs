@@ -11,7 +11,7 @@ public class JumpController : MonoBehaviour {
 	private Rigidbody2D thisBody;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		jumpFrameDelay = 0;
 		thisBody = gameObject.GetComponent<Rigidbody2D> ();
 	}

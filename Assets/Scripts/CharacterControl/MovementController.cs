@@ -15,7 +15,7 @@ public class MovementController : MonoBehaviour {
 	private Vector2 prePauseVelocity;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		thisBody = gameObject.GetComponent<Rigidbody2D> ();
 		thisBody.mass = Parameters.mass;
 	}

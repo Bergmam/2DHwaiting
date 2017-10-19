@@ -55,7 +55,6 @@ public class InputController : MonoBehaviour
 		if (paused) {
 			return; //End method if game is paused.
 		}
-
 		// If previous move finished, reset isPlayingMove and enable the animator.
 		if (!fightMoveController.IsDoingMove ())
 		{

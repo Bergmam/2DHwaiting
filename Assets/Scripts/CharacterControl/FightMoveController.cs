@@ -16,7 +16,7 @@ public class FightMoveController : MonoBehaviour {
 	private MovePlayer characterMovePlayer;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		thisBody = gameObject.GetComponent<Rigidbody2D> ();
 		layerHandler = GameObject.Find("Handler").GetComponent<LayerHandler>();
 		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
@@ -70,8 +70,8 @@ public class FightMoveController : MonoBehaviour {
 
 	public bool IsDoingMove()
 	{
-		return characterMovePlayer.CheckIsPlaying ();
-	}
+        return characterMovePlayer.CheckIsPlaying ();
+    }
 
 	public void Pause()
 	{
