@@ -8,42 +8,37 @@ public class InputController : MonoBehaviour
     public string horizontalAxis;
     public string verticalAxis;
 	public int characterIndex;
+	private Character character;
 
     private float pauseTime;
-    private bool pausedForTime;
-
+	private bool pausedForTime;
 	private bool paused;
 	private Vector2 prePauseVelocity;
-    private LayerHandler layerHandler;
 
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
 	bool isPlayingMove = false;
 	string pressedButton = "";
-    string activeBodypartName;
-    Collider2D activeBodypartCollider;
-    Character character;
-    Move currentlyPlayedMove;
 
 	Animator animator;
-	MovePlayer characterMovePlayer;
     Rigidbody2D thisBody;
 
 	private JumpController jumpController;
 	private MovementController movementController;
+	private FightMoveController fightMoveController;
 
 	void Start () {
+		// characterIndex-1 to make character 1 have index 1 etc.
+		this.character = StaticCharacterHolder.characters[characterIndex - 1];
 		this.jumpController = gameObject.AddComponent<JumpController> ();
 		this.movementController = gameObject.AddComponent<MovementController> ();
+		this.fightMoveController = gameObject.AddComponent<FightMoveController> ();
+		fightMoveController.SetCharacter (this.character);
         pauseTime = 0;
 		pausedForTime = false;
-		// characterIndex-1 to make character 1 have index 1 etc.
-        character = StaticCharacterHolder.characters[characterIndex - 1];
         animator = GameObject.Find("Character " + characterIndex).GetComponent<Animator>();
-        characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
         thisBody = gameObject.GetComponent<Rigidbody2D>();
         thisBody.mass = Parameters.mass;
 		this.paused = false;
-        layerHandler = GameObject.Find("Handler").GetComponent<LayerHandler>();
 	}
 
     void Update() {
@@ -63,17 +58,10 @@ public class InputController : MonoBehaviour
 		}
 
 		// If previous animation is finished, reset isPlayingMove and enable the animator.
-		if (!characterMovePlayer.CheckIsPlaying())
+		if (!fightMoveController.IsDoingMove ())
 		{
 			isPlayingMove = false;
 			SetAnimatorEnabled (true);
-			currentlyPlayedMove = null;
-
-			// Only set the collider to false if we have enabled it once before
-			if(activeBodypartCollider != null)
-			{
-				activeBodypartCollider.enabled = false;
-			}
 		}
 
 
@@ -88,28 +76,10 @@ public class InputController : MonoBehaviour
 			}
 			if (InputSettings.HasButton (characterIndex, pressedButton) && !isPlayingMove)
 			{
-				string moveName = InputSettings.GetMoveName (pressedButton);
-				currentlyPlayedMove = character.GetMove (moveName);
-
-				Move move = character.GetMove (moveName);
-
-				//Make sure the character cannot start playing another animation until this one is finished.
 				isPlayingMove = true;
-                layerHandler.sendToCharacterLayer(this.gameObject);
-                thisBody.velocity = new Vector2(0, thisBody.velocity.y);
 				SetAnimatorEnabled (false);
-				// Sets MovePlayer.isPlaying before calling MovePlayer.PlayMove() to avoid concurrency issues.
-				characterMovePlayer.SetIsPlaying ();
-				characterMovePlayer.PlayMove (currentlyPlayedMove);
-				// Get the name of the move assigned to do damage.
-				activeBodypartName = currentlyPlayedMove.GetActiveBodypart();
-				if (currentlyPlayedMove.IsBlockMove ()) {
-					activeBodypartName = activeBodypartName.Replace (" ", "") + "Shield";
-				}
-				//Enable the collider of the active bodypart or shield.
-				Transform activeBodypart = UnityUtils.RecursiveFind (transform, activeBodypartName);
-				activeBodypartCollider = activeBodypart.GetComponent<Collider2D> ();
-				activeBodypartCollider.enabled = true;
+				string moveName = InputSettings.GetMoveName (pressedButton);
+				fightMoveController.DoMove (moveName);
 			}
 		}
 		pressedButton = "";
@@ -157,7 +127,7 @@ public class InputController : MonoBehaviour
 
     public Move GetCurretlyPlayedMove()
     {
-        return currentlyPlayedMove;
+		return this.fightMoveController.GetCurretlyPlayedMove ();
     }
 
 	/// <summary>
@@ -168,7 +138,7 @@ public class InputController : MonoBehaviour
 		thisBody.velocity = Vector2.zero;
 		this.paused = true;
 		SetAnimatorEnabled (!stopAnimator);
-		characterMovePlayer.Pause ();
+		fightMoveController.Pause ();
 	}
 
     /// <summary>
@@ -191,8 +161,8 @@ public class InputController : MonoBehaviour
 		animator.SetBool("Stunned", false);
 		thisBody.velocity = prePauseVelocity;
 		this.paused = false;
-		SetAnimatorEnabled (!characterMovePlayer.CheckIsPlaying ());
-		characterMovePlayer.UnPause ();
+		SetAnimatorEnabled (!fightMoveController.IsDoingMove ());
+		fightMoveController.UnPause ();
 	}
 
 	public void CollisionLeft()
