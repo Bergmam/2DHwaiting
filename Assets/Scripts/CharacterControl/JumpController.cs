@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles character jumping.
+/// </summary>
 public class JumpController : MonoBehaviour {
 
 	private int jumpFrameDelay; // Used to make sure the character does not accidentally jump two frames in a row

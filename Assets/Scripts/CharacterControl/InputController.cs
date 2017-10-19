@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Takes input from the player and delegates it to the corresponding controller. Delegates input to FightMoveController, MovementController and JumpController.
+/// </summary>
 public class InputController : MonoBehaviour
 {
-    public float speed;
+	// Unity specific strings related to movement keys in our case.
     public string horizontalAxis;
     public string verticalAxis;
+
 	public int characterIndex;
 	private Character character;
 
     private float pauseTime;
 	private bool pausedForTime;
 	private bool paused;
-	private Vector2 prePauseVelocity;
 
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
 	bool isPlayingMove = false;
-	string pressedButton = "";
-
 	Animator animator;
-    Rigidbody2D thisBody;
 
 	private JumpController jumpController;
 	private MovementController movementController;
@@ -32,17 +32,16 @@ public class InputController : MonoBehaviour
 		this.jumpController = gameObject.AddComponent<JumpController> ();
 		this.movementController = gameObject.AddComponent<MovementController> ();
 		this.fightMoveController = gameObject.AddComponent<FightMoveController> ();
-		fightMoveController.SetCharacter (this.character);
-        pauseTime = 0;
-		pausedForTime = false;
-        animator = GameObject.Find("Character " + characterIndex).GetComponent<Animator>();
-        thisBody = gameObject.GetComponent<Rigidbody2D>();
-        thisBody.mass = Parameters.mass;
+		this.fightMoveController.SetCharacter (this.character);
+		this.pauseTime = 0;
+		this.pausedForTime = false;
 		this.paused = false;
+		this.animator = GameObject.Find("Character " + characterIndex).GetComponent<Animator>();
 	}
 
     void Update() {
 
+		// Reduce pause time or unpause if pause time has run out.
         if (pauseTime > 0)
         {
             pauseTime -= Time.deltaTime;
@@ -54,19 +53,20 @@ public class InputController : MonoBehaviour
         }
 
 		if (paused) {
-			return;
+			return; //End method if game is paused.
 		}
 
-		// If previous animation is finished, reset isPlayingMove and enable the animator.
+		// If previous move finished, reset isPlayingMove and enable the animator.
 		if (!fightMoveController.IsDoingMove ())
 		{
 			isPlayingMove = false;
 			SetAnimatorEnabled (true);
 		}
 
-
+		//Check fight move input.
 		if (Input.anyKeyDown)
 		{
+			string pressedButton = "";
 			foreach (string button in InputSettings.allUsedButtons)
 			{
 				if (Input.GetKeyDown (button))
@@ -82,33 +82,29 @@ public class InputController : MonoBehaviour
 				fightMoveController.DoMove (moveName);
 			}
 		}
-		pressedButton = "";
 
 		// Get information about the next position of the Character
         float horizontal = Input.GetAxisRaw(horizontalAxis);
         float vertical = Input.GetAxisRaw(verticalAxis);
         
-		if (horizontal < 0 && !isPlayingMove)
-        {
-			this.movementController.MoveLeft ();
-        }
-		else if (horizontal > 0 && !isPlayingMove)
-        {
-			this.movementController.MoveRight ();
-        }
-		else if (horizontal == 0 && !isPlayingMove)
-        {
-			this.movementController.Stop ();
-        }
-
-        if (vertical > 0)
-        {
-			jumpController.Jump ();
-        }
-
-        // Check isPlayingMove again since it can be set to true in the if-block above.
-        if (!isPlayingMove)
+		//isPlaying is whether a fight move is being played. If it is, don't move the character.
+		if (!isPlayingMove)
 		{
+			// Move sideways
+			if (horizontal < 0)
+	        {
+				this.movementController.MoveLeft ();
+	        }
+			else if (horizontal > 0)
+	        {
+				this.movementController.MoveRight ();
+	        }
+			else if (horizontal == 0)
+	        {
+				this.movementController.Stop ();
+	        }
+
+			//Switch between walking and idle animation.
 			if (Mathf.Abs(horizontal) > 0)
 			{
 				SetAnimatorBool ("Running", true);
@@ -116,6 +112,12 @@ public class InputController : MonoBehaviour
 			else
 			{
 				SetAnimatorBool ("Running", false);
+			}
+
+			// Jump
+			if (vertical > 0)
+			{
+				jumpController.Jump ();
 			}
 		}
     }
@@ -134,8 +136,7 @@ public class InputController : MonoBehaviour
 	/// Pauses this instance, freezing all animation and disable buttons.
 	/// </summary>
 	public void Pause(bool stopAnimator){
-		prePauseVelocity = thisBody.velocity;
-		thisBody.velocity = Vector2.zero;
+		this.movementController.Pause ();
 		this.paused = true;
 		SetAnimatorEnabled (!stopAnimator);
 		fightMoveController.Pause ();
@@ -159,7 +160,7 @@ public class InputController : MonoBehaviour
 	{
 		pausedForTime = false;
 		animator.SetBool("Stunned", false);
-		thisBody.velocity = prePauseVelocity;
+		this.movementController.UnPause ();
 		this.paused = false;
 		SetAnimatorEnabled (!fightMoveController.IsDoingMove ());
 		fightMoveController.UnPause ();

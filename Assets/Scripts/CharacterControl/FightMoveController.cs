@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles all execution of fight moves when playing the game.
+/// </summary>
 public class FightMoveController : MonoBehaviour {
-
-
 
 	private LayerHandler layerHandler;
 	string activeBodypartName;
@@ -26,19 +27,25 @@ public class FightMoveController : MonoBehaviour {
 		if (!characterMovePlayer.CheckIsPlaying ()) {
 			currentlyPlayedMove = null;
 			// Only set the collider to false if we have enabled it once before
-			if (activeBodypartCollider != null) {
+			if (activeBodypartCollider != null)
+			{
 				activeBodypartCollider.enabled = false;
 			}
 		}
 	}
 
+	/// <summary>
+	/// Takes a move name and plays it on the character. Also enables collision of the damaging bodypart or shield.
+	/// The collisions of thes active bodypart are not handled in this class.
+	/// </summary>
+	/// <param name="moveName">Move name.</param>
 	public void DoMove(string moveName)
 	{
-
+		if (character == null) {
+			return;
+		}
 		currentlyPlayedMove = character.GetMove (moveName);
-
 		Move move = character.GetMove (moveName);
-
 		//Make sure the character cannot start playing another animation until this one is finished.
 		layerHandler.sendToCharacterLayer(this.gameObject);
 		thisBody.velocity = new Vector2(0, thisBody.velocity.y);

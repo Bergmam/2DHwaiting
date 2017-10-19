@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles all sideways character movement.
+/// </summary>
 public class MovementController : MonoBehaviour {
 
 	private Rigidbody2D thisBody;
@@ -9,10 +12,12 @@ public class MovementController : MonoBehaviour {
 	private bool collisionRight;
 	private bool knockedBack;
 	private float previousPushedVelocity = 0; //Used to compare when the character has been knocked back and is approaching velocity 0 again.
+	private Vector2 prePauseVelocity;
 
 	// Use this for initialization
 	void Start () {
 		thisBody = gameObject.GetComponent<Rigidbody2D> ();
+		thisBody.mass = Parameters.mass;
 	}
 	
 	// Update is called once per frame
@@ -84,5 +89,16 @@ public class MovementController : MonoBehaviour {
 	public void KnockBack()
 	{
 		this.knockedBack = true;
+	}
+
+	public void Pause()
+	{
+		prePauseVelocity = thisBody.velocity;
+		thisBody.velocity = Vector2.zero;
+	}
+
+	public void UnPause()
+	{
+		thisBody.velocity = prePauseVelocity;
 	}
 }
