@@ -1,0 +1,83 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FightMoveController : MonoBehaviour {
+
+
+
+	private LayerHandler layerHandler;
+	string activeBodypartName;
+	private Collider2D activeBodypartCollider;
+	private Character character;
+	private Move currentlyPlayedMove;
+	private Rigidbody2D thisBody;
+	private MovePlayer characterMovePlayer;
+
+	// Use this for initialization
+	void Start () {
+		thisBody = gameObject.GetComponent<Rigidbody2D> ();
+		layerHandler = GameObject.Find("Handler").GetComponent<LayerHandler>();
+		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if (!characterMovePlayer.CheckIsPlaying ()) {
+			currentlyPlayedMove = null;
+			// Only set the collider to false if we have enabled it once before
+			if (activeBodypartCollider != null) {
+				activeBodypartCollider.enabled = false;
+			}
+		}
+	}
+
+	public void DoMove(string moveName)
+	{
+
+		currentlyPlayedMove = character.GetMove (moveName);
+
+		Move move = character.GetMove (moveName);
+
+		//Make sure the character cannot start playing another animation until this one is finished.
+		layerHandler.sendToCharacterLayer(this.gameObject);
+		thisBody.velocity = new Vector2(0, thisBody.velocity.y);
+		// Sets MovePlayer.isPlaying before calling MovePlayer.PlayMove() to avoid concurrency issues.
+		characterMovePlayer.SetIsPlaying ();
+		characterMovePlayer.PlayMove (currentlyPlayedMove);
+		// Get the name of the move assigned to do damage.
+		activeBodypartName = currentlyPlayedMove.GetActiveBodypart();
+		if (currentlyPlayedMove.IsBlockMove ()) {
+			activeBodypartName = activeBodypartName.Replace (" ", "") + "Shield";
+		}
+		//Enable the collider of the active bodypart or shield.
+		Transform activeBodypart = UnityUtils.RecursiveFind (transform, activeBodypartName);
+		activeBodypartCollider = activeBodypart.GetComponent<Collider2D> ();
+		activeBodypartCollider.enabled = true;
+	}
+
+	public Move GetCurretlyPlayedMove()
+	{
+		return this.currentlyPlayedMove;
+	}
+
+	public bool IsDoingMove()
+	{
+		return characterMovePlayer.CheckIsPlaying ();
+	}
+
+	public void Pause()
+	{
+		characterMovePlayer.Pause ();
+	}
+
+	public void UnPause()
+	{
+		characterMovePlayer.UnPause ();
+	}
+
+	public void SetCharacter(Character character)
+	{
+		this.character = character;
+	}
+}
