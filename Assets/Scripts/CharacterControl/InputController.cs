@@ -9,7 +9,6 @@ public class InputController : MonoBehaviour
     public string verticalAxis;
 	public int characterIndex;
 
-    private int jumpFrameDelay; // Used to make sure the character does not accidentally jump two frames in a row
     private float pauseTime;
     private bool pausedForTime;
 	private bool collisionLeft;
@@ -32,15 +31,13 @@ public class InputController : MonoBehaviour
 	MovePlayer characterMovePlayer;
     Rigidbody2D thisBody;
 
-	// stupidCounter exists to make sure that the transition between unity animations and a MovePlayer animation does not happen too fast.
-	// TODO: Remove the counter
-	int stupidCounter = 0;
+	private JumpController jumpController;
 
 	void Start () {
-        // characterIndex-1 to make character 1 have index 1 etc.
-        jumpFrameDelay = 0;
+		this.jumpController = gameObject.AddComponent<JumpController> ();
         pauseTime = 0;
-        pausedForTime = false;
+		pausedForTime = false;
+		// characterIndex-1 to make character 1 have index 1 etc.
         character = StaticCharacterHolder.characters[characterIndex - 1];
         animator = GameObject.Find("Character " + characterIndex).GetComponent<Animator>();
         characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
@@ -51,10 +48,6 @@ public class InputController : MonoBehaviour
 	}
 
     void Update() {
-        if (jumpFrameDelay != 0)
-        {
-            jumpFrameDelay--;
-        }
 
         if (pauseTime > 0)
         {
@@ -64,8 +57,6 @@ public class InputController : MonoBehaviour
         if (pauseTime <= 0 && pausedForTime)
         {
             UnPause();
-            pausedForTime = false;
-            animator.SetBool("Stunned", false);
         }
 
 		if (paused) {
@@ -86,42 +77,40 @@ public class InputController : MonoBehaviour
 			}
 		}
 
-		if (!isPlayingMove)
+
+		if (Input.anyKeyDown)
 		{
-			if (Input.anyKeyDown)
+			foreach (string button in InputSettings.allUsedButtons)
 			{
-				foreach (string button in InputSettings.allUsedButtons)
+				if (Input.GetKeyDown (button))
 				{
-					if (Input.GetKeyDown (button))
-					{
-						pressedButton = button;
-					}
+					pressedButton = button;
 				}
-				if (InputSettings.HasButton (characterIndex, pressedButton))
-				{
-					string moveName = InputSettings.GetMoveName (pressedButton);
-					currentlyPlayedMove = character.GetMove (moveName);
+			}
+			if (InputSettings.HasButton (characterIndex, pressedButton) && !isPlayingMove)
+			{
+				string moveName = InputSettings.GetMoveName (pressedButton);
+				currentlyPlayedMove = character.GetMove (moveName);
 
-					Move move = character.GetMove (moveName);
+				Move move = character.GetMove (moveName);
 
-					//Make sure the character cannot start playing another animation until this one is finished.
-					isPlayingMove = true;
-                    layerHandler.sendToCharacterLayer(this.gameObject);
-                    thisBody.velocity = new Vector2(0, thisBody.velocity.y);
-					SetAnimatorEnabled (false);
-					// Sets MovePlayer.isPlaying before calling MovePlayer.PlayMove() to avoid concurrency issues.
-					characterMovePlayer.SetIsPlaying ();
-					characterMovePlayer.PlayMove (currentlyPlayedMove);
-					// Get the name of the move assigned to do damage.
-					activeBodypartName = currentlyPlayedMove.GetActiveBodypart();
-					if (currentlyPlayedMove.IsBlockMove ()) {
-						activeBodypartName = activeBodypartName.Replace (" ", "") + "Shield";
-					}
-					//Enable the collider of the active bodypart or shield.
-					Transform activeBodypart = UnityUtils.RecursiveFind (transform, activeBodypartName);
-					activeBodypartCollider = activeBodypart.GetComponent<Collider2D> ();
-					activeBodypartCollider.enabled = true;
+				//Make sure the character cannot start playing another animation until this one is finished.
+				isPlayingMove = true;
+                layerHandler.sendToCharacterLayer(this.gameObject);
+                thisBody.velocity = new Vector2(0, thisBody.velocity.y);
+				SetAnimatorEnabled (false);
+				// Sets MovePlayer.isPlaying before calling MovePlayer.PlayMove() to avoid concurrency issues.
+				characterMovePlayer.SetIsPlaying ();
+				characterMovePlayer.PlayMove (currentlyPlayedMove);
+				// Get the name of the move assigned to do damage.
+				activeBodypartName = currentlyPlayedMove.GetActiveBodypart();
+				if (currentlyPlayedMove.IsBlockMove ()) {
+					activeBodypartName = activeBodypartName.Replace (" ", "") + "Shield";
 				}
+				//Enable the collider of the active bodypart or shield.
+				Transform activeBodypart = UnityUtils.RecursiveFind (transform, activeBodypartName);
+				activeBodypartCollider = activeBodypart.GetComponent<Collider2D> ();
+				activeBodypartCollider.enabled = true;
 			}
 		}
 
@@ -139,26 +128,34 @@ public class InputController : MonoBehaviour
 			knockedBack = false;
 			previousPushedVelocity = 0;
 		}
-		if (horizontal < 0 && !collisionLeft && !knockedBack && !isPlayingMove)
+		if (horizontal < 0)
         {
-            thisBody.velocity = new Vector2(-Parameters.moveSpeed, thisBody.velocity.y);
-			collisionRight = false; //If moving left, there is no longer a collision to the right.
+			if(!collisionLeft && !knockedBack && !isPlayingMove)
+			{
+	            thisBody.velocity = new Vector2(-Parameters.moveSpeed, thisBody.velocity.y);
+				collisionRight = false; //If moving left, there is no longer a collision to the right.
+			}
         }
-		else if (horizontal > 0 && !collisionRight && !knockedBack && !isPlayingMove)
+		else if (horizontal > 0)
         {
-			thisBody.velocity = new Vector2(Parameters.moveSpeed, thisBody.velocity.y);
-			collisionLeft = false; //If moving right, there is no longer a collision to the left
+			if (!collisionRight && !knockedBack && !isPlayingMove)
+			{
+				thisBody.velocity = new Vector2(Parameters.moveSpeed, thisBody.velocity.y);
+				collisionLeft = false; //If moving right, there is no longer a collision to the left
+			}
         }
-		else if (horizontal == 0 && !knockedBack && !isPlayingMove)
+		else if (horizontal == 0)
         {
-            thisBody.velocity = new Vector2(0, thisBody.velocity.y); //Without the knockedBack bool, this stops the character.
+			if(!knockedBack && !isPlayingMove)
+			{
+            	thisBody.velocity = new Vector2(0, thisBody.velocity.y); //Without the knockedBack bool, this stops the character.
+			}
         }
         pressedButton = "";
 
-        if (vertical > 0 && thisBody.velocity.y >= -0.01 && thisBody.velocity.y <= 0.01 && jumpFrameDelay == 0)
+        if (vertical > 0)
         {
-            jumpFrameDelay = 3;
-            thisBody.AddForce(Vector2.up * Parameters.jumpForce);
+			jumpController.Jump ();
         }
 
         // Check isPlayingMove again since it can be set to true in the if-block above.
@@ -167,13 +164,11 @@ public class InputController : MonoBehaviour
 			if (Mathf.Abs(horizontal) > 0)
 			{
 				SetAnimatorBool ("Running", true);
-				stupidCounter = 1;
 			}
-			else if (stupidCounter == 0)
+			else
 			{
 				SetAnimatorBool ("Running", false);
 			}
-			stupidCounter--;
 		}
     }
 
@@ -223,6 +218,8 @@ public class InputController : MonoBehaviour
 	/// </summary>
 	public void UnPause()
 	{
+		pausedForTime = false;
+		animator.SetBool("Stunned", false);
 		thisBody.velocity = prePauseVelocity;
 		this.paused = false;
 		SetAnimatorEnabled (!characterMovePlayer.CheckIsPlaying ());
