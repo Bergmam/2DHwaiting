@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Used for applying knockback, damage and stun when collision occurs between a character or a shield and a damaging bodypart.
 /// </summary>
-public class ShieldCollisionDetector : MonoBehaviour {
+public class DamageTriggerDetector : MonoBehaviour {
 
 	public int characterIndex;
 	private Character character;

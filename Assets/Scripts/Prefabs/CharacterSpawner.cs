@@ -53,8 +53,8 @@ public class CharacterSpawner : MonoBehaviour
 			return;
 		}
 		character.GetComponent<InputController>().characterIndex = index;
-		character.GetComponent<ShieldCollisionDetector>().characterIndex = index;
-		foreach (ShieldCollisionDetector shieldDetector in character.GetComponentsInChildren<ShieldCollisionDetector>())
+		character.GetComponent<DamageTriggerDetector>().characterIndex = index;
+		foreach (DamageTriggerDetector shieldDetector in character.GetComponentsInChildren<DamageTriggerDetector>())
 		{
 			shieldDetector.characterIndex = index;
 		}
