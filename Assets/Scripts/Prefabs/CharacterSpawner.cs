@@ -29,19 +29,34 @@ public class CharacterSpawner : MonoBehaviour
         character2.transform.position = new Vector3(x2, y2, 0);
         character2.transform.localScale = new Vector3(-character2.transform.localScale.x, character2.transform.localScale.y, character2.transform.localScale.z);
 
+		SetIndex (character1, 1);
+		SetIndex (character2, 2);
+
         character2.GetComponent<InputController>().horizontalAxis = "Horizontal2";
         character2.GetComponent<InputController>().verticalAxis = "Vertical2";
-        character2.GetComponent<InputController>().characterIndex = 2;
-
-        character2.GetComponent<CharacterCollisionDetector>().characterIndex = 2;
-        foreach (ShieldCollisionDetector shieldDetector in character2.GetComponentsInChildren<ShieldCollisionDetector>())
-        {
-            shieldDetector.characterIndex = 2;
-        }
     }
 
     public void SpawnEditorCharacter()
     {
 
     }
+
+	/// <summary>
+	/// Sets the index of a character object. The character object has to have an input controller or it will not work.
+	/// </summary>
+	/// <param name="character">Character.</param>
+	/// <param name="index">Index.</param>
+	private void SetIndex(GameObject character, int index)
+	{
+		if (character.GetComponent<InputController> () == null)
+		{
+			return;
+		}
+		character.GetComponent<InputController>().characterIndex = index;
+		character.GetComponent<ShieldCollisionDetector>().characterIndex = index;
+		foreach (ShieldCollisionDetector shieldDetector in character.GetComponentsInChildren<ShieldCollisionDetector>())
+		{
+			shieldDetector.characterIndex = index;
+		}
+	}
 }

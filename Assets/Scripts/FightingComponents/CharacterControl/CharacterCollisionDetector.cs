@@ -2,67 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Detects collisions occuring when a character moves, making it unable to push things around.
+/// </summary>
 public class CharacterCollisionDetector : MonoBehaviour
 {
-	public int characterIndex;
-	private Character character;
-	private GameState gameState;
-	private Rigidbody2D rigidBody;
 	private InputController inputController;
-
-    AudioSource audioCenter;
-    AudioClip punch;
 
     void Start ()
 	{
 		this.inputController = GetComponent<InputController> ();
-		this.character = StaticCharacterHolder.characters[characterIndex - 1];
-		this.rigidBody = GetComponent<Rigidbody2D> ();
-		this.gameState = GameObject.Find ("Handler").GetComponent<GameState> ();
-
-        audioCenter = GameObject.Find("AudioCenter").GetComponent<AudioSource>();
     }
-	
-	void OnTriggerEnter2D (Collider2D otherCollider)
-	{
-		Transform otherRootTransform = otherCollider.transform.root;
-		GameObject otherCharacterObject = otherRootTransform.gameObject;
-		InputController otherInputController = otherCharacterObject.GetComponent<InputController> ();
-		if (otherInputController == null)
-		{
-			return; //If colliding object's root does not have an InputController, it is not a character.
-		}
-		Character otherCharacter = otherInputController.GetCharacter ();
-		Move move = otherInputController.GetCurretlyPlayedMove ();
-		if (otherCharacter == null || move == null || otherCharacter.Equals (this.character) || move.IsBlockMove())
-		{
-			return; //Make sure other character object has all necessary info.
-		}
-		if (!move.GetActiveBodypart ().Equals (otherCollider.transform.name)) {
-			return; //Make sure other collider is actually the damaging move.
-			//This should not be necessary but if another collider is on, it will do damage even if
-			// it is not the damaging move. This is just to be absolutely sure.
-		}
-        audioCenter.Play();
-
-        this.character.ApplyMoveTo (move); //Apply damage in model.
-		gameState.UpdateCharacterHealth (this.character); //Update health bars and check winner.
-
-		//Apply knockback.
-		Vector3 thisPosition = transform.position;
-		Vector3 otherPosition = otherRootTransform.position;
-		if (otherPosition.x < thisPosition.x)
-		{
-			this.rigidBody.AddForce (Vector2.right * Parameters.knockbackModifyer);
-			this.inputController.KnockBack (); //Make the character unable to move while being knocked back.
-		}
-		else
-		{
-            this.rigidBody.AddForce (Vector2.left * Parameters.knockbackModifyer);
-			this.inputController.KnockBack (); //Make the character unable to move while being knocked back.
-		}
-		otherCollider.enabled = false;
-	}
 		
 	//Detect collisions with other non-trigger colliders.
 	void OnCollisionEnter2D(Collision2D collision)
