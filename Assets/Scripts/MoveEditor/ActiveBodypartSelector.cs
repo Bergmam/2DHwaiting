@@ -2,30 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Used to highlight a bodypart when it is selected.
+/// </summary>
 public class ActiveBodypartSelector : MonoBehaviour {
 
 	private string activeBodypart;
 	private bool blockMove;
 
-	void Start () {
-		this.blockMove = false;
-	}
-
-	public void SetActiveBodypart(string newActiveBodypart)
-	{
-		this.activeBodypart = newActiveBodypart;
-	}
-
-	public string GetActiveBodypart()
-	{
-		return this.activeBodypart;
-	}
-
 	/// <summary>
-	/// When a new bodypart is highlighted in the list, deselect the currrent active bodypart on the character and select the new one.
+	/// When a new bodypart is selected, deselect the currrent active bodypart on the character and select the new one.
 	/// If move is a block, show the shield.
 	/// </summary>
-	/// <param name="highlightedLabel">Highlighted label.</param>
+	/// <param name="newBodypartName">New bodypart name.</param>
 	public void BodypartChanged(string newBodypartName)
 	{
 		if (newBodypartName.Equals (activeBodypart))
@@ -58,6 +47,11 @@ public class ActiveBodypartSelector : MonoBehaviour {
 			GameObject.Find (newBodypartName).GetComponent<ColorModifier> ().Select ();
 		}
 		activeBodypart = newBodypartName;
+	}
+
+	public string GetActiveBodypart()
+	{
+		return this.activeBodypart;
 	}
 
 	public void SetBlockMove(bool blockMove)
