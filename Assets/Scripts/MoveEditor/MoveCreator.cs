@@ -10,7 +10,7 @@ public class MoveCreator : MonoBehaviour
 	private Recorder recorder;
 	private InputField nameInputField;
 	private NameValidator nameValidator;
-	private DropdownBehaviour dropDown;
+	private ActiveBodypartSelector activeBodypartSelector;
 	private Button saveButton;
 	private MovePlayer movePlayer;
 
@@ -21,12 +21,13 @@ public class MoveCreator : MonoBehaviour
 		movePlayer = character.GetComponent<MovePlayer> ();
 		sliders = GameObject.Find ("SlidersPanel").GetComponent<SliderScript> ();
 		nameValidator = GameObject.Find ("NamePanel").GetComponent<NameValidator> ();
-		dropDown = GameObject.Find ("BodypartDropdown").GetComponent<DropdownBehaviour> ();
+		activeBodypartSelector = GameObject.Find("ActiveBodypartPanel").GetComponent<ActiveBodypartSelector>();
 		saveButton = GameObject.Find ("SaveButton").GetComponent<Button> ();
 		nameInputField = GameObject.Find ("NameInputField").GetComponent<InputField> ();
 		PlaceCharacter (0.5f, 0.5f);
 		move = new Move ();
-		dropDown.SetBlockMove (move.IsBlockMove ());
+		activeBodypartSelector.SetBlockMove (move.IsBlockMove ());
+		activeBodypartSelector.BodypartChanged ("Head");
 		recorder.SetMove (move);
 	}
 
@@ -39,9 +40,9 @@ public class MoveCreator : MonoBehaviour
 			UpdateShieldScale ();
 		}
 		//Update active bodypart.
-		if (!dropDown.GetActiveBodypart ().Equals (move.GetActiveBodypart ()))
+		if (!activeBodypartSelector.GetActiveBodypart ().Equals (move.GetActiveBodypart ()))
 		{
-			move.SetActiveBodypart (dropDown.GetActiveBodypart ());
+			move.SetActiveBodypart (activeBodypartSelector.GetActiveBodypart ());
 			UpdateShieldScale ();
 		}
 		//All frames recorded and a new, non-empty, move name has been entered.
@@ -124,18 +125,16 @@ public class MoveCreator : MonoBehaviour
 	public void SetBlockMove(bool blockMove)
 	{
 		this.move.SetBlockMove (blockMove);
-		dropDown.SetBlockMove (blockMove);
+		activeBodypartSelector.SetBlockMove (blockMove);
 		if (blockMove)
 		{
 			//Change gui labels to match move type.
 			sliders.SetSliderStrings ("Coverage", "Block");
-			dropDown.SetLabelText ("Shield");
 		}
 		else
 		{
 			//Change gui labels to match move type.
 			sliders.SetSliderStrings ("Strength", "Speed");
-			dropDown.SetLabelText ("Damage Dealer");
 		}
 		GameObject.Find (move.GetActiveBodypart ()).GetComponent<ColorModifier> ().SetSelected (!blockMove);
 		GameObject shield = GameObject.Find (move.GetActiveBodypart ().Replace (" ", "") + "Shield");
