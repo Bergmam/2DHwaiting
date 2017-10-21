@@ -21,12 +21,11 @@ public class DropdownBehaviour : MonoBehaviour
 		// and add their names to the dropdown list.
 		DragAndDrop[] dragAndDropInstances = character.GetComponentsInChildren<DragAndDrop> ();
 		List<string> bodyPartNames = new List<string> ();
-		foreach (DragAndDrop dragAndDropInstance in dragAndDropInstances)
-		{
-			GameObject dragPoint = dragAndDropInstance.gameObject;
-			Transform bodyPartTransform = dragPoint.transform.parent;
-			bodyPartNames.Add (bodyPartTransform.name);
-		}
+		bodyPartNames.Add ("Head");
+		bodyPartNames.Add ("Right Hand");
+		bodyPartNames.Add ("Left Hand");
+		bodyPartNames.Add ("Right Foot");
+		bodyPartNames.Add ("Left Foot");
 		dropdown.AddOptions (bodyPartNames);
 		DropdownValueChanged ();
 	}
