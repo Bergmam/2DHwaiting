@@ -67,7 +67,6 @@ public class GameState : MonoBehaviour
 		//If presAnyKeyToContinue is true (which it is 2.5 seconds after a player dies), go back to move selection on key press.
 		else if (pressAnyKeyToContinue && Input.anyKeyDown)
 		{
-			InputSettings.ClearRegisteredMoves ();
 			StaticCharacterHolder.ResetCharacters ();
 			SceneHandler.GoBack ();
 		}
