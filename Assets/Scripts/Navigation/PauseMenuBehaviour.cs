@@ -9,7 +9,6 @@ public class PauseMenuBehaviour : MonoBehaviour
 	/// </summary>
 	public void GoToMainMenu()
 	{
-		InputSettings.ClearRegisteredMoves ();
 		StaticCharacterHolder.ResetCharacters ();
 		SceneHandler.GoBackToScene ("MainMenuScene");
 	}
@@ -19,7 +18,6 @@ public class PauseMenuBehaviour : MonoBehaviour
 	/// </summary>
 	public void GoToMoveSelection()
 	{
-		InputSettings.ClearRegisteredMoves ();
 		StaticCharacterHolder.ResetCharacters ();
 		SceneHandler.GoBackToScene ("MoveSelectionScene");
 	}

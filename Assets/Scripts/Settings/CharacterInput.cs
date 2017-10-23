@@ -88,7 +88,11 @@ public class CharacterInput
 		
 	public string GetMoveName(string button)
 	{
-		return assignedButtons [button];
+		if (assignedButtons.ContainsKey (button)) {
+			return assignedButtons [button];
+		} else {
+			return null;
+		}
 	}
 
 	public void ClearAssignedButtons()
