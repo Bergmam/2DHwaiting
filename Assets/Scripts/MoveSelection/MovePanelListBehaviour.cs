@@ -201,7 +201,12 @@ public class MovePanelListBehaviour : MonoBehaviour
 	/// <param name="button">The button to assign the move to.</param>
 	private void RegisterPlayerMoveToButton(string button)
 	{
-		Move selectedMove = listItems [selectedListIndex].getMove ();
+		RegisterPlayerMoveToButton (button, selectedListIndex);
+	}
+
+	private void RegisterPlayerMoveToButton(string button, int index)
+	{
+		Move selectedMove = listItems [index].getMove ();
 		Character registeredCharacter = InputSettings.Register (button, selectedMove.GetName ());
 		//The character returned by InputSettings.Register is the character that uses the button.
 		//If the returned character is null, no character uses the button.
@@ -210,16 +215,16 @@ public class MovePanelListBehaviour : MonoBehaviour
 			registeredCharacter.AddMove (selectedMove);
 			Color characterColor = registeredCharacter.GetColor ();
 			int characterNbr = registeredCharacter.GetNbr ();
-			listItems [selectedListIndex].AssignButton (button, characterColor, characterNbr); //Mark the selected list item with button and player color.
+			listItems [index].AssignButton (button, characterColor, characterNbr); //Mark the selected list item with button and player color.
 			//Remove the marking from any list item of a move previously registered to the button.
 			for (int i = 0; i < listItems.Length; i++)
 			{
-				if (i != selectedListIndex) //Do not remove the marking from the list item that was just marked.
+				if (i != index) //Do not remove the marking from the list item that was just marked.
 				{
 					listItems [i].ClearAssignedButton (button);
 				}
 			}
-			AddPanelToCharacterMoves (registeredCharacter, button);
+			AddPanelToCharacterMoves (registeredCharacter, button, index);
 			ShowOrHidePlayButton ();
 		}
 	}
@@ -229,14 +234,14 @@ public class MovePanelListBehaviour : MonoBehaviour
 	/// </summary>
 	/// <param name="character">Character.</param>
 	/// <param name="button">Button.</param>
-	private void AddPanelToCharacterMoves(Character character, string button)
+	private void AddPanelToCharacterMoves(Character character, string button, int index)
 	{
 		//Find the panel of the character.
 		foreach (SelectionPanelBahviour selectionPanel in selectedMovesPanels)
 		{
-			if (selectionPanel.GetOwner().Equals(character))
+			if (selectionPanel.GetOwner ().Equals (character))
 			{
-				GameObject original = listItems [selectedListIndex].gameObject; //Copy the selected list item.
+				GameObject original = listItems [index].gameObject; //Copy the selected list item.
 				selectionPanel.AddPanelClone (original, button); //Add copy to the selected moves panel.
 				break;
 			}
