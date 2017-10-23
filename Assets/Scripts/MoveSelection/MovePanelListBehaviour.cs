@@ -66,7 +66,33 @@ public class MovePanelListBehaviour : MonoBehaviour
         character2 = GameObject.Find("Character 2").GetComponent<MovePlayer>();
         PlayAnimation (1); //Start previewing the animation corresponding to the first list item.
         playButtonBehaviour = GameObject.Find("Handler").GetComponent<SceneButtonBehaviour>(); //Used to switch scene by pressing Enter.
+
+		ReselectMoves ();
     }
+
+	/// <summary>
+	/// Goes through all previously selected moves from InputSettings and selects them in the GUI.
+	/// </summary>
+	public void ReselectMoves()
+	{
+		List<string> usedButtons = InputSettings.allUsedButtons;
+		//For every used button, if the move asigned to it matches that of a panel list item. Mark that list item in GUI.
+		foreach (string button in usedButtons) {
+			string buttonMoveName = InputSettings.GetMoveName (button);
+			for (int i = 0; i < listItems.Length; i++) {
+				MovePanelBehaviour listItem = listItems [i];
+				Move panelMove = listItem.getMove ();
+				if (panelMove == null)
+				{
+					continue;
+				}
+				if (panelMove.GetName ().Equals (buttonMoveName))
+				{
+					RegisterPlayerMoveToButton (button, i);
+				}
+			}
+		}
+	}
     
 	void Update () 
 	{
@@ -204,6 +230,11 @@ public class MovePanelListBehaviour : MonoBehaviour
 		RegisterPlayerMoveToButton (button, selectedListIndex);
 	}
 
+	/// <summary>
+	/// Registers the move of a list item at a specific index to a button.
+	/// </summary>
+	/// <param name="button">The button to assign the move to.</param>
+	/// <param name="index">The index of the list item.</param>
 	private void RegisterPlayerMoveToButton(string button, int index)
 	{
 		Move selectedMove = listItems [index].getMove ();
