@@ -18,8 +18,8 @@ public class EditorCharacterSpawner : MonoBehaviour
         GameObject character = Instantiate(Resources.Load("Prefabs/Character", typeof(GameObject))) as GameObject;
 
         character.transform.name = "Character";
-        character.AddComponent<Recorder>();
-        character.AddComponent<MoveCreator>();
+        character.GetComponent<Recorder>().enabled = true;
+        character.GetComponent<MoveCreator>().enabled = true;
         character.SetActive(true);
         Destroy(character.GetComponent<Rigidbody2D>());
 
@@ -28,6 +28,12 @@ public class EditorCharacterSpawner : MonoBehaviour
             print(dragPoint.name);
             dragPoint.SetActive(true);
         }
+
+        foreach (Transform child in character.GetComponentsInChildren<Transform>(true))
+        {
+            Destroy(child.transform.GetComponent<Rigidbody2D>());
+        }
+
         character.transform.position = new Vector3(x1, y1, 0);
     }
 }
