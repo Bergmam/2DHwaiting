@@ -5,79 +5,72 @@ using UnityEngine;
 public class FightCharacterSpawner : MonoBehaviour
 {
 
-    public float x1, x2, y1, y2;
+	public float x1, x2, y1, y2;
 
-    void Start()
-    {
-        SpawnCharacters();
-    }
+	void Start()
+	{
+		SpawnCharacters();
+	}
 
 
 
-    public void SpawnCharacters()
-    {
-        GameObject character1 = Instantiate(Resources.Load("Prefabs/Character", typeof(GameObject))) as GameObject;
-        GameObject character2 = Instantiate(Resources.Load("Prefabs/Character", typeof(GameObject))) as GameObject;
+	public void SpawnCharacters()
+	{
+		GameObject character1 = Instantiate(Resources.Load("Prefabs/Character", typeof(GameObject))) as GameObject;
+		GameObject character2 = Instantiate(Resources.Load("Prefabs/Character", typeof(GameObject))) as GameObject;
 
-        character1.transform.name = "Character 1";
-        character2.transform.name = "Character 2";
+		character1.transform.localScale = new Vector3 (character1.transform.localScale.x, character1.transform.localScale.y, character1.transform.localScale.z);
+		character2.transform.localScale = new Vector3 (-character2.transform.localScale.x, character2.transform.localScale.y, character2.transform.localScale.z);
 
-        character1.transform.position = new Vector3(x1, y1, 0);
-        character2.transform.position = new Vector3(x2, y2, 0);
-        character2.transform.localScale = new Vector3(-character2.transform.localScale.x, character2.transform.localScale.y, character2.transform.localScale.z);
+		RemoveUnnecessaryComponents (character1, 1);
+		RemoveUnnecessaryComponents (character2, 2);
 
-		SetIndex (character1, 1);
-		SetIndex (character2, 2);
+		character2.GetComponent<InputController>().horizontalAxis = "Horizontal2";
+		character2.GetComponent<InputController>().verticalAxis = "Vertical2";
 
-        character1.SetActive(true);
-        character2.SetActive(true);
+		character1.transform.position = new Vector3(x1, y1, 0);
+		character2.transform.position = new Vector3(x2, y2, 0);
+	}
 
-        character1.GetComponent<InputController>().enabled = true;
-        character2.GetComponent<InputController>().enabled = true;
-        character1.GetComponent<BoxCollider2D>().enabled = true;
-        character2.GetComponent<BoxCollider2D>().enabled = true;
-        character1.GetComponent<CharacterCollisionDetector>().enabled = true;
-        character2.GetComponent<CharacterCollisionDetector>().enabled = true;
+	private void RemoveUnnecessaryComponents(GameObject characterObject, int index)
+	{
+		Transform characterTransform = characterObject.transform;
+		characterObject.transform.name = "Character " + index;
 
-        foreach (DamageTriggerDetector damageDetector in character1.GetComponentsInChildren<DamageTriggerDetector>())
-        {
-            damageDetector.enabled = true;
-        }
+		SetIndex (characterObject, index);
 
-        foreach (DamageTriggerDetector damageDetector in character2.GetComponentsInChildren<DamageTriggerDetector>())
-        {
-            damageDetector.enabled = true;
-        }
+		characterObject.SetActive(true);
 
-        foreach (ShieldControl shieldControl in character2.GetComponentsInChildren<ShieldControl>())
-        {
-            shieldControl.enabled = true;
-        }
+		characterObject.GetComponent<DamageTriggerDetector> ().enabled = true;
+		characterObject.GetComponent<DamageTriggerDetector> ().characterIndex = index;
+		characterObject.GetComponent<InputController>().enabled = true;
+		characterObject.GetComponent<BoxCollider2D>().enabled = true;
+		characterObject.GetComponent<CharacterCollisionDetector>().enabled = true;
 
-        foreach (ShieldControl shieldControl in character1.GetComponentsInChildren<ShieldControl>())
-        {
-            shieldControl.enabled = true;
-        }
+		foreach (DamageTriggerDetector damageDetector in characterObject.GetComponentsInChildren<DamageTriggerDetector>())
+		{
+			damageDetector.enabled = true;
+			damageDetector.characterIndex = index;
+		}
 
-        foreach (Transform child in character1.transform)
-        {
-            if (child.name.Contains("DragPoint"))
-            {
-                Destroy(child.gameObject);
-            }
-        }
+		foreach (GameObject shield in UnityUtils.RecursiveContains(characterTransform,"Shield"))
+		{
+			ShieldControl shieldControl = shield.GetComponent<ShieldControl> ();
+			shieldControl.enabled = true;
 
-        foreach (Transform child in character2.transform)
-        {
-            if (child.name.Contains("DragPoint"))
-            {
-                Destroy(child.gameObject);
-            }
-        }
+			DamageTriggerDetector damageDetector = shield.GetComponent<DamageTriggerDetector> ();
+			damageDetector.enabled = true;
+			damageDetector.characterIndex = index;
+		}
 
-        character2.GetComponent<InputController>().horizontalAxis = "Horizontal2";
-        character2.GetComponent<InputController>().verticalAxis = "Vertical2";
-    }
+		foreach (GameObject child in UnityUtils.RecursiveContains(characterTransform, "DragPoint"))
+		{
+			if (child.name.Contains("DragPoint"))
+			{
+				Destroy(child);
+			}
+		}
+	}
 
 
 	/// <summary>

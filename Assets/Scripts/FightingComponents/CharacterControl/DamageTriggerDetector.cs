@@ -56,7 +56,7 @@ public class DamageTriggerDetector : MonoBehaviour {
 		float knockBackModifier = 0.0f;
 		Move blockMove = this.inputController.GetCurretlyPlayedMove ();
 		//If the collision occurs between the active shield of a block move, reduce dmg, knockback and stun.
-		if (blockMove != null && blockMove.IsBlockMove () && this.transform.name.Equals (blockMove.GetActiveBodypart () + "Shield"))
+		if (blockMove != null && blockMove.IsBlockMove () && this.transform.name.Contains ("Shield"))
 		{
 			this.character.ApplyMoveTo (damagingMove, blockMove); //Apply damage in model.
 
