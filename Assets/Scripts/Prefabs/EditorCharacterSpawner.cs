@@ -14,7 +14,10 @@ public class EditorCharacterSpawner : MonoBehaviour
         SpawnCharacter();
     }
 
-
+    /// <summary>
+    /// Method to spawn a version of the character prefab with the necessary components to record moves in the editor scene.
+    /// See google document for more information about what parts should be active in the edtior scene.
+    /// </summary>
     public void SpawnCharacter()
     {
         GameObject preInitCharacter = Resources.Load("Prefabs/Character", typeof (GameObject)) as GameObject;
@@ -24,7 +27,6 @@ public class EditorCharacterSpawner : MonoBehaviour
         character.GetComponent<Recorder>().enabled = true;
         moveCreator = character.GetComponent<MoveCreator>();
         moveCreator.enabled = true;
-        GameObject.Find("BlockToggleButton").GetComponent<Toggle>().onValueChanged.AddListener(moveCreator.SetBlockMove);
         
         Destroy(character.GetComponent<Rigidbody2D>());
 
@@ -33,6 +35,7 @@ public class EditorCharacterSpawner : MonoBehaviour
             dragPoint.SetActive(true);
         }
 
+        // Destroy all rigid bodies since dragpoints does not work with them attached.
         foreach (Transform child in character.GetComponentsInChildren<Transform>(true))
         {
             Destroy(child.transform.GetComponent<Rigidbody2D>());
@@ -41,6 +44,10 @@ public class EditorCharacterSpawner : MonoBehaviour
         character.transform.position = new Vector3(x1, y1, 0);
     }
 
+    /// <summary>
+    /// Method called by the button to change a move to a block
+    /// </summary>
+    /// <param name="isBlock"></param>
     public void MakeCharacterBlockMove(bool isBlock)
     {
         moveCreator.SetBlockMove(isBlock);
