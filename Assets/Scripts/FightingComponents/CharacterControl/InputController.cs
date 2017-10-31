@@ -36,7 +36,7 @@ public class InputController : MonoBehaviour
 		this.pauseTime = 0;
 		this.pausedForTime = false;
 		this.paused = false;
-		this.animator = GameObject.Find("Character " + characterIndex).GetComponent<Animator>();
+		this.animator = GetComponent<Animator>();
 	}
 
     void Update() {

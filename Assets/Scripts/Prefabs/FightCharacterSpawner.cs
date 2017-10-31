@@ -37,58 +37,35 @@ public class FightCharacterSpawner : MonoBehaviour
 		Transform characterTransform = characterObject.transform;
 		characterObject.transform.name = "Character " + index;
 
-		SetIndex (characterObject, index);
+        characterObject.GetComponent<Animator>().enabled = true;
+        characterObject.GetComponent<InputController>().enabled = true;
+        characterObject.GetComponent<Rigidbody2D>().simulated = true;
+        characterObject.GetComponent<BoxCollider2D>().enabled = true;
+        Transform torsoTransform = characterTransform.Find("Torso");
+        torsoTransform.GetComponent<BoxCollider2D>().enabled = true;
+        characterObject.GetComponent<CharacterCollisionDetector>().enabled = true;
+        characterObject.GetComponent<DamageTriggerDetector>().enabled = true;
 
-		characterObject.SetActive(true);
+        characterObject.GetComponent<InputController>().characterIndex = index;
+        characterObject.GetComponent<DamageTriggerDetector>().characterIndex = index;
+        
+        foreach (Rigidbody2D body in characterObject.GetComponentsInChildren<Rigidbody2D>())
+        {
+            body.simulated = true;
+        }
 
-		characterObject.GetComponent<DamageTriggerDetector> ().enabled = true;
-		characterObject.GetComponent<DamageTriggerDetector> ().characterIndex = index;
-		characterObject.GetComponent<InputController>().enabled = true;
-		characterObject.GetComponent<BoxCollider2D>().enabled = true;
-		characterObject.GetComponent<CharacterCollisionDetector>().enabled = true;
-
-		foreach (DamageTriggerDetector damageDetector in characterObject.GetComponentsInChildren<DamageTriggerDetector>())
+        foreach (DamageTriggerDetector damageDetector in characterObject.GetComponentsInChildren<DamageTriggerDetector>())
 		{
 			damageDetector.enabled = true;
-			damageDetector.characterIndex = index;
-		}
+            damageDetector.characterIndex = index;
+        }
 
-		foreach (GameObject shield in UnityUtils.RecursiveContains(characterTransform,"Shield"))
-		{
-			ShieldControl shieldControl = shield.GetComponent<ShieldControl> ();
-			shieldControl.enabled = true;
-
-			DamageTriggerDetector damageDetector = shield.GetComponent<DamageTriggerDetector> ();
-			damageDetector.enabled = true;
-			damageDetector.characterIndex = index;
-		}
-
-		foreach (GameObject child in UnityUtils.RecursiveContains(characterTransform, "DragPoint"))
+        /*foreach (GameObject child in UnityUtils.RecursiveContains(characterTransform, "DragPoint"))
 		{
 			if (child.name.Contains("DragPoint"))
 			{
 				Destroy(child);
 			}
-		}
-	}
-
-
-	/// <summary>
-	/// Sets the index of a character object. The character object has to have an input controller or it will not work.
-	/// </summary>
-	/// <param name="character">Character.</param>
-	/// <param name="index">Index.</param>
-	private void SetIndex(GameObject character, int index)
-	{
-		if (character.GetComponent<InputController> () == null)
-		{
-			return;
-		}
-		character.GetComponent<InputController>().characterIndex = index;
-		character.GetComponent<DamageTriggerDetector>().characterIndex = index;
-		foreach (DamageTriggerDetector shieldDetector in character.GetComponentsInChildren<DamageTriggerDetector>())
-		{
-			shieldDetector.characterIndex = index;
-		}
-	}
+        }*/
+    }
 }

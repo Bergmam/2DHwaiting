@@ -6183,9 +6183,9 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1715642771}
-        m_MethodName: SetBlockMove
-        m_Mode: 0
+      - m_Target: {fileID: 1679047214}
+        m_MethodName: MakeCharacterBlockMove
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
