@@ -103,21 +103,24 @@ public class InputController : MonoBehaviour
 				this.movementController.Stop ();
 	        }
 
-			//Switch between walking and idle animation.
-			if (Mathf.Abs(horizontal) > 0)
-			{
-				SetAnimatorBool ("Running", true);
-			}
-			else
-			{
-				SetAnimatorBool ("Running", false);
-			}
+            if (vertical > 0)
+            {
+                SetAnimatorBool("Jumping", true);
+                jumpController.Jump();
+            } else if (Mathf.Abs(horizontal) > 0 && gameObject.transform.position.y <= -2.5)
+            {
+                SetAnimatorBool("Running", true);
+            }
 
-			// Jump
-			if (vertical > 0)
-			{
-				jumpController.Jump ();
-			}
+            if (vertical <= 0)
+            {
+                SetAnimatorBool("Jumping", false);
+            }
+
+            if (Mathf.Abs(horizontal) == 0)
+            {
+                SetAnimatorBool("Running", false);
+            }
 		}
     }
 
