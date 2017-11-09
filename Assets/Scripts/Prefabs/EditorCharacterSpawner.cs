@@ -52,4 +52,14 @@ public class EditorCharacterSpawner : MonoBehaviour
     {
         moveCreator.SetBlockMove(isBlock);
     }
+
+    public void Save()
+    {
+        moveCreator.SaveMove();
+    }
+
+    public void Reset()
+    {
+        moveCreator.ResetMoveEditor();
+    }
 }
