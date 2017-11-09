@@ -18,6 +18,12 @@ public class InputController : MonoBehaviour
 	private bool pausedForTime;
 	private bool paused;
 
+    // Booleans for coordinating transitions between animations
+    private bool isRunning = false;
+    private bool isCrouching = false;
+    private bool isJumping = false;
+    private bool collisionDown = true;
+
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
 	bool isPlayingMove = false;
 	Animator animator;
@@ -73,7 +79,7 @@ public class InputController : MonoBehaviour
 					pressedButton = button;
 				}
 			}
-			if (InputSettings.HasButton (characterIndex, pressedButton) && !isPlayingMove)
+			if (InputSettings.HasButton (characterIndex, pressedButton) && !isPlayingMove && !isCrouching)
 			{
 				isPlayingMove = true;
 				SetAnimatorEnabled (false);
@@ -90,11 +96,11 @@ public class InputController : MonoBehaviour
 		if (!isPlayingMove)
 		{
 			// Move sideways
-			if (horizontal < 0)
+			if (horizontal < 0 && !this.isCrouching)
 	        {
 				this.movementController.MoveLeft ();
 	        }
-			else if (horizontal > 0)
+			else if (horizontal > 0 && !this.isCrouching)
 	        {
 				this.movementController.MoveRight ();
 	        }
@@ -102,19 +108,30 @@ public class InputController : MonoBehaviour
 	        {
 				this.movementController.Stop ();
 	        }
-
+            print(this.isCrouching);
             if (vertical > 0)
             {
+                SetAnimatorBool("Crouching", false);
                 SetAnimatorBool("Jumping", true);
+                this.collisionDown = false;
                 jumpController.Jump();
-            } else if (Mathf.Abs(horizontal) > 0 && gameObject.transform.position.y <= -2.5)
+            }
+            else if (Mathf.Abs(horizontal) > 0 && this.collisionDown && !this.isCrouching)
             {
                 SetAnimatorBool("Running", true);
+                this.isRunning = true;
+            }
+            else if (vertical < 0 && !this.isJumping)
+            {
+                SetAnimatorBool("Crouching", true);
+                this.isCrouching = true;
             }
 
-            if (vertical <= 0)
+            if (vertical == 0 && collisionDown)
             {
                 SetAnimatorBool("Jumping", false);
+                SetAnimatorBool("Crouching", false);
+                this.isCrouching = false;
             }
 
             if (Mathf.Abs(horizontal) == 0)
@@ -188,7 +205,12 @@ public class InputController : MonoBehaviour
 		this.movementController.CollisionExitRight ();
     }
 
-	public void KnockBack()
+    public void CollisionDown()
+    {
+        this.collisionDown = true;
+    }
+
+    public void KnockBack()
 	{
 		this.movementController.KnockBack ();
 	}
