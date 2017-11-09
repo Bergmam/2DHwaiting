@@ -135,4 +135,20 @@ public static class InputSettings
 			characterInput.ClearAssignedButtons ();
 		}
 	}
+
+	public static int MaxNrOfMoves()
+	{
+		int maxNrOfMoves = 0;
+		foreach (CharacterInput characterInput in characterInputs)
+		{
+			if (characterInput.GetNrOfButtons () > maxNrOfMoves) {
+				maxNrOfMoves = characterInput.GetNrOfButtons ();
+			}
+		}
+		return maxNrOfMoves;
+	}
+
+	public static List<string> GetCharacterButtons(int characterNumber){
+		return characterInputs [characterNumber - 1].GetButtons ();
+	}
 }

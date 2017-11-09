@@ -109,4 +109,13 @@ public class CharacterInput
 	{
 		return buttons.Count == assignedButtons.Keys.Count;
 	}
+
+	public int GetNrOfButtons()
+	{
+		return this.buttons.Count;
+	}
+
+	public List<string> GetButtons(){
+		return this.buttons;
+	}
 }

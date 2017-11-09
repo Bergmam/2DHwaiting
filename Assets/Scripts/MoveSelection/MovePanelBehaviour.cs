@@ -92,4 +92,14 @@ public class MovePanelBehaviour : MonoBehaviour
 	{
 		return this.move;
 	}
+
+	public void RemoveSpeedText()
+	{
+		this.speedText.text = "";
+	}
+
+	public void RemoveStrengthText()
+	{
+		this.strengthText.text = "";
+	}
 }
