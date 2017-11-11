@@ -104,7 +104,15 @@ public class InputController : MonoBehaviour
 	        {
 				this.movementController.MoveRight ();
 	        }
-			else if (horizontal == 0)
+            else if (horizontal < 0 && this.isCrouching)
+            {
+                this.movementController.CrouchLeft();
+            }
+            else if (horizontal > 0 && this.isCrouching)
+            {
+                this.movementController.CrouchRight();
+            }
+            else if (horizontal == 0)
 	        {
 				this.movementController.Stop ();
 	        }
@@ -119,6 +127,11 @@ public class InputController : MonoBehaviour
             else if (Mathf.Abs(horizontal) > 0 && this.collisionDown && !this.isCrouching)
             {
                 SetAnimatorBool("Running", true);
+                this.isRunning = true;
+            }
+            else if (Mathf.Abs(horizontal) > 0 && this.collisionDown && this.isCrouching)
+            {
+                SetAnimatorBool("CrouchWalking", true);
                 this.isRunning = true;
             }
             else if (vertical < 0 && !this.isJumping)
@@ -137,6 +150,7 @@ public class InputController : MonoBehaviour
             if (Mathf.Abs(horizontal) == 0)
             {
                 SetAnimatorBool("Running", false);
+                SetAnimatorBool("CrouchWalking", false);
             }
 		}
     }
