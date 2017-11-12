@@ -5,16 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class InputGuiManager : MonoBehaviour {
-
-	private List<InputPanelTextBehaviour> inputTextBehaviours;
 	private GameObject[] player1InputButtons;
 	private GameObject[] player2InputButtons;
 
 	// Use this for initialization
 	void Start () {
-		inputTextBehaviours = new List<InputPanelTextBehaviour> ();
-
-
 		List<string> characterOneButtons = InputSettings.GetCharacterButtons (1);
 		Color32 color1 = StaticCharacterHolder.character1.GetColor ();
 		List<string> characterTwoButtons = InputSettings.GetCharacterButtons (2);
