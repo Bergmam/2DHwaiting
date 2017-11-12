@@ -59,7 +59,25 @@ public class MovementController : MonoBehaviour {
 		}
 	}
 
-	public void Stop(){
+    public void CrouchRight()
+    {
+        if (!collisionRight && !knockedBack)
+        {
+            thisBody.velocity = new Vector2(Parameters.crouchSpeed, thisBody.velocity.y);
+            collisionLeft = false; //If moving right, there is no longer a collision to the left
+        }
+    }
+
+    public void CrouchLeft()
+    {
+        if (!collisionRight && !knockedBack)
+        {
+            thisBody.velocity = new Vector2(-Parameters.crouchSpeed, thisBody.velocity.y);
+            collisionLeft = false; //If moving right, there is no longer a collision to the left
+        }
+    }
+
+    public void Stop(){
 		if(!knockedBack)
 		{
 			thisBody.velocity = new Vector2(0, thisBody.velocity.y); //Without the knockedBack bool, this stops the character.

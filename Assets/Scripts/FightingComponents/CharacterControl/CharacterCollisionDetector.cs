@@ -20,7 +20,13 @@ public class CharacterCollisionDetector : MonoBehaviour
 		Collider2D otherCollider = collision.collider; //The collider the object this script is attached to collides with.
 		GameObject otherCharacterObject = otherCollider.gameObject;
 		InputController otherInputController = otherCharacterObject.GetComponent<InputController> ();
-		if (otherInputController == null)
+
+        if (otherCollider.transform.tag.Equals("Floor"))
+        {
+            inputController.CollisionDown();
+        }
+
+        if (otherInputController == null)
 		{
 			return; //If colliding object's root does not have an InputController, it is not a character.
 		}
