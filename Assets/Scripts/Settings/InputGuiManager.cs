@@ -4,11 +4,14 @@ using UnityEngine;
 ﻿using System.IO;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class for managing update of GUI when input settings changes.
+/// This class creates buttons for each available move, the buttons trigger a text telling the user to press a key and the text tells this class to update GUI.
+/// </summary>
 public class InputGuiManager : MonoBehaviour {
 	private GameObject[] player1InputButtons;
 	private GameObject[] player2InputButtons;
 
-	// Use this for initialization
 	void Start () {
 		List<string> characterOneButtons = InputSettings.GetCharacterButtons (1);
 		Color32 color1 = StaticCharacterHolder.character1.GetColor ();
@@ -30,10 +33,11 @@ public class InputGuiManager : MonoBehaviour {
 			InitiateInputButton (previewPanel, 2, i, characterTwoButtons [i]);
 		}
 
+		//Make sure text is able to notify this class when the user presses a key/button.
 		GameObject enterButtonText = GameObject.Find ("EnterButtonText");
 		enterButtonText.GetComponent<EnterButtonScript> ().SetInputGuiManager (this);
-		enterButtonText.SetActive (false);
-		UpdateButtons ();
+		enterButtonText.SetActive (false); //Hide text.
+		UpdateGUI ();
 	}
 
 	private void InitiateInputButton(GameObject previewPanel, int characterNumber, int index, string button){
@@ -41,7 +45,7 @@ public class InputGuiManager : MonoBehaviour {
 
 		inputButtonTransform.GetComponent<InputButtonBehaviour> ().SetCharacterNumber (characterNumber);
 		inputButtonTransform.GetComponent<InputButtonBehaviour> ().SetIndex (index);
-		inputButtonTransform.GetComponent<InputButtonBehaviour> ().SetEnterButtonText (GameObject.Find ("EnterButtonText"));
+		inputButtonTransform.GetComponent<InputButtonBehaviour> ().SetEnterButtonText (GameObject.Find ("EnterButtonText")); //Make sure buttons are able to show/hide text.
 
 		if (characterNumber == 1) {
 			player1InputButtons [index] = inputButtonTransform.gameObject;
@@ -50,14 +54,20 @@ public class InputGuiManager : MonoBehaviour {
 		}
 	}
 
-	public void UpdateButtons(){
-		//Make sure input fields display the actual registered moves after one field has been updated.
-		// Necessary because some fields may be cleared after the same button is registered again on a different move.
-		UpdateCharacterFields (player1InputButtons, 1);
-		UpdateCharacterFields (player2InputButtons, 2);
+	/// <summary>
+	/// Update GUI to match input settings.
+	/// </summary>
+	public void UpdateGUI(){
+		UpdateCharacterButtons (player1InputButtons, 1);
+		UpdateCharacterButtons (player2InputButtons, 2);
 	}
 
-	private void UpdateCharacterFields(GameObject[] playerInputButtons, int characterNumber)
+	/// <summary>
+	/// Update the gui of the columns of buttons belonging to one character.
+	/// </summary>
+	/// <param name="playerInputButtons">Player input buttons.</param>
+	/// <param name="characterNumber">Character number.</param>
+	private void UpdateCharacterButtons(GameObject[] playerInputButtons, int characterNumber)
 	{
 		for (int i = 0; i < playerInputButtons.Length; i++) {
 			GameObject inputButton = playerInputButtons [i];
