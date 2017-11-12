@@ -146,6 +146,16 @@ public static class InputSettings
 		return allButtonsAssigned;
 	}
 
+	public static bool AllButtonsAdded(){
+		bool allButtonsAssigned = true;
+		//Check each character input individually
+		foreach (CharacterInput characterInput in characterInputs)
+		{
+			allButtonsAssigned &= characterInput.AllButtonsAdded ();
+		}
+		return allButtonsAssigned;
+	}
+
 	/// <summary>
 	/// Reset the assigned move of all slots of all characters.
 	/// </summary>

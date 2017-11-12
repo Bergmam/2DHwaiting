@@ -138,6 +138,16 @@ public class CharacterInput
 		return true;
 	}
 
+	public bool AllButtonsAdded()
+	{
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			if (buttonMovePairs [i].Key == null || buttonMovePairs [i].Key.Equals ("")) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	/// <summary>
 	/// Returns the number of buttons used by this character.
 	/// </summary>
