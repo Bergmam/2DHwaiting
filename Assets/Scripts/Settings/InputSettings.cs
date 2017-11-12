@@ -12,7 +12,7 @@ public static class InputSettings
 	private static List<CharacterInput> characterInputs = new List<CharacterInput>();
 
 	//All buttons used in the game. Can be itterated over to check if any of them has been pressed.
-	public static List<string> allUsedButtons = new List<string>();
+	public static List<string> allUsedButtons = new List<string>(); //TODO: This is technical debt. REMOVE
 
 	/// <summary>
 	/// Create a CharacterInput object for each character in the game.
@@ -25,17 +25,18 @@ public static class InputSettings
 			alreadyInitialized = true;
 			//Create a CharacterInput object for each character in the game.
 			foreach (Character character in StaticCharacterHolder.characters) {
-				CharacterInput characterInput = new CharacterInput (character);
+				CharacterInput characterInput = new CharacterInput (character, 6);
 				characterInputs.Add (characterInput);
 			}
 
 			//Register some buttons for each character TODO: Read buttons from file
-			foreach (char c in "uiojkl") {
-				AddButton (c + "", StaticCharacterHolder.characters [0]);
+			for (int i = 0; i < "uiojkl".Length; i++) {
+				AddButton ("uiojkl" [i] + "", StaticCharacterHolder.characters [0], i);
 			}
-			foreach (char c in "fghrty") {
-				AddButton (c + "", StaticCharacterHolder.characters [1]);
+			for (int i = 0; i < "rtyfgh".Length; i++) {
+				AddButton ("rtyfgh" [i] + "", StaticCharacterHolder.characters [1], i);
 			}
+
 		}
 	}
 
@@ -44,7 +45,7 @@ public static class InputSettings
 	/// </summary>
 	/// <param name="button">The button to be added.</param>
 	/// <param name="character">The character which is to use the button.</param>
-	public static void AddButton(string button, Character character)
+	public static void AddButton(string button, Character character, int index)
 	{
 		if (button.Length == 1 && !allUsedButtons.Contains (button)) { //Make sure button is not already in use and that it is just one character long.
 			allUsedButtons.Add (button);
@@ -52,9 +53,26 @@ public static class InputSettings
 			{
 				if (characterInput.GetCharacter ().Equals (character))
 				{
-					characterInput.AddButton (button);
+					characterInput.SetButton (button, index);
 					break;
 				}
+			}
+		}
+
+
+		foreach (CharacterInput characterInput in characterInputs)
+		{
+			foreach(string b in characterInput.GetButtons ()){
+			}
+		}
+	}
+
+	public static void RemoveButton(string button)
+	{
+		if (button != null) {
+			allUsedButtons.Remove (button);
+			foreach (CharacterInput characterInput in characterInputs) {
+				characterInput.RemoveButton (button);
 			}
 		}
 	}
@@ -128,11 +146,60 @@ public static class InputSettings
 		return allButtonsAssigned;
 	}
 
+	public static bool AllButtonsAdded(){
+		bool allButtonsAssigned = true;
+		//Check each character input individually
+		foreach (CharacterInput characterInput in characterInputs)
+		{
+			allButtonsAssigned &= characterInput.AllButtonsAdded ();
+		}
+		return allButtonsAssigned;
+	}
+
+	/// <summary>
+	/// Reset the assigned move of all slots of all characters.
+	/// </summary>
 	public static void ClearRegisteredMoves()
 	{
 		foreach (CharacterInput characterInput in characterInputs)
 		{
 			characterInput.ClearAssignedButtons ();
 		}
+	}
+
+	/// <summary>
+	/// Returns the largest amount of moves any player has.
+	/// </summary>
+	/// <returns>The maximum number of moves.</returns>
+	public static int MaxNrOfMoves()
+	{
+		int maxNrOfMoves = 0;
+		foreach (CharacterInput characterInput in characterInputs)
+		{
+			if (characterInput.GetNrOfButtons () > maxNrOfMoves) {
+				maxNrOfMoves = characterInput.GetNrOfButtons ();
+			}
+		}
+		return maxNrOfMoves;
+	}
+
+	/// <summary>
+	/// Returns a list of all buttons used by the specified character.
+	/// </summary>
+	/// <returns>The character buttons.</returns>
+	/// <param name="characterNumber">Character number.</param>
+	public static List<string> GetCharacterButtons(int characterNumber){
+		return characterInputs [characterNumber - 1].GetButtons (); // -1 to get from [1-2] -> [0-1].
+	}
+
+	/// <summary>
+	/// Returns the button of a character in the slot at the specified index.
+	/// </summary>
+	/// <returns>The character button.</returns>
+	/// <param name="characterNumber">Character number.</param>
+	/// <param name="index">Index of the slot to get button from.</param>
+	public static string GetCharacterButton(int characterNumber, int index)
+	{
+		return characterInputs [characterNumber - 1].getButton (index); // -1 to get from [1-2] -> [0-1].
 	}
 }

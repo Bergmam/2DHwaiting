@@ -8,30 +8,50 @@ using UnityEngine;
 /// </summary>
 public class CharacterInput
 {
-	private List<string> buttons; //All buttons used by the character.
-	private Dictionary<string,string> assignedButtons; //All buttons that have an assigned move together with the name of that move.
 	private Character character;
+	private KeyValuePair<string,string>[] buttonMovePairs;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="CharacterInput"/> class.
 	/// </summary>
 	/// <param name="character">Character.</param>
-	public CharacterInput(Character character)
+	/// <param name="size">The number of slots that links a button to a move.</param>
+	public CharacterInput(Character character, int size)
 	{
-		this.buttons = new List<string> ();
-		this.assignedButtons = new Dictionary<string, string> ();
+		this.buttonMovePairs = new KeyValuePair<string, string>[size];
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			buttonMovePairs [i] = new KeyValuePair<string,string> ("", "");
+		}
 		this.character = character;
 	}
 
 	/// <summary>
-	/// Adds a button to the list of used buttons.
+	/// Sets the button of a slot at a specified index.
+	/// Button has to be of length 1.
+	/// Will throw an exception if index is too large or negative.
 	/// </summary>
-	/// <param name="button">The button. Has to be of length 1.</param>
-	public void AddButton(string button)
+	/// <param name="index">The index of the slot the button should be registered to.</param>
+	/// <param name="button">The button to be registered.</param>
+	public void SetButton(string button, int index)
 	{
 		if (button.Length == 1)
 		{
-			buttons.Add (button);
+			SetKey (index, button);
+		}
+	}
+
+	/// <summary>
+	/// Removes a button from the slot it is registered to if it is currently in use.
+	/// If button is not in use, nothing happens.s
+	/// </summary>
+	/// <param name="button">The button to be removed.</param>
+	public void RemoveButton(string button)
+	{
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			if (buttonMovePairs [i].Key.Equals (button))
+			{
+				SetKey (i, "");
+			}
 		}
 	}
 
@@ -42,27 +62,14 @@ public class CharacterInput
 	/// <param name="moveName">Move name.</param>
 	public void RegisterButton(string button, string moveName)
 	{
-		if (buttons.Contains (button)) { //The button must be used by the character in order for a move to be assigned to it.
-			//If the move is used by another button, remove that assignment.
-			string sameMoveButton = "";
-			foreach(KeyValuePair<string,string> entry in assignedButtons)
-			{
-				if (entry.Value.Equals (moveName))
-				{
-					sameMoveButton = entry.Key;
-					break;
-				}
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			if (buttonMovePairs [i].Value.Equals (moveName)) {
+				SetValue (i, "");
 			}
-			if(!sameMoveButton.Equals(""))
-			{
-				assignedButtons.Remove (sameMoveButton);
+
+			if (buttonMovePairs [i].Key.Equals (button)) {
+				SetValue (i, moveName);
 			}
-			//If the button is currently used for another move, remove that move from the character and remove the assignment.
-			if (assignedButtons.ContainsKey (button)) {
-				character.DeleteMove (assignedButtons[button]);
-				assignedButtons.Remove (button);
-			}
-			assignedButtons.Add (button, moveName); //Assign the new move to the specified button.
 		}
 	}
 
@@ -73,7 +80,12 @@ public class CharacterInput
 	/// <param name="button">The button.</param>
 	public bool HasButton(string button)
 	{
-		return buttons.Contains (button);
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			if (buttonMovePairs [i].Key.Equals (button)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void SetCharacter(Character character)
@@ -85,19 +97,30 @@ public class CharacterInput
 	{
 		return this.character;
 	}
-		
+
+	/// <summary>
+	/// Returns the move registered to the specified button.
+	/// </summary>
+	/// <returns>The move name.</returns>
+	/// <param name="button">Button.</param>
 	public string GetMoveName(string button)
 	{
-		if (assignedButtons.ContainsKey (button)) {
-			return assignedButtons [button];
-		} else {
-			return null;
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			if (buttonMovePairs [i].Key.Equals (button)) {
+				return buttonMovePairs [i].Value;
+			}
 		}
+		return null;
 	}
 
+	/// <summary>
+	/// Clears the assigned button of every slot.
+	/// </summary>
 	public void ClearAssignedButtons()
 	{
-		assignedButtons.Clear ();
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			SetValue (i, "");
+		}
 	}
 
 
@@ -107,6 +130,68 @@ public class CharacterInput
 	/// <returns><c>true</c>, if the number of assigned moves is the same as the total number of used buttons, <c>false</c> otherwise.</returns>
 	public bool AllButtonsAssigned()
 	{
-		return buttons.Count == assignedButtons.Keys.Count;
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			if (buttonMovePairs [i].Value == null || buttonMovePairs [i].Value.Equals ("")) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public bool AllButtonsAdded()
+	{
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			if (buttonMovePairs [i].Key == null || buttonMovePairs [i].Key.Equals ("")) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/// <summary>
+	/// Returns the number of buttons used by this character.
+	/// </summary>
+	/// <returns>The nr of buttons.</returns>
+	public int GetNrOfButtons()
+	{
+		return this.buttonMovePairs.Length;
+	}
+
+	/// <summary>
+	/// Returns all buttons used by this character.
+	/// </summary>
+	/// <returns>The buttons.</returns>
+	public List<string> GetButtons(){
+		List<string> buttons = new List<string> ();
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			buttons.Add (buttonMovePairs [i].Key);
+		}
+		return buttons;
+	}
+
+	public string getButton(int index){
+		return buttonMovePairs [index].Key;
+	}
+
+	/// <summary>
+	/// Set the value of a keyvaluepair at a certain index.
+	/// </summary>
+	/// <param name="index">Index.</param>
+	/// <param name="value">Value.</param>
+	private void SetValue(int index, string value){
+		string oldKey = buttonMovePairs [index].Key;
+		KeyValuePair<string,string> newPair = new KeyValuePair<string,string> (oldKey,value);
+		buttonMovePairs [index] = newPair;
+	}
+
+	/// <summary>
+	/// Set the key of a keyvaluepair at a certain index.
+	/// </summary>
+	/// <param name="index">Index.</param>
+	/// <param name="key">Key.</param>
+	private void SetKey(int index, string key){
+		string oldValue = buttonMovePairs [index].Value;
+		KeyValuePair<string,string> newPair = new KeyValuePair<string,string> (key,oldValue);
+		buttonMovePairs [index] = newPair;
 	}
 }
