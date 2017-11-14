@@ -96,11 +96,11 @@ public class InputController : MonoBehaviour
 		if (!isPlayingMove)
 		{
 			// Move sideways
-			if (horizontal < 0 && !this.isCrouching)
+			if (horizontal < 0 && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        {
 				this.movementController.MoveLeft ();
 	        }
-			else if (horizontal > 0 && !this.isCrouching)
+			else if (horizontal > 0 && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        {
 				this.movementController.MoveRight ();
 	        }
@@ -116,7 +116,7 @@ public class InputController : MonoBehaviour
 	        {
 				this.movementController.Stop ();
 	        }
-            print(this.isCrouching);
+
             if (vertical > 0)
             {
                 SetAnimatorBool("Crouching", false);
@@ -143,6 +143,7 @@ public class InputController : MonoBehaviour
             if (vertical == 0 && collisionDown)
             {
                 SetAnimatorBool("Jumping", false);
+                SetAnimatorBool("CrouchWalking", false);
                 SetAnimatorBool("Crouching", false);
                 this.isCrouching = false;
             }
