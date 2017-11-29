@@ -9,6 +9,7 @@ public class SettingsReturnScript : MonoBehaviour {
 	void Start()
 	{
 		this.enterAllButtonsText = GameObject.Find ("EnterAllButtonsText");
+		enterAllButtonsText.SetActive (false);
 	}
 
 	void Update ()
@@ -25,12 +26,17 @@ public class SettingsReturnScript : MonoBehaviour {
 		{
 			if (allButtonsAdded)
 			{
-				gameObject.GetComponent<SceneReturnScript> ().GoBack ();
+				GoBack ();
 			}
 			else
 			{
 				enterAllButtonsText.SetActive (true);
 			}
 		}
+	}
+
+	public void GoBack()
+	{
+		SceneHandler.GoBack ();
 	}
 }
