@@ -26,6 +26,12 @@ public class SettingsReturnScript : MonoBehaviour {
 		{
 			if (allButtonsAdded)
 			{
+				//Save buttons to file.
+				List<string> player1Buttons = InputSettings.GetCharacterButtons (1);
+				List<string> player2Buttons = InputSettings.GetCharacterButtons (2);
+				SaveLoad.SaveButtons (player1Buttons, "/player1Buttons.mvs");
+				SaveLoad.SaveButtons (player2Buttons, "/player2Buttons.mvs");
+
 				GoBack ();
 			}
 			else
