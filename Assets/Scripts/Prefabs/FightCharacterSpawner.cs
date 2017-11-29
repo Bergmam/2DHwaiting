@@ -26,7 +26,9 @@ public class FightCharacterSpawner : MonoBehaviour
 		AndAndRemoveComponents (character1, 1);
 		AndAndRemoveComponents (character2, 2);
 
-		character2.GetComponent<InputController>().horizontalAxis = "Horizontal2";
+        GameObject.Find("Main Camera").GetComponent<CameraZoomControl>().character1 = character1;
+        GameObject.Find("Main Camera").GetComponent<CameraZoomControl>().character2 = character2;
+        character2.GetComponent<InputController>().horizontalAxis = "Horizontal2";
 		character2.GetComponent<InputController>().verticalAxis = "Vertical2";
 
         character1.transform.Find("LowerBodyHitbox").GetComponent<BoxCollider2D>().enabled = true;

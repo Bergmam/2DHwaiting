@@ -36,10 +36,24 @@ public class CameraZoomControl : MonoBehaviour {
 		rightCharPos = character2.transform.position.x + Parameters.characterCamMargin;
 
 		//Check which of character or edge of background is closest to the center (camera bound)
-		float leftX = Math.Max (backgroundPosLeftX, leftCharPos);
-		float rightX = Math.Min (backgroundPosRightX, rightCharPos);
 
-		float middleX = leftX + (rightX - leftX) / 2f;
+        // Calculate offsets with which to move the camera from the edges when both characters are close to each other
+        float leftOffset = 0;
+        float rightOffset = 0;
+        if (leftCharPos <= backgroundPosLeftX)
+        {
+            rightOffset = backgroundPosLeftX - leftCharPos;
+        }
+
+        if (rightCharPos >= backgroundPosRightX)
+        {
+            leftOffset = rightCharPos - backgroundPosRightX;
+        }
+
+        float leftX = Math.Max(backgroundPosLeftX, leftCharPos - leftOffset);
+        float rightX = Math.Min(backgroundPosRightX, rightCharPos + rightOffset);
+
+        float middleX = leftX + (rightX - leftX) / 2f;
 		gameCamera.orthographicSize = ((rightX - leftX) / gameCamera.aspect) / 2f; //orthographicSize is halv of screen height.
 		float camPosY = gameCamera.orthographicSize - startHeight; //Make camera lower edge always be at ground level.
 		Vector3 camPos = new Vector3 (middleX, camPosY, transform.position.z);
