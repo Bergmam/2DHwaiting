@@ -234,6 +234,40 @@ public class InputController : MonoBehaviour
 	{
 		this.movementController.KnockBack ();
 	}
+    
+    public void SetHitColor()
+    {
+        foreach(ColorModifier colorModifier in gameObject.GetComponentsInChildren<ColorModifier>())
+        {
+            print(colorModifier.gameObject.name);
+            colorModifier.SetColor(Color.red);
+        }
+
+        StartCoroutine(WaitAndRemoveColor());
+    }
+
+    private void RemoveHitColor()
+    {
+        foreach (ColorModifier colorModifier in gameObject.GetComponentsInChildren<ColorModifier>())
+        {
+            print(colorModifier.gameObject.name);
+            colorModifier.DeSelect();
+
+        }
+    }
+
+
+    /// <summary>
+    /// Wait for a parameterized amount of time before changing the color of the hit character back to the default.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator WaitAndRemoveColor()
+    {
+        print(Time.time);
+        yield return new WaitForSeconds(Parameters.hitColorTime);
+        print(Time.time);
+        RemoveHitColor();
+    }
 
 	private void SetAnimatorEnabled(bool enabled)
 	{
@@ -248,4 +282,5 @@ public class InputController : MonoBehaviour
 			this.animator.SetBool (boolName, enabled);
 		}
 	}
+
 }

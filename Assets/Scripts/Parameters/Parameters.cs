@@ -33,4 +33,6 @@ public static class Parameters {
 	public static float maxShieldScale = 1.0f;
 
     public static float scrollDelay = 0.15f;
+
+    public static float hitColorTime = 0.25f;
 }

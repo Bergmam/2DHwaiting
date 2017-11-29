@@ -52,6 +52,7 @@ public class DamageTriggerDetector : MonoBehaviour {
 
 		otherCollider.enabled = false; //Make sure the other character's damaging bodypart does not also collide with character behind shield.
 		audioCenter.Play();
+        this.inputController.SetHitColor();
 
 		float knockBackModifier = 0.0f;
 		Move blockMove = this.inputController.GetCurretlyPlayedMove ();
