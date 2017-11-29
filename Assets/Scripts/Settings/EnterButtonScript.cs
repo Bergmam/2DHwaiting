@@ -18,7 +18,6 @@ public class EnterButtonScript : MonoBehaviour {
 			if (Input.GetKeyDown ("" + availableKeys [i])) {
 				string newButton = "" + availableKeys [i];
 				InputSettings.RemoveButton (newButton); //Remove button where it is currently used so that it is only used once.
-				print("currentCharacterNumber = " + currentCharacterNumber + ", " + " currentIndex = " + currentIndex);
 				InputSettings.AddButton (newButton, StaticCharacterHolder.characters [currentCharacterNumber - 1], currentIndex); //Add button in its new place.
 				this.inputGuiManager.UpdateGUI (); //Update gui to match current settings.
 				gameObject.SetActive (false); //Hide text telling user to press a key.

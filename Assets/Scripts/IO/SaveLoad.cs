@@ -23,5 +23,26 @@ public static class SaveLoad{
             AvailableMoves.SetMoves((List<Move>)bf.Deserialize(file));
             file.Close();
         }
-    }
+	}
+
+	public static void SaveButtons(List<string> playerButtons, string path)
+	{
+		BinaryFormatter bf = new BinaryFormatter ();
+		FileStream file = File.Create (Application.persistentDataPath + path);
+		bf.Serialize (file, playerButtons);
+		file.Close ();
+	}
+
+	public static List<string> LoadButtons(string path)
+	{
+		List<string> buttons = null;
+		if (File.Exists (Application.persistentDataPath + path))
+		{
+			BinaryFormatter bf = new BinaryFormatter ();
+			FileStream file = File.Open (Application.persistentDataPath + path, FileMode.Open);
+			buttons = (List<string>)bf.Deserialize (file);
+			file.Close ();
+		}
+		return buttons;
+	}
 }

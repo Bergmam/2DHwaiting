@@ -29,14 +29,27 @@ public static class InputSettings
 				characterInputs.Add (characterInput);
 			}
 
-			//Register some buttons for each character TODO: Read buttons from file
-			for (int i = 0; i < "uiojkl".Length; i++) {
-				AddButton ("uiojkl" [i] + "", StaticCharacterHolder.characters [0], i);
-			}
-			for (int i = 0; i < "rtyfgh".Length; i++) {
-				AddButton ("rtyfgh" [i] + "", StaticCharacterHolder.characters [1], i);
-			}
+			LoadButtons (1, "uiojkl");
+			LoadButtons (2, "rtyfgh");
 
+		}
+	}
+
+	/// <summary>
+	/// Loads buttons for the specified character. If the character does not have saved buttons, use the characters in the backup string.
+	/// </summary>
+	/// <param name="characterNumber">Character number.</param>
+	/// <param name="backUpButtons">Back up buttons.</param>
+	private static void LoadButtons(int characterNumber, string backUpButtons){
+		List<string> playerButtons = SaveLoad.LoadButtons ("/player" + characterNumber + "Buttons.mvs");
+		if (playerButtons != null) {
+			for (int i = 0; i < playerButtons.Count; i++) {
+				AddButton (playerButtons [i] + "", StaticCharacterHolder.characters [characterNumber - 1], i);
+			}
+		} else {
+			for (int i = 0; i < backUpButtons.Length; i++) {
+				AddButton (backUpButtons [i] + "", StaticCharacterHolder.characters [characterNumber - 1], i);
+			}
 		}
 	}
 
