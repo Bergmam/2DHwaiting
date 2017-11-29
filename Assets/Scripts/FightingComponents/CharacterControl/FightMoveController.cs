@@ -21,6 +21,13 @@ public class FightMoveController : MonoBehaviour {
 		layerHandler = GameObject.Find("Handler").GetComponent<LayerHandler>();
 		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
 	}
+
+    void Start ()
+    {
+        // Enable hitboxes to make sure no moves are registered before fightmovecontroller is initialized
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        gameObject.transform.Find("LowerBodyHitbox").GetComponent<BoxCollider2D>().enabled = true;
+    }
 	
 	// Update is called once per frame
 	void Update () {

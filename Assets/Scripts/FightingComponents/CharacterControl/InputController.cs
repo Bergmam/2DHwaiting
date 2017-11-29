@@ -31,13 +31,18 @@ public class InputController : MonoBehaviour
 	private JumpController jumpController;
 	private MovementController movementController;
 	private FightMoveController fightMoveController;
+    
+    void Awake ()
+    {   
+        // initialize all controllers in Awake() to make sure no collisions occur before controllers can handle them
+        this.jumpController = gameObject.AddComponent<JumpController>();
+        this.movementController = gameObject.AddComponent<MovementController>();
+        this.fightMoveController = gameObject.AddComponent<FightMoveController>();
+    }
 
 	void Start () {
 		// characterIndex-1 to make character 1 have index 1 etc.
 		this.character = StaticCharacterHolder.characters[characterIndex - 1];
-		this.jumpController = gameObject.AddComponent<JumpController> ();
-		this.movementController = gameObject.AddComponent<MovementController> ();
-		this.fightMoveController = gameObject.AddComponent<FightMoveController> ();
 		this.fightMoveController.SetCharacter (this.character);
 		this.pauseTime = 0;
 		this.pausedForTime = false;

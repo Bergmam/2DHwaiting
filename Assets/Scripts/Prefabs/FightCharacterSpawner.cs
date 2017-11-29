@@ -29,7 +29,10 @@ public class FightCharacterSpawner : MonoBehaviour
 		character2.GetComponent<InputController>().horizontalAxis = "Horizontal2";
 		character2.GetComponent<InputController>().verticalAxis = "Vertical2";
 
-		character1.transform.position = new Vector3(x1, y1, 0);
+        character1.transform.Find("LowerBodyHitbox").GetComponent<BoxCollider2D>().enabled = true;
+        character2.transform.Find("LowerBodyHitbox").GetComponent<BoxCollider2D>().enabled = true;
+
+        character1.transform.position = new Vector3(x1, y1, 0);
 		character2.transform.position = new Vector3(x2, y2, 0);
 	}
 
@@ -48,10 +51,9 @@ public class FightCharacterSpawner : MonoBehaviour
         torsoTransform.GetComponent<BoxCollider2D>().enabled = true;
 
         characterObject.GetComponent<CharacterCollisionDetector>().enabled = true;
-        characterObject.GetComponent<DamageTriggerDetector>().enabled = true;
+        characterObject.transform.Find("LowerBodyHitbox").GetComponent<DamageTriggerDetector>().enabled = true;
 
         characterObject.GetComponent<InputController>().characterIndex = index;
-        characterObject.GetComponent<DamageTriggerDetector>().characterIndex = index;
         
         foreach (Rigidbody2D body in characterObject.GetComponentsInChildren<Rigidbody2D>())
         {
