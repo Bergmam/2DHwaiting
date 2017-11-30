@@ -31,6 +31,9 @@ public class FightCharacterSpawner : MonoBehaviour
         character2.GetComponent<InputController>().horizontalAxis = "Horizontal2";
 		character2.GetComponent<InputController>().verticalAxis = "Vertical2";
 
+        character2.GetComponent<BoxCollider2D>().enabled = true;
+        character2.GetComponent<BoxCollider2D>().enabled = true;
+
         character1.transform.Find("LowerBodyHitbox").GetComponent<BoxCollider2D>().enabled = true;
         character2.transform.Find("LowerBodyHitbox").GetComponent<BoxCollider2D>().enabled = true;
 
