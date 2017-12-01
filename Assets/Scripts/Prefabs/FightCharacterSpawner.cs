@@ -47,6 +47,9 @@ public class FightCharacterSpawner : MonoBehaviour
 		characterObject.transform.name = "Character " + index;
 
         characterObject.GetComponent<Animator>().enabled = true;
+		characterObject.GetComponent<JumpController> ().enabled = true;
+		characterObject.GetComponent<MovementController> ().enabled = true;
+		characterObject.GetComponent<FightMoveController> ().enabled = true;
         characterObject.GetComponent<InputController>().enabled = true;
         characterObject.GetComponent<Rigidbody2D>().simulated = true;
 
