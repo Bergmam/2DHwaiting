@@ -99,7 +99,7 @@ public class MoveCreator : MonoBehaviour
 	public void ResetMoveEditor()
 	{
 		nameInputField.text = string.Empty;
-		sliders.ResetSliders(); //Reset sliders to 50/50
+		sliders.ResetSlider(); //Reset slider to 50/50
 		move = new Move ();
 		recorder.Reset (move);
         saveButton.interactable = false;
