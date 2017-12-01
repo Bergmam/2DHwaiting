@@ -16,9 +16,9 @@ public class EditorGuiManager : MonoBehaviour {
 		GameObject nameAndSavePanel = GameObject.Find ("NameAndSavePanel");
 		statePanels = new GameObject[] {
 			moveTypePanel,
-			slidersPanel,
 			activeBodypartPanel,
 			recordFramesPanel,
+			slidersPanel,
 			nameAndSavePanel
 		};
 	}
@@ -68,6 +68,12 @@ public class EditorGuiManager : MonoBehaviour {
 		{
 			currentStateIndex--;
 		}
+		ShowOnlyCurrentPanel ();
+	}
+
+	public void Reset()
+	{
+		this.currentStateIndex = 0;
 		ShowOnlyCurrentPanel ();
 	}
 }

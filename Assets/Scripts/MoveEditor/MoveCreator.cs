@@ -13,6 +13,8 @@ public class MoveCreator : MonoBehaviour
 	private ActiveBodypartSelector activeBodypartSelector;
 	private Button saveButton;
 	private MovePlayer movePlayer;
+	private EditorGuiManager editorGuiManager;
+	private bool doneRecordingFrames;
 
 	void Start ()
 	{
@@ -29,6 +31,8 @@ public class MoveCreator : MonoBehaviour
 		activeBodypartSelector.SetBlockMove (move.IsBlockMove ());
 		activeBodypartSelector.BodypartChanged ("Head");
 		recorder.SetMove (move);
+		this.editorGuiManager = GameObject.FindObjectOfType<EditorGuiManager> ();
+		editorGuiManager.Init ();
 	}
 
 	void Update ()
@@ -44,6 +48,10 @@ public class MoveCreator : MonoBehaviour
 		{
 			move.SetActiveBodypart (activeBodypartSelector.GetActiveBodypart ());
 			UpdateShieldScale ();
+		}
+		if (!doneRecordingFrames && recorder.IsDoneRecording ()) {
+			doneRecordingFrames = true;
+			editorGuiManager.NextState ();
 		}
 		//All frames recorded and a new, non-empty, move name has been entered.
 		if (recorder.IsDoneRecording () && nameValidator.IsNameValid ())
@@ -100,9 +108,13 @@ public class MoveCreator : MonoBehaviour
 	{
 		nameInputField.text = string.Empty;
 		sliders.ResetSlider(); //Reset slider to 50/50
+		SetBlockMove (false);
+		activeBodypartSelector.BodypartChanged ("Head");
 		move = new Move ();
 		recorder.Reset (move);
         saveButton.interactable = false;
+		this.doneRecordingFrames = false;
+		this.editorGuiManager.Reset ();
     }
 
 	public void SaveMove()
