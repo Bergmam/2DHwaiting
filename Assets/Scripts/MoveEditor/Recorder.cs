@@ -128,7 +128,6 @@ public class Recorder : MonoBehaviour
 			int frameIndex = halfNbrOfFrames - 1 - i;
 			Frame frame = frames [frameIndex];
 			move.AddFrame (frame);
-			UpdateProgressBar ();
 		}
 	}
 
@@ -191,6 +190,7 @@ public class Recorder : MonoBehaviour
 	{
 		//With the first and last frames, some of the bar is filled in on start.
 		float nbrOfRecordedFrames = (float)move.GetCurrentNbrOfFrames () - 1; //Player did not record the first frame.
+		nbrOfRecordedFrames *= 2; //Player only records first half of frames. Each recorded frame is used twice.
 		float totalNbrOfRecordableFrames = (float)move.GetTotalNbrOfFrames () - 2; //Player does not record first or last frame.
 		//Player did not record the last frame.
 		nbrOfRecordedFrames = nbrOfRecordedFrames > totalNbrOfRecordableFrames ? totalNbrOfRecordableFrames : nbrOfRecordedFrames;
