@@ -30,15 +30,12 @@ public class UnityUtils
     /// <param name="current">The transform from where to start</param>
     /// <param name="name">The name of the child to look for</param>
     /// <returns>The child if found, otherwise null.</returns>
-
-
     public static List<GameObject> RecursiveContains(Transform current, string name)
     {
         List<GameObject> children = new List<GameObject>();
 
         foreach(Transform child in current.GetComponentsInChildren<Transform>(true))
         {
-            MonoBehaviour.print(child.name);
             if (child.name.Contains(name))
             {
                 children.Add(child.gameObject);
@@ -47,26 +44,5 @@ public class UnityUtils
 
         return children;
     }
-
-   /* {
-
-        List<GameObject> children = new List<GameObject>();
-
-        if (current.name.Contains(name))
-        {
-            MonoBehaviour.print("Bajs");
-            children.Add(current.gameObject);
-        } 
-
-        for (int i = 0; i < current.childCount; ++i)
-        {
-            if (current.GetChild(i))
-            {
-                children.AddRange(RecursiveContainsHelper(current.GetChild(i), name));
-            }
-        }
-
-        return children;
-    }*/
 
 }

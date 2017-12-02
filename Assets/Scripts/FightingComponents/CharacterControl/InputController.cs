@@ -35,9 +35,9 @@ public class InputController : MonoBehaviour
     void Awake ()
     {   
         // initialize all controllers in Awake() to make sure no collisions occur before controllers can handle them
-        this.jumpController = gameObject.AddComponent<JumpController>();
-        this.movementController = gameObject.AddComponent<MovementController>();
-        this.fightMoveController = gameObject.AddComponent<FightMoveController>();
+        this.jumpController = gameObject.GetComponent<JumpController>();
+        this.movementController = gameObject.GetComponent<MovementController>();
+        this.fightMoveController = gameObject.GetComponent<FightMoveController>();
     }
 
 	void Start () {
