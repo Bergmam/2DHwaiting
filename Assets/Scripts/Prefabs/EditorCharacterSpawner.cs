@@ -7,11 +7,14 @@ public class EditorCharacterSpawner : MonoBehaviour
 {
 
     public float x1, y1;
+    public float x2, y2;
+
     private MoveCreator moveCreator;
 
     void Start()
     {
         SpawnCharacter();
+        SpawnOnionCharacter();
     }
 
     /// <summary>
@@ -42,6 +45,29 @@ public class EditorCharacterSpawner : MonoBehaviour
         }
 
         character.transform.position = new Vector3(x1, y1, 0);
+    }
+
+    public void SpawnOnionCharacter()
+    {
+        GameObject preInitCharacter = Resources.Load("Prefabs/Character", typeof(GameObject)) as GameObject;
+        GameObject character = Instantiate(preInitCharacter);
+
+        foreach (SpriteRenderer sprite in character.GetComponentsInChildren<SpriteRenderer>())
+        {
+            sprite.sortingOrder = 0;
+        }
+
+        character.transform.name = "Onion Character";
+
+        Destroy(character.GetComponent<Rigidbody2D>());
+
+        // Destroy all rigid bodies since dragpoints does not work with them attached.
+        foreach (Transform child in character.GetComponentsInChildren<Transform>(true))
+        {
+            Destroy(child.transform.GetComponent<Rigidbody2D>());
+        }
+
+        character.transform.position = new Vector3(x2, y2, 0);
     }
 
     /// <summary>
