@@ -55,6 +55,7 @@ public class EditorCharacterSpawner : MonoBehaviour
         foreach (SpriteRenderer sprite in character.GetComponentsInChildren<SpriteRenderer>())
         {
             sprite.sortingOrder = 0;
+            sprite.color = new Color(1f, 1f, 1f, 0.5f);
         }
 
         character.transform.name = "Onion Character";
