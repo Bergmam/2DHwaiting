@@ -21,7 +21,7 @@ public static class Parameters {
     public static int minBlock = 30; // 
     public static int maxBlock = 121; //
 
-    public static float minStun = 0.1f; //Time in seconds
+    public static float minStun = 0.5f; //Time in seconds
     public static float maxStun = 3.0f; //Time in seconds
 
     public static float characterCamMargin = 5f;
