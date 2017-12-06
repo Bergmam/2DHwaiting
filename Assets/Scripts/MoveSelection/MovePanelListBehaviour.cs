@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-﻿using System.IO;
+using System.IO;
 using UnityEngine.UI;
 
 /// <summary>
@@ -20,6 +20,7 @@ public class MovePanelListBehaviour : MonoBehaviour
     private MovePlayer character2;
     private GameObject playButton;
     private float scrollDelay;
+	private bool hasDeleted = false;
     SceneButtonBehaviour playButtonBehaviour;
 
 
@@ -60,12 +61,17 @@ public class MovePanelListBehaviour : MonoBehaviour
 			}
 			selectedMovesPanels [i].SetOwner (character);
 		}
-
-		listItems[0].Select(); //Select the top list item.
+		listItems[selectedListIndex].Select();
+		//listItems[0].Select(); //Select the top list item.
 		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
         character2 = GameObject.Find("Character 2").GetComponent<MovePlayer>();
         PlayAnimation (1); //Start previewing the animation corresponding to the first list item.
         playButtonBehaviour = GameObject.Find("Handler").GetComponent<SceneButtonBehaviour>(); //Used to switch scene by pressing Enter.
+
+		if (selectedListIndex >= nbrOfVisiblePanels / 2 && hasDeleted) {
+			ScrollList(-1);
+			hasDeleted = false;
+		}
 
 		ReselectMoves ();
     }
@@ -144,6 +150,9 @@ public class MovePanelListBehaviour : MonoBehaviour
         {
             playButtonBehaviour.SwitchScene("FightScene");
         }
+		if (Input.GetKeyDown("delete")) {
+			DeleteMove();
+		}
 		if (Input.anyKeyDown)
 		{
 			//Check if any button used in the game has been pressed.
@@ -258,6 +267,29 @@ public class MovePanelListBehaviour : MonoBehaviour
 			AddPanelToCharacterMoves (registeredCharacter, button, index);
 			ShowOrHidePlayButton ();
 		}
+	}
+
+	/// <summary>
+	/// Deletes the currently selected move from the list of moves
+	///
+	private void DeleteMove() {
+		Move moveToBeDeleted = listItems[selectedListIndex].getMove();
+		
+		foreach(SelectionPanelBahviour panel in selectedMovesPanels)
+		{
+			panel.RemovePanelWithMove(moveToBeDeleted.GetName());
+		}
+
+		AvailableMoves.DeleteMove(moveToBeDeleted);
+		playButton.SetActive(true);
+		foreach(MovePanelBehaviour panel in listItems)
+		{
+			Destroy(panel.gameObject);
+		}
+		selectedListIndex = Mathf.Max(selectedListIndex - 1, 0);
+		
+		hasDeleted = true;
+		Start();
 	}
 
 	/// <summary>

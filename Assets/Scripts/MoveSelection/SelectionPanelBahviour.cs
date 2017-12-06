@@ -43,7 +43,7 @@ public class SelectionPanelBahviour : MonoBehaviour
 	/// Removes any panel with  move.
 	/// </summary>
 	/// <param name="moveName">Move name.</param>
-	private void RemovePanelWithMove(string moveName)
+	public void RemovePanelWithMove(string moveName)
 	{
 		//Cannot remove items from list while itterating.
 		//Only one panel at a time can hold the same move. This fins it if it exists.

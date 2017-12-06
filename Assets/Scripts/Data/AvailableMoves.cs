@@ -25,6 +25,11 @@ public class AvailableMoves
         moves.Add(move);
     }
 
+    public static void DeleteMove(Move move) 
+    {
+        moves.Remove(move);
+    }
+
     /// <summary>
     /// Prints the names of all currently available moves
     /// </summary>
