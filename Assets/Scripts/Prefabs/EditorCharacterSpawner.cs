@@ -55,7 +55,7 @@ public class EditorCharacterSpawner : MonoBehaviour
         foreach (SpriteRenderer sprite in character.GetComponentsInChildren<SpriteRenderer>())
         {
             sprite.sortingOrder = 0;
-            sprite.color = new Color(1f, 1f, 1f, 0.5f);
+            sprite.color = new Color(0, 0, 0, 0.5f);
         }
 
         character.transform.name = "Onion Character";
@@ -68,7 +68,7 @@ public class EditorCharacterSpawner : MonoBehaviour
             Destroy(child.transform.GetComponent<Rigidbody2D>());
         }
 
-        character.transform.position = new Vector3(x2, y2, 0);
+        character.transform.position = new Vector3(x1, y1, 0);
     }
 
     /// <summary>
