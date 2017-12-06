@@ -158,6 +158,7 @@ public class Recorder : MonoBehaviour
 	/// </summary>
 	private void FinishMove()
 	{
+        onionCharacter.SetActive(false);
 		movePlayer.SetAutoLoopEnabled(true);
 		if (move != null)
 		{
@@ -180,6 +181,8 @@ public class Recorder : MonoBehaviour
 		{
 			return;
 		}
+        onionMovePlayer.FrameToCharacter(initialPoseFrame);
+        onionCharacter.SetActive(true);
 		doneRecording = false;
 		movePlayer.SetAutoLoopEnabled (false);
 		progressBarBehaviour.UpdateFill (0);
