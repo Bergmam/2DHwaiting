@@ -13,9 +13,10 @@ public class Recorder : MonoBehaviour
 	private List<GameObject> endPoints;
 	public bool reverseOnWayBack = true;
 	private MovePlayer movePlayer;
+    private MovePlayer onionMovePlayer;
 	private bool doneRecording;
 	private InputField nameInputField;
-
+    private GameObject onionCharacter;
 	private Frame initialPoseFrame;
 
 
@@ -28,6 +29,8 @@ public class Recorder : MonoBehaviour
 		initialPoseFrame = GetCurrentPoseFrame ();
 		progressBarBehaviour = GameObject.Find ("ProgressBar").GetComponent<ProgressBarBehaviour> ();
 		nameInputField = GameObject.Find ("NameInputField").GetComponent<InputField> ();
+        onionCharacter = GameObject.Find("Onion Character");
+        onionMovePlayer = onionCharacter.GetComponent<MovePlayer>();
     }
 		
 	public void SetMove(Move move)
@@ -49,7 +52,8 @@ public class Recorder : MonoBehaviour
 		{
 			Frame frame = GetCurrentPoseFrame ();
 			UpdateFrameTwistLimits ();
-			move.AddFrame (frame);
+            onionMovePlayer.FrameToCharacter(frame);
+            move.AddFrame (frame);
 			UpdateProgressBar ();
 			if (move.GetCurrentNbrOfFrames () >= move.GetTotalNbrOfFrames () / 2 && reverseOnWayBack)
 			{
@@ -154,6 +158,7 @@ public class Recorder : MonoBehaviour
 	/// </summary>
 	private void FinishMove()
 	{
+        onionCharacter.SetActive(false);
 		movePlayer.SetAutoLoopEnabled(true);
 		if (move != null)
 		{
@@ -176,6 +181,8 @@ public class Recorder : MonoBehaviour
 		{
 			return;
 		}
+        onionMovePlayer.FrameToCharacter(initialPoseFrame);
+        onionCharacter.SetActive(true);
 		doneRecording = false;
 		movePlayer.SetAutoLoopEnabled (false);
 		progressBarBehaviour.UpdateFill (0);

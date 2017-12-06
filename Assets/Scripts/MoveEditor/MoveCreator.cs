@@ -24,7 +24,6 @@ public class MoveCreator : MonoBehaviour
 		activeBodypartSelector = GameObject.Find("ActiveBodypartPanel").GetComponent<ActiveBodypartSelector>();
 		saveButton = GameObject.Find ("SaveButton").GetComponent<Button> ();
 		nameInputField = GameObject.Find ("NameInputField").GetComponent<InputField> ();
-		PlaceCharacter (0.5f, 0.5f);
 		move = new Move ();
 		activeBodypartSelector.SetBlockMove (move.IsBlockMove ());
 		activeBodypartSelector.BodypartChanged ("Head");
