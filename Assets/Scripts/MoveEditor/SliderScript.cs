@@ -77,6 +77,7 @@ public class SliderScript : MonoBehaviour
 	public void ResetSlider()
 	{
 		UpdateSpeedValue (50); //Automatically updates strength as well.
+		speedStrengthSlider.value = speedValue;
 	}
 
 	public void SetSliderStrings(string top, string bot)

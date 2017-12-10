@@ -19,19 +19,16 @@ public class Recorder : MonoBehaviour
     private GameObject onionCharacter;
 	private Frame initialPoseFrame;
 
-
-	void Start()
-	{
+	public void Init(){
 		doneRecording = false;
 		endPoints = new List<GameObject> ();
 		movePlayer = gameObject.GetComponent<MovePlayer> ();
-        FindEndPoints ();
+		FindEndPoints ();
 		initialPoseFrame = GetCurrentPoseFrame ();
 		progressBarBehaviour = GameObject.Find ("ProgressBar").GetComponent<ProgressBarBehaviour> ();
-		nameInputField = GameObject.Find ("NameInputField").GetComponent<InputField> ();
-        onionCharacter = GameObject.Find("Onion Character");
-        onionMovePlayer = onionCharacter.GetComponent<MovePlayer>();
-    }
+		onionCharacter = GameObject.Find("Onion Character");
+		onionMovePlayer = onionCharacter.GetComponent<MovePlayer>();
+	}
 		
 	public void SetMove(Move move)
 	{
@@ -180,14 +177,12 @@ public class Recorder : MonoBehaviour
 		{
 			return;
 		}
-        onionMovePlayer.FrameToCharacter(initialPoseFrame);
-        onionCharacter.SetActive(true);
+		Destroy (onionCharacter);
 		doneRecording = false;
 		movePlayer.SetAutoLoopEnabled (false);
 		progressBarBehaviour.UpdateFill (0);
 		movePlayer.FrameToCharacter (initialPoseFrame); //Reset character pose
 		UpdateFrameTwistLimits();
-		SetMove (newMove); //SetMove sets new move and records the first frame from current pose.
 	}
 
 	/// <summary>
@@ -204,5 +199,9 @@ public class Recorder : MonoBehaviour
 
 		float progress = nbrOfRecordedFrames / totalNbrOfRecordableFrames;
 		progressBarBehaviour.UpdateFill (progress);
+	}
+
+	public void SetNameInputField(InputField nameInputField){
+		this.nameInputField = nameInputField;
 	}
 }
