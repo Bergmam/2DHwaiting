@@ -13,20 +13,45 @@ public class MoveCreator : MonoBehaviour
 	private ActiveBodypartSelector activeBodypartSelector;
 	private Button saveButton;
 	private MovePlayer movePlayer;
+	private EditorGuiManager editorGuiManager;
+	private bool doneRecordingFrames;
 
-	void Start ()
-	{
-		GameObject character = GameObject.Find ("Character");
-		recorder = character.GetComponent<Recorder> ();
-		movePlayer = character.GetComponent<MovePlayer> ();
+	GameObject character;
+
+	void Awake(){
 		sliders = GameObject.Find ("SlidersPanel").GetComponent<SliderScript> ();
 		nameValidator = GameObject.Find ("NamePanel").GetComponent<NameValidator> ();
 		activeBodypartSelector = GameObject.Find("ActiveBodypartPanel").GetComponent<ActiveBodypartSelector>();
 		saveButton = GameObject.Find ("SaveButton").GetComponent<Button> ();
 		nameInputField = GameObject.Find ("NameInputField").GetComponent<InputField> ();
 		move = new Move ();
+		move.SetActiveBodypart ("Head");
+	}
+
+	void Start(){
+		this.editorGuiManager = GameObject.FindObjectOfType<EditorGuiManager> ();
+		editorGuiManager.Init ();
+	}
+
+
+	public void CharacterSpawned()
+	{
+		character = GameObject.Find ("Character");
+		movePlayer = character.GetComponent<MovePlayer> ();
 		activeBodypartSelector.SetBlockMove (move.IsBlockMove ());
 		activeBodypartSelector.BodypartChanged ("Head");
+	}
+
+	public void ActivateRecorder(){
+		foreach (GameObject dragPoint in UnityUtils.RecursiveContains(character.transform, "DragPoint"))
+		{
+			dragPoint.SetActive(true);
+		}
+
+		recorder = character.GetComponent<Recorder> ();
+		recorder.enabled = true;
+		recorder.SetNameInputField (nameInputField);
+		recorder.Init ();
 		recorder.SetMove (move);
 	}
 
@@ -39,20 +64,24 @@ public class MoveCreator : MonoBehaviour
 			UpdateShieldScale ();
 		}
 		//Update active bodypart.
-		if (!activeBodypartSelector.GetActiveBodypart ().Equals (move.GetActiveBodypart ()))
-		{
-			move.SetActiveBodypart (activeBodypartSelector.GetActiveBodypart ());
-			UpdateShieldScale ();
+		if (activeBodypartSelector.GetActiveBodypart () != null) {
+			if (!activeBodypartSelector.GetActiveBodypart ().Equals (move.GetActiveBodypart ())) {
+				move.SetActiveBodypart (activeBodypartSelector.GetActiveBodypart ());
+				UpdateShieldScale ();
+			}
 		}
-		//All frames recorded and a new, non-empty, move name has been entered.
-		if (recorder.IsDoneRecording () && nameValidator.IsNameValid ())
-		{
-			move.SetName (nameValidator.GetName ());
-			saveButton.interactable = true;
-		}
-		else
-		{
-			saveButton.interactable = false; //hide button again if name is no longer valid.
+		if (recorder != null) {
+			if (!doneRecordingFrames && recorder.IsDoneRecording ()) {
+				doneRecordingFrames = true;
+				editorGuiManager.NextState ();
+			}
+			//All frames recorded and a new, non-empty, move name has been entered.
+			if (recorder.IsDoneRecording () && nameValidator.IsNameValid ()) {
+				move.SetName (nameValidator.GetName ());
+				saveButton.interactable = true;
+			} else {
+				saveButton.interactable = false; //hide button again if name is no longer valid.
+			}
 		}
 	}
 
@@ -82,26 +111,22 @@ public class MoveCreator : MonoBehaviour
 		}
 	}
 
-	private void PlaceCharacter (float x, float y)
-	{
-		float screenHeight = Screen.height;
-		float screenWidth = Screen.width;
-		Vector3 characterStartPosition = new Vector3 (x * screenWidth, y * screenHeight, 0f);
-		characterStartPosition = Camera.main.ScreenToWorldPoint (characterStartPosition);
-		characterStartPosition = new Vector3 (characterStartPosition.x, characterStartPosition.y, 0f);
-		transform.position = characterStartPosition;
-	}
-
 	/// <summary>
 	/// Resets the MoveEditor by restarting the progressBar and the movePlayer.
 	/// </summary>
 	public void ResetMoveEditor()
 	{
+		activeBodypartSelector.Reset ();
+		Destroy (GameObject.Find ("Character"));
+
 		nameInputField.text = string.Empty;
-		sliders.ResetSliders(); //Reset sliders to 50/50
+		sliders.ResetSlider(); //Reset slider to 50/50
+		SetBlockMove (false);
 		move = new Move ();
 		recorder.Reset (move);
         saveButton.interactable = false;
+		this.doneRecordingFrames = false;
+		this.editorGuiManager.Reset ();
     }
 
 	public void SaveMove()
@@ -109,6 +134,7 @@ public class MoveCreator : MonoBehaviour
 		if (!AvailableMoves.ContainsName (move.GetName ()) && !move.GetName().Equals(string.Empty))
 		{
 			AvailableMoves.AddMove ((Move)move.Clone ());
+			SaveLoad.Save(AvailableMoves.GetMoves()); //Save every time save button is clicked in case game crashes while still in scene.
 			ResetMoveEditor ();
 		}
 		else
@@ -117,12 +143,18 @@ public class MoveCreator : MonoBehaviour
         }
 	}
 
+	public void SpawnCharacter(bool blockMove){
+		gameObject.GetComponent<EditorCharacterSpawner> ().SpawnCharacter ();
+		SetBlockMove (blockMove);
+	}
+
 	/// <summary>
 	/// Sets whether the move is a block move or not.
 	/// </summary>
 	/// <param name="blockMove">If set to <c>true</c> move is a block.</param>
 	public void SetBlockMove(bool blockMove)
 	{
+
 		this.move.SetBlockMove (blockMove);
 		activeBodypartSelector.SetBlockMove (blockMove);
 		if (blockMove)
@@ -135,9 +167,16 @@ public class MoveCreator : MonoBehaviour
 			//Change gui labels to match move type.
 			sliders.SetSliderStrings ("Strength", "Speed");
 		}
-		GameObject.Find (move.GetActiveBodypart ()).GetComponent<ColorModifier> ().SetSelected (!blockMove);
-		GameObject shield = GameObject.Find (move.GetActiveBodypart ().Replace (" ", "") + "Shield");
-		shield.GetComponent<SpriteRenderer> ().enabled = blockMove;
+
+		string activeBodyPartName = move.GetActiveBodypart ();
+		if (activeBodyPartName != null) {
+			GameObject activeBodyPart = GameObject.Find (move.GetActiveBodypart ());
+			if (activeBodyPart != null) {
+				activeBodyPart.GetComponent<ColorModifier> ().SetSelected (!blockMove);
+			}
+			GameObject shield = GameObject.Find (move.GetActiveBodypart ().Replace (" ", "") + "Shield");
+			shield.GetComponent<SpriteRenderer> ().enabled = blockMove;
+		}
 		UpdateShieldScale ();
 	}
 }

@@ -11,12 +11,6 @@ public class EditorCharacterSpawner : MonoBehaviour
 
     private MoveCreator moveCreator;
 
-    void Start()
-    {
-        SpawnCharacter();
-        SpawnOnionCharacter();
-    }
-
     /// <summary>
     /// Method to spawn a version of the character prefab with the necessary components to record moves in the editor scene.
     /// See google document for more information about what parts should be active in the edtior scene.
@@ -27,16 +21,10 @@ public class EditorCharacterSpawner : MonoBehaviour
         GameObject character = Instantiate(preInitCharacter);
 
         character.transform.name = "Character";
-        character.GetComponent<Recorder>().enabled = true;
-        moveCreator = character.GetComponent<MoveCreator>();
+		moveCreator = gameObject.GetComponent<MoveCreator>();
         moveCreator.enabled = true;
         
         Destroy(character.GetComponent<Rigidbody2D>());
-
-        foreach (GameObject dragPoint in UnityUtils.RecursiveContains(character.transform, "DragPoint"))
-        {
-            dragPoint.SetActive(true);
-        }
 
         // Destroy all rigid bodies since dragpoints does not work with them attached.
         foreach (Transform child in character.GetComponentsInChildren<Transform>(true))
@@ -44,7 +32,11 @@ public class EditorCharacterSpawner : MonoBehaviour
             Destroy(child.transform.GetComponent<Rigidbody2D>());
         }
 
-        character.transform.position = new Vector3(x1, y1, 0);
+		character.transform.position = new Vector3(x1, y1, 0);
+
+		SpawnOnionCharacter();
+
+		moveCreator.CharacterSpawned ();
     }
 
     public void SpawnOnionCharacter()
@@ -69,24 +61,5 @@ public class EditorCharacterSpawner : MonoBehaviour
         }
 
         character.transform.position = new Vector3(x1, y1, 0);
-    }
-
-    /// <summary>
-    /// Method called by the button to change a move to a block
-    /// </summary>
-    /// <param name="isBlock"></param>
-    public void MakeCharacterBlockMove(bool isBlock)
-    {
-        moveCreator.SetBlockMove(isBlock);
-    }
-
-    public void Save()
-    {
-        moveCreator.SaveMove();
-    }
-
-    public void Reset()
-    {
-        moveCreator.ResetMoveEditor();
     }
 }

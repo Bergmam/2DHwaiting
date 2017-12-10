@@ -19,19 +19,16 @@ public class Recorder : MonoBehaviour
     private GameObject onionCharacter;
 	private Frame initialPoseFrame;
 
-
-	void Start()
-	{
+	public void Init(){
 		doneRecording = false;
 		endPoints = new List<GameObject> ();
 		movePlayer = gameObject.GetComponent<MovePlayer> ();
-        FindEndPoints ();
+		FindEndPoints ();
 		initialPoseFrame = GetCurrentPoseFrame ();
 		progressBarBehaviour = GameObject.Find ("ProgressBar").GetComponent<ProgressBarBehaviour> ();
-		nameInputField = GameObject.Find ("NameInputField").GetComponent<InputField> ();
-        onionCharacter = GameObject.Find("Onion Character");
-        onionMovePlayer = onionCharacter.GetComponent<MovePlayer>();
-    }
+		onionCharacter = GameObject.Find("Onion Character");
+		onionMovePlayer = onionCharacter.GetComponent<MovePlayer>();
+	}
 		
 	public void SetMove(Move move)
 	{
@@ -132,7 +129,6 @@ public class Recorder : MonoBehaviour
 			int frameIndex = halfNbrOfFrames - 1 - i;
 			Frame frame = frames [frameIndex];
 			move.AddFrame (frame);
-			UpdateProgressBar ();
 		}
 	}
 
@@ -181,14 +177,12 @@ public class Recorder : MonoBehaviour
 		{
 			return;
 		}
-        onionMovePlayer.FrameToCharacter(initialPoseFrame);
-        onionCharacter.SetActive(true);
+		Destroy (onionCharacter);
 		doneRecording = false;
 		movePlayer.SetAutoLoopEnabled (false);
 		progressBarBehaviour.UpdateFill (0);
 		movePlayer.FrameToCharacter (initialPoseFrame); //Reset character pose
 		UpdateFrameTwistLimits();
-		SetMove (newMove); //SetMove sets new move and records the first frame from current pose.
 	}
 
 	/// <summary>
@@ -198,11 +192,16 @@ public class Recorder : MonoBehaviour
 	{
 		//With the first and last frames, some of the bar is filled in on start.
 		float nbrOfRecordedFrames = (float)move.GetCurrentNbrOfFrames () - 1; //Player did not record the first frame.
+		nbrOfRecordedFrames *= 2; //Player only records first half of frames. Each recorded frame is used twice.
 		float totalNbrOfRecordableFrames = (float)move.GetTotalNbrOfFrames () - 2; //Player does not record first or last frame.
 		//Player did not record the last frame.
 		nbrOfRecordedFrames = nbrOfRecordedFrames > totalNbrOfRecordableFrames ? totalNbrOfRecordableFrames : nbrOfRecordedFrames;
 
 		float progress = nbrOfRecordedFrames / totalNbrOfRecordableFrames;
 		progressBarBehaviour.UpdateFill (progress);
+	}
+
+	public void SetNameInputField(InputField nameInputField){
+		this.nameInputField = nameInputField;
 	}
 }
