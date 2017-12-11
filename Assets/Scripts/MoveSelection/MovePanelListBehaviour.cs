@@ -289,7 +289,6 @@ public class MovePanelListBehaviour : MonoBehaviour
 	/// Deletes the currently selected move from the list of moves
 	///
 	public void DeleteMove() {
-		//Move moveToBeDeleted = listItems[selectedListIndex].getMove();
 		
 		foreach(SelectionPanelBahviour panel in selectedMovesPanels)
 		{
@@ -306,6 +305,8 @@ public class MovePanelListBehaviour : MonoBehaviour
 		
 		hasDeleted = true;
 		controlsActive = true;
+
+		SaveLoad.Save(moves);
 		Start();
 	}
 
