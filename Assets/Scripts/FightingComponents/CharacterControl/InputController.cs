@@ -21,7 +21,6 @@ public class InputController : MonoBehaviour
     // Booleans for coordinating transitions between animations
     private bool isRunning = false;
     private bool isCrouching = false;
-    private bool isJumping = false;
     private bool collisionDown = true;
 
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
@@ -122,7 +121,7 @@ public class InputController : MonoBehaviour
 				this.movementController.Stop ();
 	        }
 
-            if (vertical > 0)
+            if (vertical > 0 && !movementController.isKnockedBack())
             {
                 SetAnimatorBool("Crouching", false);
                 SetAnimatorBool("Jumping", true);
@@ -139,7 +138,7 @@ public class InputController : MonoBehaviour
                 SetAnimatorBool("CrouchWalking", true);
                 this.isRunning = true;
             }
-            else if (vertical < 0 && !this.isJumping)
+            else if (vertical < 0)
             {
                 SetAnimatorBool("Crouching", true);
                 this.isCrouching = true;

@@ -9,7 +9,7 @@ public static class Parameters {
     public static float jumpForce = 300.0f; // InputController 
     public static float moveSpeed = 5.0f; // 
     public static float crouchSpeed = 2.0f;
-    public static float knockbackModifyer = 130.0f;
+    public static float knockbackModifyer = 500.0f;
     public static float blockKnockbackModifier = 80.0f;
 
     public static int minSpeed = 20; // 

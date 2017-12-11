@@ -119,4 +119,8 @@ public class MovementController : MonoBehaviour {
 	{
 		thisBody.velocity = prePauseVelocity;
 	}
+
+	public bool isKnockedBack(){
+		return this.knockedBack;
+	}
 }

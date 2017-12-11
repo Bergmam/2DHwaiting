@@ -88,6 +88,14 @@ public class DamageTriggerDetector : MonoBehaviour {
 		//Apply knockback.
 		Vector3 thisPosition = transform.position;
 		Vector3 otherPosition = otherRootTransform.position;
+
+		
+		if(Mathf.Abs (this.rigidBody.velocity.y) > 0.001){
+			knockBackModifier /=2;
+		}
+		Vector2 newVelocity = new Vector2(0,this.rigidBody.velocity.y);
+		this.rigidBody.velocity = newVelocity;
+
 		if (otherPosition.x < thisPosition.x)
 		{
 			this.rigidBody.AddForce (Vector2.right * knockBackModifier);
