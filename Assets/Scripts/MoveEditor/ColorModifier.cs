@@ -13,7 +13,7 @@ public class ColorModifier : MonoBehaviour
 	private Color selectedColor = new Color32 (135, 0, 0, 255);
 	private Color defaultColor = Color.white;
 
-	void Start ()
+	void Awake ()
 	{
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer> ();
 		image = gameObject.GetComponent<Image> ();

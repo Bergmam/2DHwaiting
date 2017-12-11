@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Used to highlight a bodypart when it is selected.
@@ -57,5 +58,19 @@ public class ActiveBodypartSelector : MonoBehaviour {
 	public void SetBlockMove(bool blockMove)
 	{
 		this.blockMove = blockMove;
+	}
+
+	public void Reset(){
+
+		//Deactivate all buttons that are not the head. Head is default.
+		foreach (Transform child in transform) {
+			if (!child.name.Equals ("HeadToggleButton")) {
+				Toggle toggle = child.GetComponent<Toggle> ();
+				if (toggle != null) {
+					toggle.isOn = false;
+				}
+			}
+		}
+		transform.Find ("HeadToggleButton").GetComponent<Toggle> ().isOn = true; //Activate head. Head is default.
 	}
 }

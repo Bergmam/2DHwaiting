@@ -47,6 +47,13 @@ public class MovePanelListBehaviour : MonoBehaviour
 		listItemHeight = measuringPanel.rect.height;
 		nbrOfVisiblePanels = 7;
 
+		//Update viewport content size to make room for all moves.
+		GameObject listViewContent = GameObject.Find ("Content");
+		RectTransform listViewContentRect = listViewContent.GetComponent<RectTransform> ();
+		Vector2 viewContentSize = listViewContentRect.sizeDelta;
+		Vector2 viewContentNewSize = new Vector2 (viewContentSize.x, (moves.Count + 1) * listItemHeight); // +1 for margin
+		listViewContentRect.sizeDelta = viewContentNewSize;
+
         listItems = new MovePanelBehaviour[moves.Count];
         for (int i = 0; i < moves.Count; i++)
 		{

@@ -145,9 +145,12 @@ public class InputController : MonoBehaviour
                 this.isCrouching = true;
             }
 
-            if (vertical == 0 && collisionDown)
+            if (vertical <= 0 && collisionDown)
             {
                 SetAnimatorBool("Jumping", false);
+            }
+            
+            if (vertical == 0 && collisionDown ) {
                 SetAnimatorBool("CrouchWalking", false);
                 SetAnimatorBool("Crouching", false);
                 this.isCrouching = false;
