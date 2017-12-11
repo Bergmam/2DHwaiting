@@ -242,7 +242,6 @@ public class InputController : MonoBehaviour
     {
         foreach(ColorModifier colorModifier in gameObject.GetComponentsInChildren<ColorModifier>())
         {
-            print(colorModifier.gameObject.name);
             colorModifier.SetColor(Color.red);
         }
 
@@ -253,7 +252,6 @@ public class InputController : MonoBehaviour
     {
         foreach (ColorModifier colorModifier in gameObject.GetComponentsInChildren<ColorModifier>())
         {
-            print(colorModifier.gameObject.name);
             colorModifier.DeSelect();
 
         }
@@ -266,9 +264,7 @@ public class InputController : MonoBehaviour
     /// <returns></returns>
     IEnumerator WaitAndRemoveColor()
     {
-        print(Time.time);
         yield return new WaitForSeconds(Parameters.hitColorTime);
-        print(Time.time);
         RemoveHitColor();
     }
 

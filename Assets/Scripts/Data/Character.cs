@@ -121,10 +121,11 @@ public class Character
 	{
         int strength = (int)Mathf.Round(Parameters.minStrength + (float)damagingMove.GetStrength() / 100
             * (Parameters.maxStrength - Parameters.minStrength));
-        int speed = (int)Mathf.Round(Parameters.minBlock + (float)blockingMove.GetSpeed() / 100
+        int block = (int)Mathf.Round(Parameters.minBlock + (float)blockingMove.GetSpeed() / 100
             * (Parameters.maxBlock - Parameters.minBlock));
-        int damage = strength - speed;
-		if (damage > 0) {
+        int damage = strength - block;
+		bool characterWontDie = health > (damage + 1);
+		if (damage > 0 && characterWontDie) { //Character cannot die when blocking.
 			SubHealth(damage + 1); //Change range of move damage [0-100] -> [1-101]
 		}
 	}

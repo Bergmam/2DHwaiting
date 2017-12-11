@@ -220,10 +220,10 @@ public class MovePlayer : MonoBehaviour
 		}
 		Transform bodypart = UnityUtils.RecursiveFind (transform, this.moveToPlay.GetActiveBodypart ());
 		Transform shield = UnityUtils.RecursiveFind (transform, this.moveToPlay.GetActiveBodypart ().Replace (" ", "") + "Shield");
-		if (bodypart != null && bodypart.gameObject.GetComponent<ColorModifier> () != null)
+		if (bodypart != null && bodypart.gameObject.GetComponent<ColorModifier> () != null && !moveToPlay.IsBlockMove ())
 		{
 			//Highlight damage dealer if move is not a block move and show true, hide otherwise.
-			bodypart.gameObject.GetComponent<ColorModifier> ().SetSelected (!moveToPlay.IsBlockMove () && show);
+			bodypart.gameObject.GetComponent<ColorModifier> ().SetSelected (show);
 		}
 		if (shield != null && moveToPlay.IsBlockMove ()) 
 		{
