@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-﻿using System.IO;
+using System.IO;
 using UnityEngine.UI;
 
 /// <summary>
@@ -20,11 +20,18 @@ public class MovePanelListBehaviour : MonoBehaviour
     private MovePlayer character2;
     private GameObject playButton;
     private float scrollDelay;
+	private bool hasDeleted = false;
     SceneButtonBehaviour playButtonBehaviour;
+
+	public GameObject deleteMovePrompt;
+	private Move moveToBeDeleted;
+	private bool controlsActive = true;
 
 
     void Start () 
 	{
+
+		deleteMovePrompt.SetActive(false);
         scrollDelay = 0;
 		//Hide the play button untill each character has a move assigned to each of its used buttons.
 		playButton = GameObject.Find ("PlayButton");
@@ -67,12 +74,17 @@ public class MovePanelListBehaviour : MonoBehaviour
 			}
 			selectedMovesPanels [i].SetOwner (character);
 		}
-
-		listItems[0].Select(); //Select the top list item.
+		listItems[selectedListIndex].Select();
+		//listItems[0].Select(); //Select the top list item.
 		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
         character2 = GameObject.Find("Character 2").GetComponent<MovePlayer>();
         PlayAnimation (1); //Start previewing the animation corresponding to the first list item.
         playButtonBehaviour = GameObject.Find("Handler").GetComponent<SceneButtonBehaviour>(); //Used to switch scene by pressing Enter.
+
+		if (selectedListIndex >= nbrOfVisiblePanels / 2 && hasDeleted) {
+			ScrollList(-1);
+			hasDeleted = false;
+		}
 
 		ReselectMoves ();
     }
@@ -103,65 +115,72 @@ public class MovePanelListBehaviour : MonoBehaviour
     
 	void Update () 
 	{
-        bool vertical1Up = Input.GetAxisRaw("Vertical") > 0;
-        bool vertical1Down = Input.GetAxisRaw("Vertical") < 0;
-        bool vertical2Up = Input.GetAxisRaw("Vertical2") > 0;
-        bool vertical2Down = Input.GetAxisRaw("Vertical2") < 0;
+		if (controlsActive) {
+			bool vertical1Up = Input.GetAxisRaw("Vertical") > 0;
+			bool vertical1Down = Input.GetAxisRaw("Vertical") < 0;
+			bool vertical2Up = Input.GetAxisRaw("Vertical2") > 0;
+			bool vertical2Down = Input.GetAxisRaw("Vertical2") < 0;
 
-        if (scrollDelay > 0)
-        {
-            scrollDelay -= Time.deltaTime;
-        } 
-
-        else
-        {
-            if ((vertical1Up || vertical2Up) && scrollDelay <= 0) //Up arrow pressed
-            {
-                scrollDelay = Parameters.scrollDelay;
-                bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
-                MoveSelection(-1);
-                bool movedIntoBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
-                if (!movedOutOfTopPanels && !movedIntoBotPanels)
-                {
-                    ScrollList(-1);
-                }
-            }
-            else if ((vertical1Down || vertical2Down) && scrollDelay <= 0) //Down arrow pressed
-            {
-                scrollDelay = Parameters.scrollDelay;
-                bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
-                MoveSelection(1);
-                bool moveIntoTopPanels = selectedListIndex <= nbrOfVisiblePanels / 2;
-                if (!moveIntoTopPanels && !movedOutOfBotPanels)
-                {
-                    ScrollList(1);
-                }
-            }
-            if (vertical1Up || vertical1Down)
-            {
-                PlayAnimation(1);
-            }
-            else if (vertical2Up || vertical2Down)
-            {
-                PlayAnimation(2);
-            }
-        }
-
-        if ((Input.GetKeyDown("enter") || Input.GetKeyDown("return")) && InputSettings.AllButtonsAssigned())
-        {
-            playButtonBehaviour.SwitchScene("FightScene");
-        }
-		if (Input.anyKeyDown)
-		{
-			//Check if any button used in the game has been pressed.
-			foreach (string button in InputSettings.allUsedButtons)
+			if (scrollDelay > 0)
 			{
-				if(Input.GetKeyDown(button))
+				scrollDelay -= Time.deltaTime;
+			} 
+
+			else
+			{
+				if ((vertical1Up || vertical2Up) && scrollDelay <= 0) //Up arrow pressed
 				{
-					RegisterPlayerMoveToButton (button);
+					scrollDelay = Parameters.scrollDelay;
+					bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
+					MoveSelection(-1);
+					bool movedIntoBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
+					if (!movedOutOfTopPanels && !movedIntoBotPanels)
+					{
+						ScrollList(-1);
+					}
+				}
+				else if ((vertical1Down || vertical2Down) && scrollDelay <= 0) //Down arrow pressed
+				{
+					scrollDelay = Parameters.scrollDelay;
+					bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
+					MoveSelection(1);
+					bool moveIntoTopPanels = selectedListIndex <= nbrOfVisiblePanels / 2;
+					if (!moveIntoTopPanels && !movedOutOfBotPanels)
+					{
+						ScrollList(1);
+					}
+				}
+				if (vertical1Up || vertical1Down)
+				{
+					PlayAnimation(1);
+				}
+				else if (vertical2Up || vertical2Down)
+				{
+					PlayAnimation(2);
+				}
+			}
+
+			if ((Input.GetKeyDown("enter") || Input.GetKeyDown("return")) && InputSettings.AllButtonsAssigned())
+			{
+				playButtonBehaviour.SwitchScene("FightScene");
+			}
+			if (Input.GetKeyDown("delete")) {
+				//DeleteMove();
+				ShowDeleteMovePanel();
+			}
+			if (Input.anyKeyDown)
+			{
+				//Check if any button used in the game has been pressed.
+				foreach (string button in InputSettings.allUsedButtons)
+				{
+					if(Input.GetKeyDown(button))
+					{
+						RegisterPlayerMoveToButton (button);
+					}
 				}
 			}
 		}
+        
 	}
 
 	/// <summary>
@@ -265,6 +284,42 @@ public class MovePanelListBehaviour : MonoBehaviour
 			AddPanelToCharacterMoves (registeredCharacter, button, index);
 			ShowOrHidePlayButton ();
 		}
+	}
+
+	private void ShowDeleteMovePanel() {
+		moveToBeDeleted = listItems[selectedListIndex].getMove();
+		controlsActive = false;
+		deleteMovePrompt.SetActive(true);
+	}
+
+	/// <summary>
+	/// Deletes the currently selected move from the list of moves
+	///
+	public void DeleteMove() {
+		
+		foreach(SelectionPanelBahviour panel in selectedMovesPanels)
+		{
+			panel.RemovePanelWithMove(moveToBeDeleted.GetName());
+		}
+
+		AvailableMoves.DeleteMove(moveToBeDeleted);
+		playButton.SetActive(true);
+		foreach(MovePanelBehaviour panel in listItems)
+		{
+			Destroy(panel.gameObject);
+		}
+		selectedListIndex = Mathf.Max(selectedListIndex - 1, 0);
+		
+		hasDeleted = true;
+		controlsActive = true;
+
+		SaveLoad.Save(moves);
+		Start();
+	}
+
+	public void CancelDeleteMove() {
+		controlsActive = true;
+		deleteMovePrompt.SetActive(false);
 	}
 
 	/// <summary>
