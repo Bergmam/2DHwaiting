@@ -14,11 +14,13 @@ public class FightMoveController : MonoBehaviour {
 	private Move currentlyPlayedMove;
 	private Rigidbody2D thisBody;
 	private MovePlayer characterMovePlayer;
+	private GameState gameState;
 
 	// Use this for initialization
 	void Awake () {
 		thisBody = gameObject.GetComponent<Rigidbody2D> ();
 		layerHandler = GameObject.Find("Handler").GetComponent<LayerHandler>();
+		this.gameState = GameObject.Find ("Handler").GetComponent<GameState> ();
 		characterMovePlayer = gameObject.GetComponent<MovePlayer> ();
 	}
 
@@ -51,6 +53,12 @@ public class FightMoveController : MonoBehaviour {
 		if (character == null) {
 			return;
 		}
+
+		//Make sure other character is not invunerable when doing a move.
+		//Each move makes the character invunerable until next move so no move can do dmg twice.
+		int otherCharacterNumber = (this.character.GetNbr () % 2) + 1; // 1 -> 2, 2 -> 1
+		this.gameState.SetCharacterVunerable (otherCharacterNumber);
+
 		currentlyPlayedMove = character.GetMove (moveName);
 		Move move = character.GetMove (moveName);
 		//Make sure the character cannot start playing another animation until this one is finished.

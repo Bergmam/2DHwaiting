@@ -13,6 +13,7 @@ public class Character
 	private int nbr; //Used for comparisons and, in some cases, as index in lists.
 	private int maxHealth = Parameters.health; //Used for calculating percentage of health in health bar.
 	private int health;
+	private bool invunerable;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Character"/> class.
@@ -161,5 +162,15 @@ public class Character
 
 	public void ClearMoves(){
 		this.moves.Clear ();
+	}
+
+	public void SetInvunderable(bool invunerable)
+	{
+		this.invunerable = invunerable;
+	}
+
+	public bool isInvunerable()
+	{
+		return this.invunerable;
 	}
 }

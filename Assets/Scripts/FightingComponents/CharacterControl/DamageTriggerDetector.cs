@@ -49,6 +49,11 @@ public class DamageTriggerDetector : MonoBehaviour {
 			//This should not be necessary but if another collider is on, it will do damage even if
 			// it is not the damaging move. This is just to be absolutely sure.
 		}
+		if (this.character.isInvunerable ()) {
+			return;
+		}
+
+		this.character.SetInvunderable (true); //Make sure no other collider can do damage to the character in this frame.
 
 		otherCollider.enabled = false; //Make sure the other character's damaging bodypart does not also collide with character behind shield.
 		audioCenter.Play();

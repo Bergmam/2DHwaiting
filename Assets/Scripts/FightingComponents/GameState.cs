@@ -17,9 +17,13 @@ public class GameState : MonoBehaviour
 	private ColorModifier pauseBackgroundToggel;
 	private float timeUntilPressAnyKey;
 	private GameObject pauseMenu;
+	private Character character1;
+	private Character character2;
 
 	void Start ()
 	{
+		this.character1 = StaticCharacterHolder.characters [1 - 1];
+		this.character2 = StaticCharacterHolder.characters [2 - 1];
 		pauseMenu = GameObject.Find ("PauseMenu");
 		pauseMenu.SetActive (false);
 		timeUntilPressAnyKey = 1.0f;
@@ -130,5 +134,18 @@ public class GameState : MonoBehaviour
 		winnerText.text = "PLAYER" + winner.GetNbr () + " WINS!";
 		winnerText.enabled = true;
 		gameOver = true;
+	}
+
+	/// <summary>
+	/// Sets the character vunerable. One FightMoveController makes the other character vunerable when doing a move.
+	/// Each move makes the character invunerable until next move so no move can do dmg twice.
+	/// </summary>
+	/// <param name="characterNumber">Character number.</param>
+	public void SetCharacterVunerable(int characterNumber){
+		if (characterNumber == 1) {
+			character1.SetInvunderable (false);
+		} else if (characterNumber == 2) {
+			character2.SetInvunderable (false);
+		}
 	}
 }
