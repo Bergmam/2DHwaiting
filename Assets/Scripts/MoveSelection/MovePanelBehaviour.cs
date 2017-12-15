@@ -31,9 +31,11 @@ public class MovePanelBehaviour : MonoBehaviour
 	public void setMove(Move move)
 	{
 		this.move = move;
-		nameText.text = move.GetName ();
-		speedText.text = "" + move.GetSpeed ();
-		strengthText.text = "" + move.GetStrength ();
+		if (move != null) {
+			nameText.text = move.GetName ();
+			speedText.text = "" + move.GetSpeed ();
+			strengthText.text = "" + move.GetStrength ();
+		}
 	}
 
     public void Select()
@@ -101,5 +103,33 @@ public class MovePanelBehaviour : MonoBehaviour
 	public void RemoveStrengthText()
 	{
 		this.strengthText.text = "";
+	}
+
+	public void RemoveNameText()
+	{
+		this.nameText.text = "";
+	}
+
+	public string GetAssignedButton(int playerNumber)
+	{
+		playerNumber--; //Decrement to make player1 have index 0 etc.
+		return assignedButtonTexts [playerNumber].text;
+	}
+
+	public string GetAssignedButton()
+	{
+		for (int i = 0; i < assignedButtonTexts.Length; i++) {
+			if (assignedButtonTexts [i] == null) {
+				continue;
+			}
+			if (assignedButtonTexts [i].text == null) {
+				continue;
+			}
+			if (assignedButtonTexts [i].text.Equals("")) {
+				continue;
+			}
+			return assignedButtonTexts [i].text;
+		}
+		return null;
 	}
 }

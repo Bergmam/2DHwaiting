@@ -334,8 +334,8 @@ public class MovePanelListBehaviour : MonoBehaviour
 		{
 			if (selectionPanel.GetOwner ().Equals (character))
 			{
-				GameObject original = listItems [index].gameObject; //Copy the selected list item.
-				selectionPanel.AddPanelClone (original, button); //Add copy to the selected moves panel.
+				MovePanelBehaviour movePanel = listItems [index];
+				selectionPanel.AddMove (button , movePanel.getMove ());
 				break;
 			}
 		}
