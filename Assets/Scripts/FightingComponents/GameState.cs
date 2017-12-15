@@ -60,19 +60,24 @@ public class GameState : MonoBehaviour
 		//Pause game when a player presses the escape key.
 		if (Input.GetKeyDown (KeyCode.Escape))
 		{
-			if (paused) {
-				UnPauseGame ();
-			} 
-			else
-			{
-				PauseGame ();
-			}
+			PauseUnpause ();
 		}
 		//If presAnyKeyToContinue is true (which it is 2.5 seconds after a player dies), go back to move selection on key press.
 		else if (pressAnyKeyToContinue && Input.anyKeyDown)
 		{
 			StaticCharacterHolder.ResetCharacters ();
 			SceneHandler.GoBack ();
+		}
+	}
+
+	public void PauseUnpause()
+	{
+		if (paused) {
+			UnPauseGame ();
+		} 
+		else
+		{
+			PauseGame ();
 		}
 	}
 
