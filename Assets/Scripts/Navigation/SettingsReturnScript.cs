@@ -25,7 +25,7 @@ public class SettingsReturnScript : MonoBehaviour {
 
 		if (escapePressed)
 		{
-			
+			WarningOrGoBack ();
 		}
 	}
 
