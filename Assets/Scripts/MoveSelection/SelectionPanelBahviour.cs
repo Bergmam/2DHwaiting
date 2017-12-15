@@ -20,7 +20,7 @@ public class SelectionPanelBahviour : MonoBehaviour
 	void Init ()
 	{
 		//TODO: In case we ever set owner twice, we would have to delete all children of the panel.
-
+		this.inited = true;
 		panels = new List<GameObject> ();
 		List<string> character1Buttons = InputSettings.GetCharacterButtons (owner.GetNbr ());
 		foreach (string characterButton in character1Buttons)
