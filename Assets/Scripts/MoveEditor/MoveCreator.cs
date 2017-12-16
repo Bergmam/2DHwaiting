@@ -15,6 +15,8 @@ public class MoveCreator : MonoBehaviour
 	private MovePlayer movePlayer;
 	private EditorGuiManager editorGuiManager;
 	private bool doneRecordingFrames;
+	private List<GameObject> twistLimitMarkers;
+
 
 	GameObject character;
 
@@ -26,9 +28,17 @@ public class MoveCreator : MonoBehaviour
 		nameInputField = GameObject.Find ("NameInputField").GetComponent<InputField> ();
 		move = new Move ();
 		move.SetActiveBodypart ("Head");
+		twistLimitMarkers = new List<GameObject> ();
+		twistLimitMarkers.Add (GameObject.Find ("HighFrameLimitMarker"));
+		twistLimitMarkers.Add (GameObject.Find ("LowFrameLimitMarker"));
+		twistLimitMarkers.Add (GameObject.Find ("HighHardLimitMarker"));
+		twistLimitMarkers.Add (GameObject.Find ("LowHardLimitMarker"));
 	}
 
 	void Start(){
+		foreach (GameObject marker in twistLimitMarkers) {
+			marker.SetActive (false);
+		}
 		this.editorGuiManager = GameObject.FindObjectOfType<EditorGuiManager> ();
 		editorGuiManager.Init ();
 	}
@@ -43,9 +53,15 @@ public class MoveCreator : MonoBehaviour
 	}
 
 	public void ActivateRecorder(){
+		foreach (GameObject marker in twistLimitMarkers) {
+			marker.SetActive (true);
+		}
 		foreach (GameObject dragPoint in UnityUtils.RecursiveContains(character.transform, "DragPoint"))
 		{
 			dragPoint.SetActive(true);
+		}
+		foreach (GameObject marker in twistLimitMarkers) {
+			marker.SetActive (false);
 		}
 
 		recorder = character.GetComponent<Recorder> ();
@@ -116,6 +132,10 @@ public class MoveCreator : MonoBehaviour
 	/// </summary>
 	public void ResetMoveEditor()
 	{
+		foreach (GameObject marker in twistLimitMarkers) {
+			marker.transform.parent = transform;
+		}
+
 		activeBodypartSelector.Reset ();
 		Destroy (GameObject.Find ("Character"));
 
