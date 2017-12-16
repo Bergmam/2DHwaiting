@@ -42,6 +42,9 @@ public class MovePanelListBehaviour : MonoBehaviour
 
     public void Init () 
 	{
+		//Make sure character does not display a move even if move list is empty.
+		character2.reset();
+		character1.reset();
 
 		deleteMovePrompt.SetActive(false);
         scrollDelay = 0;
@@ -109,10 +112,10 @@ public class MovePanelListBehaviour : MonoBehaviour
 			}
 
 			ReselectMoves ();
+		}
 
-			if (selected) {
-				PlayAnimation (1);
-			}
+		if (selected) {
+			PlayAnimation (1);
 		}
     }
 
@@ -242,23 +245,27 @@ public class MovePanelListBehaviour : MonoBehaviour
 	/// </summary>
 	private void PlayAnimation(int characterNumber)
 	{
-		if (moves == null)
+		character2.reset();
+		character1.reset();
+		if (moves == null || listItems == null)
 		{
 			return;
 		}
-		if (moves[selectedListIndex] == null)
+		if (selectedListIndex >= moves.Count || selectedListIndex >= listItems.Length)
+		{
+			return;
+		}
+		if (moves[selectedListIndex] == null || listItems [selectedListIndex] == null)
 		{
 			return;
 		}
         if (characterNumber == 1)
         {
-            character2.reset();
             character1.SetAutoLoopEnabled(true);
 			character1.PlayMove (listItems [selectedListIndex].getMove ());
         }
         else if (characterNumber == 2)
         {
-            character1.reset();
             character2.SetAutoLoopEnabled(true);
 			character2.PlayMove (listItems [selectedListIndex].getMove ());
         }
@@ -347,7 +354,15 @@ public class MovePanelListBehaviour : MonoBehaviour
 		{
 			Destroy(panel.gameObject);
 		}
-		selectedListIndex = Mathf.Max(selectedListIndex - 1, 0);
+		if (selectedListIndex < listItems.Length - 1)
+		{
+			selectedListIndex = Mathf.Max (selectedListIndex, 0);
+		}
+		else
+		{
+			selectedListIndex = Mathf.Max (selectedListIndex - 1, 0);
+		}
+
 		
 		hasDeleted = true;
 		controlsActive = true;
@@ -390,6 +405,10 @@ public class MovePanelListBehaviour : MonoBehaviour
 
 	public void SetSelected(bool selected){
 		this.selected = selected;
+
+		if (selected) {
+			PlayAnimation (1);
+		}
 	}
 
 	public void SetBlock(bool blockMoves){

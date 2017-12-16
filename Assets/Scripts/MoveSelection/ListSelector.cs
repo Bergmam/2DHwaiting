@@ -8,6 +8,7 @@ public class ListSelector : MonoBehaviour {
 	private MovePanelListBehaviour blockList;
 	GameObject attackViewport;
 	GameObject blockViewport;
+	MovePanelBehaviour moveListHeader;
 
 	void Awake()
 	{
@@ -15,17 +16,15 @@ public class ListSelector : MonoBehaviour {
 		this.blockList = GameObject.Find ("BlockContent").GetComponent<MovePanelListBehaviour> ();
 		this.attackViewport = GameObject.Find ("AttackViewport");
 		this.blockViewport = GameObject.Find ("BlockViewport");
+		this.moveListHeader = GameObject.Find ("MoveListHeader").GetComponent<MovePanelBehaviour> ();
 	}
 
 	void Start () {
-		attackList.SetSelected (true);
-		blockList.SetSelected (false);
-		attackList.SetBlock (false);
 		blockList.SetBlock (true);
+		attackList.SetBlock (false);
 		blockList.Init ();
 		attackList.Init ();
-		blockViewport.SetActive (false);
-		attackViewport.SetActive (true);
+		EnableAttackList ();
 	}
 
 	void Update () {
@@ -34,18 +33,32 @@ public class ListSelector : MonoBehaviour {
 
 		if (leftPressed && !rightPressed)
 		{
-			attackList.SetSelected (true);
-			blockList.SetSelected (false);
-			blockViewport.SetActive (false);
-			attackViewport.SetActive (true);
+			EnableAttackList ();
 		}
 		else if (rightPressed && !leftPressed)
 		{
-			attackList.SetSelected (false);
-			blockList.SetSelected (true);
-			attackViewport.SetActive (false);
-			blockViewport.SetActive (true);
+			EnableBlockList ();
 		}
+	}
+
+	private void EnableAttackList(){
+		attackList.SetSelected (true);
+		blockList.SetSelected (false);
+		blockViewport.SetActive (false);
+		attackViewport.SetActive (true);
+		moveListHeader.SetNameText ("Attack move name");
+		moveListHeader.SetSpeedText ("Spd");
+		moveListHeader.SetStrengthText ("Str");
+	}
+
+	private void EnableBlockList(){
+		attackList.SetSelected (false);
+		blockList.SetSelected (true);
+		attackViewport.SetActive (false);
+		blockViewport.SetActive (true);
+		moveListHeader.SetNameText ("Block move name");
+		moveListHeader.SetSpeedText ("Blk");
+		moveListHeader.SetStrengthText ("Cvr");
 	}
 
 	public void ClearButton(string button)

@@ -110,6 +110,21 @@ public class MovePanelBehaviour : MonoBehaviour
 		this.nameText.text = "";
 	}
 
+	public void SetSpeedText(string text)
+	{
+		this.speedText.text = text;
+	}
+
+	public void SetStrengthText(string text)
+	{
+		this.strengthText.text = text;
+	}
+
+	public void SetNameText(string text)
+	{
+		this.nameText.text = text;
+	}
+
 	public string GetAssignedButton(int playerNumber)
 	{
 		playerNumber--; //Decrement to make player1 have index 0 etc.
