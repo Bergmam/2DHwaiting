@@ -8,6 +8,8 @@ public class ListSelector : MonoBehaviour {
 	private MovePanelListBehaviour blockList;
 	GameObject attackViewport;
 	GameObject blockViewport;
+	GameObject blockMovesText;
+	GameObject attackMovesText;
 	MovePanelBehaviour moveListHeader;
 
 	void Awake()
@@ -16,6 +18,8 @@ public class ListSelector : MonoBehaviour {
 		this.blockList = GameObject.Find ("BlockContent").GetComponent<MovePanelListBehaviour> ();
 		this.attackViewport = GameObject.Find ("AttackViewport");
 		this.blockViewport = GameObject.Find ("BlockViewport");
+		this.blockMovesText = GameObject.Find ("BlockMovesText");
+		this.attackMovesText = GameObject.Find ("AttackMovesText");
 		this.moveListHeader = GameObject.Find ("MoveListHeader").GetComponent<MovePanelBehaviour> ();
 	}
 
@@ -46,6 +50,8 @@ public class ListSelector : MonoBehaviour {
 		blockList.SetSelected (false);
 		blockViewport.SetActive (false);
 		attackViewport.SetActive (true);
+		attackMovesText.SetActive (false);
+		blockMovesText.SetActive (true);
 		moveListHeader.SetNameText ("Attack move name");
 		moveListHeader.SetSpeedText ("Spd");
 		moveListHeader.SetStrengthText ("Str");
@@ -56,6 +62,8 @@ public class ListSelector : MonoBehaviour {
 		blockList.SetSelected (true);
 		attackViewport.SetActive (false);
 		blockViewport.SetActive (true);
+		attackMovesText.SetActive (true);
+		blockMovesText.SetActive (false);
 		moveListHeader.SetNameText ("Block move name");
 		moveListHeader.SetSpeedText ("Blk");
 		moveListHeader.SetStrengthText ("Cvr");
