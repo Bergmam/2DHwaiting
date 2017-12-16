@@ -42,19 +42,12 @@ public class MovePanelListBehaviour : MonoBehaviour
 
     public void Init () 
 	{
-		//Make sure character does not display a move even if move list is empty.
-		character2.reset();
-		character1.reset();
-
 		deleteMovePrompt.SetActive(false);
         scrollDelay = 0;
 		//Hide the play button untill each character has a move assigned to each of its used buttons.
 		playButton.SetActive (false);
 		//Create a list item for each available move.
 		moves = AvailableMoves.GetMoves ();
-		if (moves.Count == 0) { //Don't view anything if there are no moves.
-			return;
-		}
 
 		//Make list items as high as the MeasuingPanel which is 1/7 of the viewport.
 		RectTransform measuringPanel = GameObject.Find ("MeasuringPanel").GetComponent<RectTransform> ();
@@ -106,7 +99,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 		if (listItems.Length > 0) {
 
 			listItems [selectedListIndex].Select ();
-			if (selectedListIndex >= nbrOfVisiblePanels / 2 && hasDeleted) {
+			if (selectedListIndex > nbrOfVisiblePanels / 2 && hasDeleted && listItems.Length >= nbrOfVisiblePanels) {
 				ScrollList (-1);
 				hasDeleted = false;
 			}
@@ -158,7 +151,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 
 			else
 			{
-				if ((vertical1Up || vertical2Up) && scrollDelay <= 0) //Up arrow pressed
+				if ((vertical1Up || vertical2Up) && scrollDelay <= 0 && listItems != null) //Up arrow pressed
 				{
 					scrollDelay = Parameters.scrollDelay;
 					bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
@@ -169,7 +162,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 						ScrollList(-1);
 					}
 				}
-				else if ((vertical1Down || vertical2Down) && scrollDelay <= 0) //Down arrow pressed
+				else if ((vertical1Down || vertical2Down) && scrollDelay <= 0 && listItems != null) //Down arrow pressed
 				{
 					scrollDelay = Parameters.scrollDelay;
 					bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
@@ -195,7 +188,6 @@ public class MovePanelListBehaviour : MonoBehaviour
 				playButtonBehaviour.SwitchScene("FightScene");
 			}
 			if (Input.GetKeyDown("delete") && selected) {
-				//DeleteMove();
 				ShowDeleteMovePanel();
 			}
 			if (Input.anyKeyDown && selected)
@@ -334,9 +326,11 @@ public class MovePanelListBehaviour : MonoBehaviour
 	}
 
 	private void ShowDeleteMovePanel() {
-		moveToBeDeleted = listItems[selectedListIndex].getMove();
-		controlsActive = false;
-		deleteMovePrompt.SetActive(true);
+		if (listItems != null && listItems.Length > 0) {
+			moveToBeDeleted = listItems [selectedListIndex].getMove ();
+			controlsActive = false;
+			deleteMovePrompt.SetActive (true);
+		}
 	}
 
 	/// <summary>

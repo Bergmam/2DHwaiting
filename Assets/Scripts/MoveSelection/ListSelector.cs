@@ -81,12 +81,17 @@ public class ListSelector : MonoBehaviour {
 	public void DeleteMove()
 	{
 		if (attackList.IsSelected ())
-		{;
+		{
 			attackList.DeleteMove ();
 		}
 		else if (blockList.IsSelected ())
 		{
 			blockList.DeleteMove ();
 		}
+	}
+
+	public void CancelDeleteMove() {
+		attackList.CancelDeleteMove ();
+		blockList.CancelDeleteMove ();
 	}
 }
