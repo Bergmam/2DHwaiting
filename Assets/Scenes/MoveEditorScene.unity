@@ -2570,7 +2570,7 @@ GameObject:
   - component: {fileID: 722146500}
   - component: {fileID: 722146499}
   m_Layer: 5
-  m_Name: DoneButton
+  m_Name: NextButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5718,7 +5718,7 @@ GameObject:
   - component: {fileID: 1791422265}
   - component: {fileID: 1791422264}
   m_Layer: 5
-  m_Name: DoneButton
+  m_Name: NextButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5969,7 +5969,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Done
+  m_Text: Next
 --- !u!222 &1799706758
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7605,7 +7605,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Done
+  m_Text: Next
 --- !u!222 &2094570753
 CanvasRenderer:
   m_ObjectHideFlags: 0
