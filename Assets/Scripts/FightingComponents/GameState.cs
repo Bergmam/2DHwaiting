@@ -58,7 +58,7 @@ public class GameState : MonoBehaviour
 			}
 		}
 		//Pause game when a player presses the escape key.
-		if (Input.GetKeyDown (KeyCode.Escape))
+		if (Input.GetKeyDown (KeyCode.Escape) && !gameOver)
 		{
 			PauseUnpause ();
 		}
