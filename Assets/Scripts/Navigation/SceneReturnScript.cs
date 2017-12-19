@@ -23,14 +23,19 @@ public class SceneReturnScript : MonoBehaviour
 		//Press Escape to go back
 		if (Input.GetKeyDown (KeyCode.Escape)) 
 		{
-			if (promptPanel == null) 
-			{
-				GoBack ();
-			}
-			else
-			{
-				promptPanel.SetActive (!promptPanel.activeSelf); //Hide panel again if pressing escape while it is active.
-			}
+			PromptOrGoBack ();
+		}
+	}
+
+	public void PromptOrGoBack()
+	{
+		if (promptPanel == null) 
+		{
+			GoBack ();
+		}
+		else
+		{
+			promptPanel.SetActive (!promptPanel.activeSelf); //Hide panel again if pressing escape while it is active.
 		}
 	}
 

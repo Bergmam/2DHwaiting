@@ -6,6 +6,7 @@ public class EditorGuiManager : MonoBehaviour {
 
 	private GameObject[] statePanels;
 	private int currentStateIndex;
+	ProgressBarBehaviour phaseProgressBar;
 
 	void Start ()
 	{
@@ -14,6 +15,7 @@ public class EditorGuiManager : MonoBehaviour {
 		GameObject activeBodypartPanel = GameObject.Find ("ActiveBodypartPanel");
 		GameObject recordFramesPanel = GameObject.Find ("RecordFramesPanel");
 		GameObject nameAndSavePanel = GameObject.Find ("NameAndSavePanel");
+		phaseProgressBar = GameObject.Find ("PhaseProgressBar").GetComponent<ProgressBarBehaviour> ();
 		statePanels = new GameObject[] {
 			moveTypePanel,
 			activeBodypartPanel,
@@ -31,6 +33,7 @@ public class EditorGuiManager : MonoBehaviour {
 	{
 		currentStateIndex = 0;
 		ShowOnlyCurrentPanel ();
+		UpdatePhaseProgressBar ();
 	}
 
 	/// <summary>
@@ -56,6 +59,7 @@ public class EditorGuiManager : MonoBehaviour {
 			currentStateIndex++;
 		}
 		ShowOnlyCurrentPanel ();
+		UpdatePhaseProgressBar ();
 	}
 
 	/// <summary>
@@ -69,11 +73,20 @@ public class EditorGuiManager : MonoBehaviour {
 			currentStateIndex--;
 		}
 		ShowOnlyCurrentPanel ();
+		UpdatePhaseProgressBar ();
 	}
 
 	public void Reset()
 	{
 		this.currentStateIndex = 0;
 		ShowOnlyCurrentPanel ();
+		UpdatePhaseProgressBar ();
+	}
+
+	/// <summary>
+	/// Updates the phase progress bar.
+	/// </summary>
+	public void UpdatePhaseProgressBar(){
+		phaseProgressBar.UpdateFill (0.2f * (currentStateIndex + 1)); // + 1 because we fill up to the next phase (not up to the current).
 	}
 }

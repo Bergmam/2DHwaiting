@@ -5,6 +5,7 @@ using UnityEngine;
 public class SettingsReturnScript : MonoBehaviour {
 
 	private GameObject enterAllButtonsText;
+	private bool allButtonsAdded;
 
 	void Start()
 	{
@@ -15,7 +16,7 @@ public class SettingsReturnScript : MonoBehaviour {
 	void Update ()
 	{
 		bool escapePressed = Input.GetKeyDown (KeyCode.Escape);
-		bool allButtonsAdded = InputSettings.AllButtonsAdded ();
+		allButtonsAdded = InputSettings.AllButtonsAdded ();
 
 		if (allButtonsAdded)
 		{
@@ -24,20 +25,25 @@ public class SettingsReturnScript : MonoBehaviour {
 
 		if (escapePressed)
 		{
-			if (allButtonsAdded)
-			{
-				//Save buttons to file.
-				List<string> player1Buttons = InputSettings.GetCharacterButtons (1);
-				List<string> player2Buttons = InputSettings.GetCharacterButtons (2);
-				SaveLoad.SaveButtons (player1Buttons, "/player1Buttons.mvs");
-				SaveLoad.SaveButtons (player2Buttons, "/player2Buttons.mvs");
+			WarningOrGoBack ();
+		}
+	}
 
-				GoBack ();
-			}
-			else
-			{
-				enterAllButtonsText.SetActive (true);
-			}
+	public void WarningOrGoBack()
+	{
+		if (allButtonsAdded)
+		{
+			//Save buttons to file.
+			List<string> player1Buttons = InputSettings.GetCharacterButtons (1);
+			List<string> player2Buttons = InputSettings.GetCharacterButtons (2);
+			SaveLoad.SaveButtons (player1Buttons, "/player1Buttons.mvs");
+			SaveLoad.SaveButtons (player2Buttons, "/player2Buttons.mvs");
+
+			GoBack ();
+		}
+		else
+		{
+			enterAllButtonsText.SetActive (true);
 		}
 	}
 

@@ -30,7 +30,21 @@ public class DragAndDrop : MonoBehaviour {
 	public PivotDirection pivotDirection = PivotDirection.North;
 	private int pivotRotationOffset;
 
-	void Start(){
+	private GameObject highFrameLimitMarker;
+	private GameObject lowFrameLimitMarker;
+	private GameObject highHardLimitMarker;
+	private GameObject lowHardLimitMarker;
+
+	void Awake()
+	{
+		highFrameLimitMarker = GameObject.Find ("HighFrameLimitMarker");
+		lowFrameLimitMarker = GameObject.Find ("LowFrameLimitMarker");
+		highHardLimitMarker = GameObject.Find ("HighHardLimitMarker");
+		lowHardLimitMarker = GameObject.Find ("LowHardLimitMarker");
+	}
+
+	void Start()
+	{
 		UpdateFrameLimits ();
 		switch (pivotDirection)
 		{
@@ -49,18 +63,37 @@ public class DragAndDrop : MonoBehaviour {
 		}
 	}
 
-    void OnMouseDown() {
+    void OnMouseDown()
+	{
 		mouseDown = true;
+		EnableMarker (highFrameLimitMarker, highFrameTwistLimit);
+		EnableMarker (lowFrameLimitMarker, lowFrameTwistLimit);
+		EnableMarker (highHardLimitMarker, highHardTwistLimit);
+		EnableMarker (lowHardLimitMarker, lowHardTwistLimit);
 	}
 
-	void OnMouseUp() {
+	private void EnableMarker(GameObject marker, float rotation)
+	{
+		marker.transform.position = transform.parent.position;
+		marker.transform.parent = transform.parent.parent;
+		marker.transform.localEulerAngles = new Vector3 (0, 0, rotation + pivotRotationOffset);
+		marker.SetActive (true);
+	}
+
+	void OnMouseUp()
+	{
 		mouseDown = false;
+		highFrameLimitMarker.SetActive (false);
+		lowFrameLimitMarker.SetActive (false);
+		highHardLimitMarker.SetActive (false);
+		lowHardLimitMarker.SetActive (false);
 	}
 
 	/// <summary>
 	/// Updates the twist limits to fit the new angle of the moved bodypart.
 	/// </summary>
-	public void UpdateFrameLimits(){
+	public void UpdateFrameLimits()
+	{
 		float previousRotation = transform.parent.localEulerAngles.z;
 		//Mod 360 to make sure both limits are within [0 - 360]
 		highFrameTwistLimit = (previousRotation + frameTwistLimit) % 360;

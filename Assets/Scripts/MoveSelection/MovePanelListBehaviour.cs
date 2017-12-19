@@ -23,24 +23,31 @@ public class MovePanelListBehaviour : MonoBehaviour
 	private bool hasDeleted = false;
     SceneButtonBehaviour playButtonBehaviour;
 
+	private bool selected;
+	private bool containsBlockMoves;
+	private ListSelector listSelector; 
+
 	public GameObject deleteMovePrompt;
 	private Move moveToBeDeleted;
 	private bool controlsActive = true;
 
-
-    void Start () 
+	void Awake ()
 	{
+		playButton = GameObject.Find ("PlayButton");
+		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
+		character2 = GameObject.Find("Character 2").GetComponent<MovePlayer>();
+		playButtonBehaviour = GameObject.Find("Handler").GetComponent<SceneButtonBehaviour>(); //Used to switch scene by pressing Enter.
+		listSelector = GameObject.Find("Handler").GetComponent<ListSelector>();
+	}
 
+    public void Init () 
+	{
 		deleteMovePrompt.SetActive(false);
         scrollDelay = 0;
 		//Hide the play button untill each character has a move assigned to each of its used buttons.
-		playButton = GameObject.Find ("PlayButton");
 		playButton.SetActive (false);
 		//Create a list item for each available move.
 		moves = AvailableMoves.GetMoves ();
-		if (moves.Count == 0) { //Don't view anything if there are no moves.
-			return;
-		}
 
 		//Make list items as high as the MeasuingPanel which is 1/7 of the viewport.
 		RectTransform measuringPanel = GameObject.Find ("MeasuringPanel").GetComponent<RectTransform> ();
@@ -48,18 +55,32 @@ public class MovePanelListBehaviour : MonoBehaviour
 		nbrOfVisiblePanels = 7;
 
 		//Update viewport content size to make room for all moves.
-		GameObject listViewContent = GameObject.Find ("Content");
+		GameObject listViewContent = gameObject;
 		RectTransform listViewContentRect = listViewContent.GetComponent<RectTransform> ();
 		Vector2 viewContentSize = listViewContentRect.sizeDelta;
 		Vector2 viewContentNewSize = new Vector2 (viewContentSize.x, (moves.Count + 1) * listItemHeight); // +1 for margin
 		listViewContentRect.sizeDelta = viewContentNewSize;
 
-        listItems = new MovePanelBehaviour[moves.Count];
+		int nbrOfRightMoveType = 0;
+		for (int i = 0; i < moves.Count; i++)
+		{
+			Move move = moves [i];
+			if(move.IsBlockMove() == containsBlockMoves)
+			{
+				nbrOfRightMoveType++;
+			}
+		}
+		listItems = new MovePanelBehaviour[nbrOfRightMoveType];
+		int j = 0;
         for (int i = 0; i < moves.Count; i++)
 		{
 			Move move = moves [i];
-			GameObject previewPanel = CreateMovePanel (move, transform);
-			listItems[i] = previewPanel.GetComponent<MovePanelBehaviour> (); //Get the interaction script from the created list item.
+			if(move.IsBlockMove() == containsBlockMoves)
+			{
+				GameObject previewPanel = CreateMovePanel (move, transform);
+				listItems[j] = previewPanel.GetComponent<MovePanelBehaviour> (); //Get the interaction script from the created list item.
+				j++;
+			}
         }
 
 		//Get a reference to the interaction script of each panel viewing the currently selected moves of each character and place them in a list.
@@ -74,19 +95,21 @@ public class MovePanelListBehaviour : MonoBehaviour
 			}
 			selectedMovesPanels [i].SetOwner (character);
 		}
-		listItems[selectedListIndex].Select();
-		//listItems[0].Select(); //Select the top list item.
-		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
-        character2 = GameObject.Find("Character 2").GetComponent<MovePlayer>();
-        PlayAnimation (1); //Start previewing the animation corresponding to the first list item.
-        playButtonBehaviour = GameObject.Find("Handler").GetComponent<SceneButtonBehaviour>(); //Used to switch scene by pressing Enter.
 
-		if (selectedListIndex >= nbrOfVisiblePanels / 2 && hasDeleted) {
-			ScrollList(-1);
-			hasDeleted = false;
+		if (listItems.Length > 0) {
+
+			listItems [selectedListIndex].Select ();
+			if (selectedListIndex > nbrOfVisiblePanels / 2 && hasDeleted && listItems.Length >= nbrOfVisiblePanels) {
+				ScrollList (-1);
+				hasDeleted = false;
+			}
+
+			ReselectMoves ();
 		}
 
-		ReselectMoves ();
+		if (selected) {
+			PlayAnimation (1);
+		}
     }
 
 	/// <summary>
@@ -116,10 +139,10 @@ public class MovePanelListBehaviour : MonoBehaviour
 	void Update () 
 	{
 		if (controlsActive) {
-			bool vertical1Up = Input.GetAxisRaw("Vertical") > 0;
-			bool vertical1Down = Input.GetAxisRaw("Vertical") < 0;
-			bool vertical2Up = Input.GetAxisRaw("Vertical2") > 0;
-			bool vertical2Down = Input.GetAxisRaw("Vertical2") < 0;
+			bool vertical1Up = Input.GetAxisRaw("Vertical") > 0 && selected;
+			bool vertical1Down = Input.GetAxisRaw("Vertical") < 0 && selected;
+			bool vertical2Up = Input.GetAxisRaw("Vertical2") > 0 && selected;
+			bool vertical2Down = Input.GetAxisRaw("Vertical2") < 0 && selected;
 
 			if (scrollDelay > 0)
 			{
@@ -128,7 +151,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 
 			else
 			{
-				if ((vertical1Up || vertical2Up) && scrollDelay <= 0) //Up arrow pressed
+				if ((vertical1Up || vertical2Up) && scrollDelay <= 0 && listItems != null) //Up arrow pressed
 				{
 					scrollDelay = Parameters.scrollDelay;
 					bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
@@ -139,7 +162,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 						ScrollList(-1);
 					}
 				}
-				else if ((vertical1Down || vertical2Down) && scrollDelay <= 0) //Down arrow pressed
+				else if ((vertical1Down || vertical2Down) && scrollDelay <= 0 && listItems != null) //Down arrow pressed
 				{
 					scrollDelay = Parameters.scrollDelay;
 					bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
@@ -164,11 +187,10 @@ public class MovePanelListBehaviour : MonoBehaviour
 			{
 				playButtonBehaviour.SwitchScene("FightScene");
 			}
-			if (Input.GetKeyDown("delete")) {
-				//DeleteMove();
+			if (Input.GetKeyDown("delete") && selected) {
 				ShowDeleteMovePanel();
 			}
-			if (Input.anyKeyDown)
+			if (Input.anyKeyDown && selected)
 			{
 				//Check if any button used in the game has been pressed.
 				foreach (string button in InputSettings.allUsedButtons)
@@ -215,17 +237,29 @@ public class MovePanelListBehaviour : MonoBehaviour
 	/// </summary>
 	private void PlayAnimation(int characterNumber)
 	{
+		character2.reset();
+		character1.reset();
+		if (moves == null || listItems == null)
+		{
+			return;
+		}
+		if (selectedListIndex >= moves.Count || selectedListIndex >= listItems.Length)
+		{
+			return;
+		}
+		if (moves[selectedListIndex] == null || listItems [selectedListIndex] == null)
+		{
+			return;
+		}
         if (characterNumber == 1)
         {
-            character2.reset();
             character1.SetAutoLoopEnabled(true);
-            character1.PlayMove(moves[selectedListIndex]);
+			character1.PlayMove (listItems [selectedListIndex].getMove ());
         }
         else if (characterNumber == 2)
         {
-            character1.reset();
             character2.SetAutoLoopEnabled(true);
-            character2.PlayMove(moves[selectedListIndex]);
+			character2.PlayMove (listItems [selectedListIndex].getMove ());
         }
 		
 	}
@@ -272,31 +306,37 @@ public class MovePanelListBehaviour : MonoBehaviour
 			registeredCharacter.AddMove (selectedMove);
 			Color characterColor = registeredCharacter.GetColor ();
 			int characterNbr = registeredCharacter.GetNbr ();
+			listSelector.ClearButton (button);
 			listItems [index].AssignButton (button, characterColor, characterNbr); //Mark the selected list item with button and player color.
-			//Remove the marking from any list item of a move previously registered to the button.
-			for (int i = 0; i < listItems.Length; i++)
-			{
-				if (i != index) //Do not remove the marking from the list item that was just marked.
-				{
-					listItems [i].ClearAssignedButton (button);
-				}
-			}
+			//listSelector
 			AddPanelToCharacterMoves (registeredCharacter, button, index);
 			ShowOrHidePlayButton ();
 		}
 	}
 
+	public void ClearButton(string button)
+	{
+		if (listItems != null) {
+			//Remove the marking from any list item of a move previously registered to the button.
+			for (int i = 0; i < listItems.Length; i++)
+			{
+				listItems [i].ClearAssignedButton (button);
+			}
+		}
+	}
+
 	private void ShowDeleteMovePanel() {
-		moveToBeDeleted = listItems[selectedListIndex].getMove();
-		controlsActive = false;
-		deleteMovePrompt.SetActive(true);
+		if (listItems != null && listItems.Length > 0) {
+			moveToBeDeleted = listItems [selectedListIndex].getMove ();
+			controlsActive = false;
+			deleteMovePrompt.SetActive (true);
+		}
 	}
 
 	/// <summary>
 	/// Deletes the currently selected move from the list of moves
 	///
 	public void DeleteMove() {
-		
 		foreach(SelectionPanelBahviour panel in selectedMovesPanels)
 		{
 			panel.RemovePanelWithMove(moveToBeDeleted.GetName());
@@ -308,13 +348,21 @@ public class MovePanelListBehaviour : MonoBehaviour
 		{
 			Destroy(panel.gameObject);
 		}
-		selectedListIndex = Mathf.Max(selectedListIndex - 1, 0);
+		if (selectedListIndex < listItems.Length - 1)
+		{
+			selectedListIndex = Mathf.Max (selectedListIndex, 0);
+		}
+		else
+		{
+			selectedListIndex = Mathf.Max (selectedListIndex - 1, 0);
+		}
+
 		
 		hasDeleted = true;
 		controlsActive = true;
 
 		SaveLoad.Save(moves);
-		Start();
+		Init ();
 	}
 
 	public void CancelDeleteMove() {
@@ -334,8 +382,8 @@ public class MovePanelListBehaviour : MonoBehaviour
 		{
 			if (selectionPanel.GetOwner ().Equals (character))
 			{
-				GameObject original = listItems [index].gameObject; //Copy the selected list item.
-				selectionPanel.AddPanelClone (original, button); //Add copy to the selected moves panel.
+				MovePanelBehaviour movePanel = listItems [index];
+				selectionPanel.AddMove (button , movePanel.getMove ());
 				break;
 			}
 		}
@@ -347,5 +395,22 @@ public class MovePanelListBehaviour : MonoBehaviour
 	private void ShowOrHidePlayButton()
 	{
 		playButton.SetActive (InputSettings.AllButtonsAssigned ());
+	}
+
+	public void SetSelected(bool selected){
+		this.selected = selected;
+
+		if (selected) {
+			PlayAnimation (1);
+		}
+	}
+
+	public void SetBlock(bool blockMoves){
+		this.containsBlockMoves = blockMoves;
+	}
+
+	public bool IsSelected()
+	{
+		return this.selected;
 	}
 }
