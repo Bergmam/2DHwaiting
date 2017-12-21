@@ -5,86 +5,64 @@ using UnityEngine.UI;
 
 public class ListKeyboardManager : MonoBehaviour {
 
-	private int selectedListIndex = 0; //The index of the currently selected list item.
-	private Button[] listItems; //Object used for interacting with the underlying list items.
-	private float scrollDelay;
-
-	void Awake()
-	{
-		listItems = new Button[transform.childCount];
-		for (int i = 0; i < transform.childCount; i++)
-		{
-			Transform child = transform.GetChild (i);
-			Button button = child.GetComponent<Button> ();
-			if (button != null)
-			{
-				listItems [i] = button;
-			}
-		}
-
-
-		for (int i = 0; i < listItems.Length - 1; i++)
-		{
-			float biggerY = listItems [i].gameObject.GetComponent<RectTransform> ().anchorMin.y;
-			float smallerY = listItems [i + 1].gameObject.GetComponent<RectTransform> ().anchorMin.y;
-			print (listItems [i].transform.name + " is at " + smallerY + ", " + listItems [i + 1].transform.name + " is at " + biggerY);
-			if (smallerY > biggerY) {
-				Button tmp = listItems [i];
-				listItems [i] = listItems [i + 1];
-				listItems [i + 1] = tmp;
-			}
-		}
-
-		for (int i = 0; i < listItems.Length; i++)
-		{
-			print (i + ": " + listItems [i].transform.name);
-		}
-	}
-
 	void Start()
 	{
-		MoveSelection (0);
+		Activate ();
 	}
 
-	void Update ()
-	{
-		bool vertical1Up = Input.GetAxisRaw("Vertical") > 0;
-		bool vertical1Down = Input.GetAxisRaw("Vertical") < 0;
-		bool vertical2Up = Input.GetAxisRaw("Vertical2") > 0;
-		bool vertical2Down = Input.GetAxisRaw("Vertical2") < 0;
-
-		if (scrollDelay > 0)
+	public void Activate(){
+		for (int j = 0; j < transform.childCount; j++)
 		{
-			scrollDelay -= Time.deltaTime;
-		}
-
-		else
-		{
-			if ((vertical1Up || vertical2Up) && scrollDelay <= 0 && listItems != null) //Up arrow pressed
+			// Find the right component and select it for keyboard navigation.
+			Transform child = transform.GetChild (j);
+			InputField inputField = child.GetComponentInChildren<InputField> ();
+			if (inputField != null)
 			{
-				scrollDelay = Parameters.scrollDelay;
-				MoveSelection(-1);
+				inputField.Select ();
+				inputField.ActivateInputField ();
+				return;
 			}
-			else if ((vertical1Down || vertical2Down) && scrollDelay <= 0 && listItems != null) //Down arrow pressed
+			Slider slider = child.GetComponentInChildren<Slider> ();
+			if (slider != null)
 			{
-				scrollDelay = Parameters.scrollDelay;
-				MoveSelection(1);
+				slider.Select ();
+				return;
 			}
-		}
-
-		if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
-		{
-			listItems [selectedListIndex].onClick.Invoke ();
+			Button button = child.GetComponentInChildren<Button> ();
+			if (button != null)
+			{
+				button.Select ();
+				return;
+			}
+			Toggle toggleButton = child.GetComponentInChildren<Toggle> ();
+			if (toggleButton != null)
+			{
+				toggleButton.Select ();
+				return;
+			}
 		}
 	}
 
-	private void MoveSelection(int steps)
-	{
-		int newIndex = selectedListIndex + steps;
-		if (newIndex >= 0 && newIndex < listItems.Length)
+
+	void Update(){
+		// If enter i pressed, find next or save button and select it.
+		// This makes pressing enter again go to next phase.
+		if (Input.GetKeyDown (KeyCode.Return) || Input.GetKeyDown (KeyCode.KeypadEnter))
 		{
-			listItems [selectedListIndex].Select ();
-			selectedListIndex = newIndex;
+			Transform nextButtonTransform = transform.Find ("NextButton");
+			if (nextButtonTransform == null)
+			{
+				nextButtonTransform = transform.Find ("SaveButton");
+			}
+			if (nextButtonTransform != null)
+			{
+				Button button = nextButtonTransform.GetComponent<Button> ();
+				if (button != null)
+				{
+					button.Select ();
+					return;
+				}
+			}
 		}
 	}
 }

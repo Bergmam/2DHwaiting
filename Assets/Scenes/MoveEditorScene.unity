@@ -2220,6 +2220,7 @@ GameObject:
   - component: {fileID: 635684791}
   - component: {fileID: 635684793}
   - component: {fileID: 635684794}
+  - component: {fileID: 635684795}
   m_Layer: 5
   m_Name: ActiveBodypartPanel
   m_TagString: Untagged
@@ -2308,6 +2309,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 0
+--- !u!114 &635684795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 635684789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d84a5d46a214ac39b1c6b10b3c8d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &641268509
 GameObject:
   m_ObjectHideFlags: 0
@@ -3412,6 +3424,7 @@ GameObject:
   - component: {fileID: 992207137}
   - component: {fileID: 992207136}
   - component: {fileID: 992207138}
+  - component: {fileID: 992207139}
   m_Layer: 5
   m_Name: SlidersPanel
   m_TagString: Untagged
@@ -3484,6 +3497,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65c5337f9baf9e74da5eee1099636246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &992207139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 992207134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d84a5d46a214ac39b1c6b10b3c8d59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1006246673
@@ -4562,6 +4586,7 @@ GameObject:
   - component: {fileID: 1258432166}
   - component: {fileID: 1258432168}
   - component: {fileID: 1258432167}
+  - component: {fileID: 1258432169}
   m_Layer: 5
   m_Name: NameAndSavePanel
   m_TagString: Untagged
@@ -4624,6 +4649,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1258432165}
+--- !u!114 &1258432169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1258432165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d84a5d46a214ac39b1c6b10b3c8d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1266670001
 GameObject:
   m_ObjectHideFlags: 0
@@ -5400,6 +5436,7 @@ GameObject:
   - component: {fileID: 1660454946}
   - component: {fileID: 1660454945}
   - component: {fileID: 1660454947}
+  - component: {fileID: 1660454948}
   m_Layer: 5
   m_Name: MoveTypePanel
   m_TagString: Untagged
@@ -5475,6 +5512,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 0
+--- !u!114 &1660454948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1660454943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d84a5d46a214ac39b1c6b10b3c8d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1672987314
 GameObject:
   m_ObjectHideFlags: 0

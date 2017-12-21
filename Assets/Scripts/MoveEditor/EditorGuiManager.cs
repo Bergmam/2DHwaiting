@@ -45,6 +45,12 @@ public class EditorGuiManager : MonoBehaviour {
 		{
 			bool isCurrentPanel = (i == currentStateIndex);
 			statePanels [i].SetActive (isCurrentPanel);
+
+			//Select one component of the phase panel to enable keyboard navigation.
+			ListKeyboardManager keyBoardEnable = statePanels [i].GetComponent<ListKeyboardManager> ();
+			if (keyBoardEnable != null && isCurrentPanel) {
+				keyBoardEnable.Activate ();
+			}
 		}
 	}
 
