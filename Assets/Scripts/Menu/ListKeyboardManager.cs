@@ -35,7 +35,7 @@ public class ListKeyboardManager : MonoBehaviour {
 				return;
 			}
 			Toggle toggleButton = child.GetComponentInChildren<Toggle> ();
-			if (toggleButton != null)
+			if (toggleButton != null && !child.name.Equals ("HeadToggleButton")) // TEMPORARY FIX
 			{
 				toggleButton.Select ();
 				return;
