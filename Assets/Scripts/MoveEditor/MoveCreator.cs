@@ -69,6 +69,10 @@ public class MoveCreator : MonoBehaviour
 		recorder.SetNameInputField (nameInputField);
 		recorder.Init ();
 		recorder.SetMove (move);
+
+		Transform torsoDragPoint = UnityUtils.RecursiveFind (character.transform, "TorsoDragPoint");
+		torsoDragPoint.GetComponent<DragAndDrop> ().Select ();
+
 	}
 
 	void Update ()
