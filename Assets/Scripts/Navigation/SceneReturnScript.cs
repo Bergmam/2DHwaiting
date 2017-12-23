@@ -39,9 +39,15 @@ public class SceneReturnScript : MonoBehaviour
 			promptPanel.SetActive (!promptPanel.activeSelf); //Hide panel again if pressing escape while it is active.
 			// If prompt is active, select a button in it to enable keyboard navigation.
 			if (promptPanel.activeSelf) {
-				Button button = promptPanel.GetComponentInChildren<Button>();
+				Button button = promptPanel.GetComponentInChildren<Button> ();
 				if (button != null) {
 					button.Select ();
+				}
+			} else {
+				//If panel is hidden, make sure a selectable in the scene is reselected to enable keyboard navigation.
+				Selectable selectable = GameObject.FindObjectOfType<Selectable> ();
+				if (selectable != null) {
+					selectable.Select ();
 				}
 			}
 		}
