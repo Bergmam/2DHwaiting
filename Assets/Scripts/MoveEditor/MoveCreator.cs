@@ -93,6 +93,13 @@ public class MoveCreator : MonoBehaviour
 		if (recorder != null) {
 			if (!doneRecordingFrames && recorder.IsDoneRecording ()) {
 				doneRecordingFrames = true;
+				foreach (GameObject dragPoint in UnityUtils.RecursiveContains(character.transform, "DragPoint"))
+				{
+					dragPoint.SetActive (false);
+				}
+				foreach (GameObject marker in twistLimitMarkers) {
+					marker.SetActive (false);
+				}
 				editorGuiManager.NextState ();
 			}
 			//All frames recorded and a new, non-empty, move name has been entered.
