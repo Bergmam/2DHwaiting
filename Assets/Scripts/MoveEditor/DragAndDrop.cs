@@ -182,10 +182,14 @@ public class DragAndDrop : MonoBehaviour {
 		float horizontal2 = Input.GetAxisRaw ("Horizontal2");
 		float vertical2 = Input.GetAxisRaw ("Vertical2");
 
+		if (Input.GetMouseButtonDown (0) && !mouseDown) {
+			Deselect ();
+		}
+
 		if (scrollDelay > 0) {
 			scrollDelay -= Time.deltaTime;
 		} else {
-			if (selected) {
+			if (selected && !mouseDown) {
 				if (vertical1 > 0 || vertical2 > 0) {
 					//scrollDelay = Parameters.scrollDelay;
 					AddRotation (1);
@@ -226,7 +230,6 @@ public class DragAndDrop : MonoBehaviour {
 		}
 
 		if (nextDragpointName != null) {
-			print ("nextDragpointName = " + nextDragpointName);
 			GameObject nextDragpoint = GameObject.Find (nextDragpointName);
 			DragAndDrop dragAndDrop = nextDragpoint.GetComponent<DragAndDrop> ();
 			if (dragAndDrop != null) {
@@ -245,7 +248,6 @@ public class DragAndDrop : MonoBehaviour {
 
 	public void UpdateRotation(float newRot)
 	{
-		print ("Trying to update " + transform.parent.name + " rotation to " + newRot);
 		transform.parent.eulerAngles = new Vector3(0, 0, newRot); //Update rotation previous to checking limits
 
 		//Find biggest of low limits and smallest of high limis to create the smallest allowed intervall
@@ -256,7 +258,6 @@ public class DragAndDrop : MonoBehaviour {
 
 		if (RotationUtils.InCounterClockwiseLimits (rotation, tmpLowLimit, tmpHighLimit)) 
 		{ 
-			print ("In limit");
 			//Angle in limit
 			outHigh = false;
 			outLow = false;	
@@ -264,24 +265,20 @@ public class DragAndDrop : MonoBehaviour {
 		{
 			if (outHigh) //Rotation is still outside limits to one side
 			{
-				print ("OutHigh, tmpHighLimit = " + tmpHighLimit);
 				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);
 			}
 			else if (outLow) //Rotation is still outside limits to the other side
 			{ 
-				print ("OutLow, tmpLowLimit = " + tmpLowLimit);
 				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
 			}
 			//Check to which side rotation has exited the limits intervall
 			else if (RotationUtils.InCounterClockwiseLimits(rotation, RotationUtils.MiddleOfRotations (tmpHighLimit, tmpLowLimit), tmpLowLimit))
 			{
-				print ("OutLow, tmpLowLimit = " + tmpLowLimit);
 				outLow = true;
 				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
 			}
 			else
 			{
-				print ("OutHigh, tmpHighLimit = " + tmpHighLimit);
 				outHigh = true;
 				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);
 			}
@@ -304,9 +301,5 @@ public class DragAndDrop : MonoBehaviour {
 		this.selected = false;
 		this.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 255);
 		scrollDelay = Parameters.scrollDelay;
-		highFrameLimitMarker.SetActive (false);
-		lowFrameLimitMarker.SetActive (false);
-		highHardLimitMarker.SetActive (false);
-		lowHardLimitMarker.SetActive (false);
 	}
 }
