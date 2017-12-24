@@ -22,6 +22,7 @@ public class InputGuiManager : MonoBehaviour {
 		player1InputButtons = new GameObject[maxNrOfMoves];
 		player2InputButtons = new GameObject[maxNrOfMoves];
 		for (int i = 0; i < maxNrOfMoves; i++) {
+
 			Move move = new Move ();
 			move.SetName ("Move " + (i + 1));
 			string previewPath = "Prefabs" + Path.DirectorySeparatorChar + "MoveInputPanel";
@@ -31,13 +32,39 @@ public class InputGuiManager : MonoBehaviour {
 			previewPanel.transform.Find ("NameText").GetComponent<Text> ().text = "Move " + (i + 1);
 			InitiateInputButton (previewPanel, 1, i, characterOneButtons [i]);
 			InitiateInputButton (previewPanel, 2, i, characterTwoButtons [i]);
+
+		}
+
+		//Make sure back button navigates to the proper button if right or down is pressed when it is currently selected.
+		Button backButton = GameObject.Find ("BackButton").GetComponent<Button> ();
+		Button player1TopButton = player1InputButtons [0].GetComponent<Button> ();
+		Button player2TopButton = player2InputButtons [0].GetComponent<Button> ();
+		if (player1InputButtons.Length > 1) {
+			EditButtonNavigation (backButton, null, player1TopButton, player1TopButton, null);
+			EditButtonNavigation (player1TopButton, backButton, player1InputButtons [1].GetComponent<Button> (), player2TopButton, backButton);
+			EditButtonNavigation (player2TopButton, null, player2InputButtons [1].GetComponent<Button> (), null, player1TopButton);
+		} else { // If there is just one button for each character, there is no down navigation for the button.
+			EditButtonNavigation (backButton, null, player1TopButton, player1TopButton, null);
+			EditButtonNavigation (player1TopButton, backButton, null, player2TopButton, backButton);
+			EditButtonNavigation (player2TopButton, null, null, null, player1TopButton);
 		}
 
 		//Make sure text is able to notify this class when the user presses a key/button.
 		GameObject enterButtonText = GameObject.Find ("EnterButtonText");
+		gameObject.GetComponent<ListKeyboardManager> ().enabled = true;
 		enterButtonText.GetComponent<EnterButtonScript> ().SetInputGuiManager (this);
 		enterButtonText.SetActive (false); //Hide text.
 		UpdateGUI ();
+	}
+
+	private void EditButtonNavigation(Button button, Button up, Button down, Button right, Button left){
+		Navigation buttonNavigation = new Navigation ();
+		buttonNavigation.mode = Navigation.Mode.Explicit;
+		buttonNavigation.selectOnUp = up;
+		buttonNavigation.selectOnDown = down;
+		buttonNavigation.selectOnRight = right;
+		buttonNavigation.selectOnLeft = left;
+		button.navigation = buttonNavigation;
 	}
 
 	private void InitiateInputButton(GameObject previewPanel, int characterNumber, int index, string button){
