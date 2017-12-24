@@ -18,6 +18,8 @@ public class MovePanelBehaviour : MonoBehaviour
 
     private Color32 defaultColor = new Color32(58,149,255,255); //Used to reset panel color on deselection.
 
+	private GameObject previewCharacter;
+
     void Awake()
     {
         speedText = transform.Find("SpeedText").GetComponent<Text>();
@@ -35,6 +37,12 @@ public class MovePanelBehaviour : MonoBehaviour
 			nameText.text = move.GetName ();
 			speedText.text = "" + move.GetSpeed ();
 			strengthText.text = "" + move.GetStrength ();
+		}
+
+		if (this.previewCharacter != null && move != null) 
+		{
+			this.previewCharacter.SetActive(true);
+			this.previewCharacter.GetComponent<MovePlayer>().FrameToCharacter(move.GetFrames()[(move.GetTotalNbrOfFrames() - 1) / 2]);
 		}
 	}
 
@@ -146,5 +154,15 @@ public class MovePanelBehaviour : MonoBehaviour
 			return assignedButtonTexts [i].text;
 		}
 		return null;
+	}
+
+	public void addPreviewCharacter(GameObject previewCharacter)
+	{
+		this.previewCharacter = previewCharacter;
+	}
+
+	public GameObject getPreviewCharacter() 
+	{
+		return this.previewCharacter;
 	}
 }
