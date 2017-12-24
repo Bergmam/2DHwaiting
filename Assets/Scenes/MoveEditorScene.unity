@@ -667,11 +667,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 1006246675}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1726,12 +1726,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1051368931}
+    m_SelectOnDown: {fileID: 1411478727}
+    m_SelectOnLeft: {fileID: 1411478727}
+    m_SelectOnRight: {fileID: 733387900}
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1740,16 +1740,17 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 51fa907ce78d0284a9e409120836563c,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 2125237606}
   toggleTransition: 0
   graphic: {fileID: 1571326789}
   m_Group: {fileID: 635684794}
@@ -2219,6 +2220,7 @@ GameObject:
   - component: {fileID: 635684791}
   - component: {fileID: 635684793}
   - component: {fileID: 635684794}
+  - component: {fileID: 635684795}
   m_Layer: 5
   m_Name: ActiveBodypartPanel
   m_TagString: Untagged
@@ -2307,6 +2309,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 0
+--- !u!114 &635684795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 635684789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d84a5d46a214ac39b1c6b10b3c8d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &641268509
 GameObject:
   m_ObjectHideFlags: 0
@@ -2901,12 +2914,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 561273130}
+    m_SelectOnDown: {fileID: 950169906}
+    m_SelectOnLeft: {fileID: 1411478727}
+    m_SelectOnRight: {fileID: 722146499}
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2915,16 +2928,17 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 51fa907ce78d0284a9e409120836563c,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 11945647}
   toggleTransition: 0
   graphic: {fileID: 2035898218}
   m_Group: {fileID: 635684794}
@@ -3348,12 +3362,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 733387900}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+    m_SelectOnLeft: {fileID: 1056852006}
+    m_SelectOnRight: {fileID: 722146499}
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -3362,16 +3376,17 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 51fa907ce78d0284a9e409120836563c,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1951508728}
   toggleTransition: 0
   graphic: {fileID: 2008195347}
   m_Group: {fileID: 635684794}
@@ -3409,6 +3424,7 @@ GameObject:
   - component: {fileID: 992207137}
   - component: {fileID: 992207136}
   - component: {fileID: 992207138}
+  - component: {fileID: 992207139}
   m_Layer: 5
   m_Name: SlidersPanel
   m_TagString: Untagged
@@ -3483,6 +3499,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c5337f9baf9e74da5eee1099636246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &992207139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 992207134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d84a5d46a214ac39b1c6b10b3c8d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1006246673
 GameObject:
   m_ObjectHideFlags: 0
@@ -3532,10 +3559,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 175955382}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
@@ -3998,12 +4025,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1411478727}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+    m_SelectOnLeft: {fileID: 1051368931}
+    m_SelectOnRight: {fileID: 950169906}
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4012,16 +4039,17 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 51fa907ce78d0284a9e409120836563c,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1499154280}
   toggleTransition: 0
   graphic: {fileID: 87239329}
   m_Group: {fileID: 635684794}
@@ -4558,6 +4586,7 @@ GameObject:
   - component: {fileID: 1258432166}
   - component: {fileID: 1258432168}
   - component: {fileID: 1258432167}
+  - component: {fileID: 1258432169}
   m_Layer: 5
   m_Name: NameAndSavePanel
   m_TagString: Untagged
@@ -4620,6 +4649,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1258432165}
+--- !u!114 &1258432169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1258432165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d84a5d46a214ac39b1c6b10b3c8d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1266670001
 GameObject:
   m_ObjectHideFlags: 0
@@ -4834,12 +4874,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 561273130}
+    m_SelectOnDown: {fileID: 1056852006}
+    m_SelectOnLeft: {fileID: 1051368931}
+    m_SelectOnRight: {fileID: 733387900}
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4848,16 +4888,17 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 51fa907ce78d0284a9e409120836563c,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 879946426}
   toggleTransition: 0
   graphic: {fileID: 879137638}
   m_Group: {fileID: 635684794}
@@ -5395,6 +5436,7 @@ GameObject:
   - component: {fileID: 1660454946}
   - component: {fileID: 1660454945}
   - component: {fileID: 1660454947}
+  - component: {fileID: 1660454948}
   m_Layer: 5
   m_Name: MoveTypePanel
   m_TagString: Untagged
@@ -5470,6 +5512,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 0
+--- !u!114 &1660454948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1660454943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d84a5d46a214ac39b1c6b10b3c8d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1672987314
 GameObject:
   m_ObjectHideFlags: 0

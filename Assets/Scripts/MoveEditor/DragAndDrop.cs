@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum PivotDirection {North, West, South, East};
 
@@ -35,12 +36,34 @@ public class DragAndDrop : MonoBehaviour {
 	private GameObject highHardLimitMarker;
 	private GameObject lowHardLimitMarker;
 
+	private string[] dragPointNames;
+
+	private bool selected;
+	private float scrollDelay;
+
 	void Awake()
 	{
+		this.selected = false;
 		highFrameLimitMarker = GameObject.Find ("HighFrameLimitMarker");
 		lowFrameLimitMarker = GameObject.Find ("LowFrameLimitMarker");
 		highHardLimitMarker = GameObject.Find ("HighHardLimitMarker");
 		lowHardLimitMarker = GameObject.Find ("LowHardLimitMarker");
+		this.dragPointNames = new string[] {
+			"TorsoDragPoint",
+			"HeadDragPoint",
+			"UpperRightArmDragPoint",
+			"LowerRightArmDragPoint",
+			"RightHandDragPoint",
+			"UpperLeftArmDragPoint",
+			"LowerLeftArmDragPoint",
+			"LeftHandDragPoint",
+			"UpperRightLegDragPoint",
+			"LowerRightLegDragPoint",
+			"RightFootDragPoint",
+			"UperLeftLegDragPoint",
+			"LowerLeftLegDragPoint",
+			"LeftFootDragPoint"
+		};
 	}
 
 	void Start()
@@ -66,10 +89,7 @@ public class DragAndDrop : MonoBehaviour {
     void OnMouseDown()
 	{
 		mouseDown = true;
-		EnableMarker (highFrameLimitMarker, highFrameTwistLimit);
-		EnableMarker (lowFrameLimitMarker, lowFrameTwistLimit);
-		EnableMarker (highHardLimitMarker, highHardTwistLimit);
-		EnableMarker (lowHardLimitMarker, lowHardTwistLimit);
+		Select ();
 	}
 
 	private void EnableMarker(GameObject marker, float rotation)
@@ -83,10 +103,6 @@ public class DragAndDrop : MonoBehaviour {
 	void OnMouseUp()
 	{
 		mouseDown = false;
-		highFrameLimitMarker.SetActive (false);
-		lowFrameLimitMarker.SetActive (false);
-		highHardLimitMarker.SetActive (false);
-		lowHardLimitMarker.SetActive (false);
 	}
 
 	/// <summary>
@@ -155,41 +171,135 @@ public class DragAndDrop : MonoBehaviour {
 
 			newRot += pivotRotationOffset;
 
-            transform.parent.eulerAngles = new Vector3(0, 0, newRot); //Update rotation previous to checking limits
+			UpdateRotation (newRot);
+        }
+	}
 
-			//Find biggest of low limits and smallest of high limis to create the smallest allowed intervall
-			float tmpLowLimit = RotationUtils.InCounterClockwiseLimits (lowFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? lowFrameTwistLimit : lowHardTwistLimit;
-			float tmpHighLimit = RotationUtils.InCounterClockwiseLimits (highFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? highFrameTwistLimit : highHardTwistLimit;
+	void Update()
+	{
+		float horizontal1 = Input.GetAxisRaw ("Horizontal");
+		float vertical1 = Input.GetAxisRaw ("Vertical");
+		float horizontal2 = Input.GetAxisRaw ("Horizontal2");
+		float vertical2 = Input.GetAxisRaw ("Vertical2");
 
-			float rotation = transform.parent.localEulerAngles.z;
+		if (Input.GetMouseButtonDown (0) && !mouseDown) {
+			Deselect ();
+		}
 
-			if (RotationUtils.InCounterClockwiseLimits (rotation, tmpLowLimit, tmpHighLimit)) 
-			{ 
-				//Angle in limit
-				outHigh = false;
-				outLow = false;	
-			} else 
-			{
-                if (outHigh) //Rotation is still outside limits to one side
-				{
-					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);
-				}
-				else if (outLow) //Rotation is still outside limits to the other side
-				{ 
-					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
-				}
-				//Check to which side rotation has exited the limits intervall
-				else if (RotationUtils.InCounterClockwiseLimits(rotation, RotationUtils.MiddleOfRotations (tmpHighLimit, tmpLowLimit), tmpLowLimit))
-				{
-					outLow = true;
-					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
-				}
-				else
-				{
-					outHigh = true;
-					transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);
+		if (scrollDelay > 0) {
+			scrollDelay -= Time.deltaTime;
+		} else {
+			if (selected && !mouseDown) {
+				if (vertical1 > 0 || vertical2 > 0) {
+					//scrollDelay = Parameters.scrollDelay;
+					AddRotation (1);
+				} else if (vertical1 < 0 || vertical2 < 0) {
+					//scrollDelay = Parameters.scrollDelay;
+					AddRotation (-1);
+				} else if (horizontal1 > 0 || horizontal2 > 0) {
+					SelectNextDragPoint ();
+				} else if (horizontal1 < 0 || horizontal2 < 0) {
+					SelectPreviousDragPoint ();
 				}
 			}
-        }
+		}
+	}
+
+	public void SelectNextDragPoint()
+	{
+		SelectOtherDragPoint (1);
+	}
+
+	public void SelectPreviousDragPoint()
+	{
+		SelectOtherDragPoint (-1);
+	}
+
+	public void SelectOtherDragPoint(int offset)
+	{
+		string nextDragpointName = null;
+		for (int i = 0; i < dragPointNames.Length; i++) {
+			if (dragPointNames [i].Equals (transform.name)) {
+				int nextIndex = (i + offset);
+				while (nextIndex < 0) {
+					nextIndex += dragPointNames.Length;
+				}
+				nextIndex %= dragPointNames.Length;
+				nextDragpointName = dragPointNames [nextIndex];
+			}
+		}
+
+		if (nextDragpointName != null) {
+			GameObject nextDragpoint = GameObject.Find (nextDragpointName);
+			DragAndDrop dragAndDrop = nextDragpoint.GetComponent<DragAndDrop> ();
+			if (dragAndDrop != null) {
+				this.Deselect ();
+				dragAndDrop.Select ();
+			}
+		}
+	}
+
+	public void AddRotation(float degrees)
+	{
+		float rotation = transform.parent.eulerAngles.z;
+		float newRot = rotation + degrees;
+		UpdateRotation (newRot);
+	}
+
+	public void UpdateRotation(float newRot)
+	{
+		transform.parent.eulerAngles = new Vector3(0, 0, newRot); //Update rotation previous to checking limits
+
+		//Find biggest of low limits and smallest of high limis to create the smallest allowed intervall
+		float tmpLowLimit = RotationUtils.InCounterClockwiseLimits (lowFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? lowFrameTwistLimit : lowHardTwistLimit;
+		float tmpHighLimit = RotationUtils.InCounterClockwiseLimits (highFrameTwistLimit, lowHardTwistLimit, highHardTwistLimit) ? highFrameTwistLimit : highHardTwistLimit;
+
+		float rotation = transform.parent.localEulerAngles.z;
+
+		if (RotationUtils.InCounterClockwiseLimits (rotation, tmpLowLimit, tmpHighLimit)) 
+		{ 
+			//Angle in limit
+			outHigh = false;
+			outLow = false;	
+		} else 
+		{
+			if (outHigh) //Rotation is still outside limits to one side
+			{
+				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);
+			}
+			else if (outLow) //Rotation is still outside limits to the other side
+			{ 
+				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
+			}
+			//Check to which side rotation has exited the limits intervall
+			else if (RotationUtils.InCounterClockwiseLimits(rotation, RotationUtils.MiddleOfRotations (tmpHighLimit, tmpLowLimit), tmpLowLimit))
+			{
+				outLow = true;
+				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
+			}
+			else
+			{
+				outHigh = true;
+				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);
+			}
+		}
+	}
+
+	public void Select()
+	{
+		this.selected = true;
+		this.GetComponent<SpriteRenderer> ().color = new Color (0, 0, 0, 255);
+		scrollDelay = Parameters.scrollDelay;
+		EnableMarker (highFrameLimitMarker, highFrameTwistLimit);
+		EnableMarker (lowFrameLimitMarker, lowFrameTwistLimit);
+		EnableMarker (highHardLimitMarker, highHardTwistLimit);
+		EnableMarker (lowHardLimitMarker, lowHardTwistLimit);
+	}
+
+	public void Deselect()
+	{
+		this.selected = false;
+		this.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 255);
+		scrollDelay = Parameters.scrollDelay;
 	}
 }
