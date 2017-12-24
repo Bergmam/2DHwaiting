@@ -26,8 +26,12 @@ public class SelectionPanelBahviour : MonoBehaviour
 		foreach (string characterButton in character1Buttons)
 		{
 			string previewPath = "Prefabs" + Path.DirectorySeparatorChar + "MovePanel";
+			string previewCharacterPath = "Prefabs" + Path.DirectorySeparatorChar + "Character";
+
 			GameObject previewPanelObject = (GameObject)Resources.Load (previewPath);
+			GameObject previewCharacterObject = (GameObject)Resources.Load(previewCharacterPath);
 			GameObject previewPanel = Instantiate (previewPanelObject, previewPanelObject.transform.position, previewPanelObject.transform.rotation, transform);
+
 			if (owner.GetNbr () == 1)
 			{
 				foreach (Transform child in previewPanel.transform)
@@ -37,6 +41,26 @@ public class SelectionPanelBahviour : MonoBehaviour
 					child.GetComponent<RectTransform> ().localScale = new Vector3 (-1, 1, 1);
 				}
 			}
+
+			GameObject previewCharacter = Instantiate ( previewCharacterObject, previewCharacterObject.transform.position, previewCharacterObject.transform.rotation, previewPanel.transform );
+
+			previewPanel.GetComponent<MovePanelBehaviour>().addPreviewCharacter(previewCharacter);
+
+			float characterPosition;
+
+			if (owner.GetNbr() == 1) 
+			{
+				characterPosition = 2.4f;
+			} else 
+			{
+				characterPosition = -2.4f;
+			}
+
+			previewCharacter.transform.position = new Vector2(characterPosition * previewPanel.transform.localScale.x, 0);
+			previewCharacter.transform.localScale = new Vector3(3 * -previewPanel.transform.localScale.x, 3, 3);
+
+			previewCharacter.SetActive(false);
+
 			MovePanelBehaviour panelBehaviour = previewPanel.GetComponent<MovePanelBehaviour> ();
 			if (owner != null)
 			{
@@ -102,6 +126,12 @@ public class SelectionPanelBahviour : MonoBehaviour
 			panelWithMove.GetComponent<MovePanelBehaviour> ().RemoveSpeedText ();
 			panelWithMove.GetComponent<MovePanelBehaviour> ().RemoveStrengthText ();
 			panelWithMove.GetComponent<MovePanelBehaviour> ().RemoveNameText ();
+
+			GameObject previewCharacter = panelWithMove.GetComponent<MovePanelBehaviour>().getPreviewCharacter();
+			if (previewCharacter != null)
+			{
+				previewCharacter.SetActive(false);
+			}
 		}
 	}
 
