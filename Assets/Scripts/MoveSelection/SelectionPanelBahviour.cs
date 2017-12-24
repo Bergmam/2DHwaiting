@@ -42,6 +42,9 @@ public class SelectionPanelBahviour : MonoBehaviour
 				}
 			}
 
+			previewPanel.transform.Find("NameText").GetComponent<Text>().text = "Empty";
+			previewPanel.transform.Find("NameText").GetComponent<Text>().color = Color.blue;
+
 			GameObject previewCharacter = Instantiate ( previewCharacterObject, previewCharacterObject.transform.position, previewCharacterObject.transform.rotation, previewPanel.transform );
 
 			previewPanel.GetComponent<MovePanelBehaviour>().addPreviewCharacter(previewCharacter);
@@ -91,6 +94,7 @@ public class SelectionPanelBahviour : MonoBehaviour
 			//Add move to correct panel and remove it from any other panel.
 			if (panelBehaviour.GetAssignedButton ().Equals (button)) {
 				RemovePanelWithMove (move.GetName ()); //Remove the move from any panel currently holding the move.
+				panelBehaviour.transform.Find("NameText").GetComponent<Text>().color = new Color(0, 0, 0, 1);
 				panelBehaviour.setMove (move);
 			}
 		}
@@ -126,6 +130,8 @@ public class SelectionPanelBahviour : MonoBehaviour
 			panelWithMove.GetComponent<MovePanelBehaviour> ().RemoveSpeedText ();
 			panelWithMove.GetComponent<MovePanelBehaviour> ().RemoveStrengthText ();
 			panelWithMove.GetComponent<MovePanelBehaviour> ().RemoveNameText ();
+			panelWithMove.transform.Find("NameText").GetComponent<Text>().text = "Empty";
+			panelWithMove.transform.Find("NameText").GetComponent<Text>().color = Color.blue;
 
 			GameObject previewCharacter = panelWithMove.GetComponent<MovePanelBehaviour>().getPreviewCharacter();
 			if (previewCharacter != null)
