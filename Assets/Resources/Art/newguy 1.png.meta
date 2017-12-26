@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 330649e98caac8d408971c8da338b374
-timeCreated: 1504116610
+timeCreated: 1514270270
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -11,6 +11,7 @@ TextureImporter:
     21300008: foot
     21300010: torso
     21300012: lower_leg_or_arm
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -19,6 +20,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -34,10 +37,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -59,6 +65,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -67,6 +74,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -75,6 +83,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: iPhone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -83,6 +92,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Android
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -91,6 +101,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Tizen
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -99,6 +110,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: WebGL
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -107,6 +119,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Samsung TV
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -128,86 +141,94 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: left_hand
       rect:
         serializedVersion: 2
-        x: 359
-        y: 783
-        width: 234
-        height: 218
+        x: 363
+        y: 759
+        width: 216
+        height: 233
       alignment: 9
-      pivot: {x: 0.15, y: 0.5}
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: right_hand
       rect:
         serializedVersion: 2
-        x: 662
-        y: 782
-        width: 235
-        height: 219
+        x: 673
+        y: 770
+        width: 216
+        height: 232
       alignment: 9
-      pivot: {x: 0.15, y: 0.5}
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: upper_leg
       rect:
         serializedVersion: 2
-        x: 422
-        y: 310
-        width: 147
-        height: 387
+        x: 424
+        y: 302
+        width: 144
+        height: 384
       alignment: 9
-      pivot: {x: 0.5, y: 0.9}
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: foot
       rect:
         serializedVersion: 2
         x: 455
-        y: 61
-        width: 194
-        height: 140
+        y: 54
+        width: 89
+        height: 192
       alignment: 9
-      pivot: {x: 0.3, y: 0.8}
+      pivot: {x: 0.5, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: torso
       rect:
         serializedVersion: 2
-        x: 55
-        y: 30
-        width: 275
-        height: 611
+        x: 56
+        y: 32
+        width: 272
+        height: 608
       alignment: 9
       pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: lower_leg_or_arm
       rect:
         serializedVersion: 2
-        x: 799
-        y: 311
-        width: 98
-        height: 386
+        x: 800
+        y: 312
+        width: 96
+        height: 384
       alignment: 9
-      pivot: {x: 0.5, y: 0.9}
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
     outline: []
+    physicsShape: []
   spritePackingTag: 
   userData: 
   assetBundleName: 
