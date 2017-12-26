@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum PivotDirection {North, West, South, East};
-
 /// <summary>
 /// Class for handling the dragging and dropping of limbs in the MoveEditor.
 /// </summary>
@@ -27,8 +25,6 @@ public class DragAndDrop : MonoBehaviour {
 
 	public float highHardTwistLimit;
 	public float lowHardTwistLimit;
-
-	public PivotDirection pivotDirection = PivotDirection.North;
 	private int pivotRotationOffset;
 
 	private GameObject highFrameLimitMarker;
@@ -69,21 +65,7 @@ public class DragAndDrop : MonoBehaviour {
 	void Start()
 	{
 		UpdateFrameLimits ();
-		switch (pivotDirection)
-		{
-			case PivotDirection.North:
-				pivotRotationOffset = 0;
-				break;
-			case PivotDirection.West:
-				pivotRotationOffset = 90;
-				break;
-			case PivotDirection.South:
-				pivotRotationOffset = 180;
-				break;
-			default : 
-				pivotRotationOffset = 270; //PivotDirection.East:
-				break;
-		}
+		pivotRotationOffset = 180; // Standard rotation of unity is pivot up. Sprite sheet has pivot point down.
 	}
 
     void OnMouseDown()
