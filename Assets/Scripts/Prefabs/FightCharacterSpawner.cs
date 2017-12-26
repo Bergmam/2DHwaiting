@@ -39,6 +39,9 @@ public class FightCharacterSpawner : MonoBehaviour
 
         character1.transform.position = new Vector3(x1, y1, 0);
 		character2.transform.position = new Vector3(x2, y2, 0);
+
+		character1.transform.Find("undercharacter").GetComponent<SpriteRenderer>().color = Color.black;
+		character2.transform.Find("undercharacter").GetComponent<SpriteRenderer>().color = Color.black;
 	}
 
 	private void AndAndRemoveComponents(GameObject characterObject, int index)
