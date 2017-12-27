@@ -1111,10 +1111,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1225374576}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 2
   m_Colors:
@@ -1215,7 +1215,7 @@ RectTransform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1870362075}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.025, y: 0.3}
   m_AnchorMax: {x: 0.28, y: 0.85}
@@ -1334,7 +1334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee7b04f1ae344cdd8f7043914bc0ae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deleteMovePrompt: {fileID: 975145780}
 --- !u!114 &745890460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1387,7 +1386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a218ebefbee498e886959cd9c28b80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptPanel: {fileID: 0}
+  promptPanel: {fileID: 975145780}
+  promptInsteadOfReturn: 0
 --- !u!4 &923131091
 Transform:
   m_ObjectHideFlags: 0
@@ -1513,7 +1513,7 @@ GameObject:
   - component: {fileID: 975145783}
   - component: {fileID: 975145782}
   m_Layer: 5
-  m_Name: ExitWhileEditingPanel
+  m_Name: DeleteMovePrompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2109,7 +2109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee7b04f1ae344cdd8f7043914bc0ae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deleteMovePrompt: {fileID: 975145780}
 --- !u!1 &1225374574
 GameObject:
   m_ObjectHideFlags: 0
@@ -2159,11 +2158,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 597855039}
   m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -3096,8 +3095,8 @@ RectTransform:
   - {fileID: 592253300}
   - {fileID: 27161437}
   - {fileID: 1041614997}
-  - {fileID: 1042353724}
   - {fileID: 600095404}
+  - {fileID: 1042353724}
   - {fileID: 314819270}
   - {fileID: 71469606}
   - {fileID: 1440037806}

@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class SceneReturnScript : MonoBehaviour 
 {
 	public GameObject promptPanel; //Set in editor if exists for the current scene. Leave null otherwise.
+	public bool promptInsteadOfReturn = true;
 
 	void Start()
 	{
@@ -30,9 +31,9 @@ public class SceneReturnScript : MonoBehaviour
 
 	public void PromptOrGoBack()
 	{
-		if (promptPanel == null) 
+		if (promptPanel == null || !promptInsteadOfReturn) 
 		{
-			GoBack ();
+			GoBackOrHidePrompt ();
 		}
 		else
 		{
@@ -49,6 +50,17 @@ public class SceneReturnScript : MonoBehaviour
 				if (selectable != null) {
 					selectable.Select ();
 				}
+			}
+		}
+	}
+
+	public void GoBackOrHidePrompt()
+	{
+		if (promptPanel != null) {
+			if (!promptPanel.activeSelf) {
+				GoBack ();
+			} else {
+				HidePrompt ();
 			}
 		}
 	}

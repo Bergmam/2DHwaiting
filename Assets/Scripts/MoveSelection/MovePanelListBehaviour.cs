@@ -21,18 +21,19 @@ public class MovePanelListBehaviour : MonoBehaviour
     private GameObject playButton;
     private float scrollDelay;
 	private bool hasDeleted = false;
-    SceneButtonBehaviour playButtonBehaviour;
+    private SceneButtonBehaviour playButtonBehaviour;
 
 	private bool selected;
 	private bool containsBlockMoves;
 	private ListSelector listSelector; 
 
-	public GameObject deleteMovePrompt;
+	private GameObject deleteMovePrompt;
 	private Move moveToBeDeleted;
 	private bool controlsActive = true;
 
 	void Awake ()
 	{
+		this.deleteMovePrompt = GameObject.Find ("DeleteMovePrompt");
 		playButton = GameObject.Find ("PlayButton");
 		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
 		character2 = GameObject.Find("Character 2").GetComponent<MovePlayer>();
@@ -330,6 +331,10 @@ public class MovePanelListBehaviour : MonoBehaviour
 			moveToBeDeleted = listItems [selectedListIndex].getMove ();
 			controlsActive = false;
 			deleteMovePrompt.SetActive (true);
+			Button button = deleteMovePrompt.GetComponentInChildren<Button> ();
+			if (button != null) {
+				button.Select ();
+			}
 		}
 	}
 
