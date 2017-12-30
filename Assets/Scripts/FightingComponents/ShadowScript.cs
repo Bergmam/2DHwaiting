@@ -5,6 +5,12 @@ using UnityEngine;
 public class ShadowScript : MonoBehaviour {
 
 	private float height;
+	private SpriteRenderer spriteRenderer;
+
+	void Awake()
+	{
+		this.spriteRenderer = gameObject.GetComponent<SpriteRenderer> ();
+	}
 
 	void Update ()
 	{
@@ -14,6 +20,11 @@ public class ShadowScript : MonoBehaviour {
 			float z = transform.position.z;
 			Vector3 newPosition = new Vector3 (x, height, z);
 			transform.position = newPosition;
+		}
+
+		// Make sure shadow is not moved to front when character performs a move. Shadows should always be behind both characters.
+		if (!spriteRenderer.sortingLayerName.Equals ("Character")) {
+			spriteRenderer.sortingLayerName = "Character";
 		}
 	}
 
