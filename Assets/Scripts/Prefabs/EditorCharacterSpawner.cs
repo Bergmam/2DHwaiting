@@ -33,7 +33,6 @@ public class EditorCharacterSpawner : MonoBehaviour
         }
 
 		character.transform.position = new Vector3(x1, y1, 0);
-        character.transform.Find("undercharacter").GetComponent<SpriteRenderer>().color = new Color(0.2f, 1, 0.2f, 1);
         
 
 		SpawnOnionCharacter();
@@ -61,7 +60,7 @@ public class EditorCharacterSpawner : MonoBehaviour
         {
             Destroy(child.transform.GetComponent<Rigidbody2D>());
         }
-
+		character.transform.Find ("undercharacter").gameObject.SetActive (false); // Remove shadow of character onion skin.
         character.transform.position = new Vector3(x1, y1, 0);
     }
 }

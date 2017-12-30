@@ -5,16 +5,18 @@ using UnityEngine;
 public class ShadowScript : MonoBehaviour {
 
 	private float height;
+	private bool floating; // Floating == true means the shadow follows the character's feet. Floating == false means it is fixed at the specified height.
 	private SpriteRenderer spriteRenderer;
 
 	void Awake()
 	{
 		this.spriteRenderer = gameObject.GetComponent<SpriteRenderer> ();
+		this.floating = true;
 	}
 
 	void Update ()
 	{
-		if (Mathf.Abs (transform.position.y - height) > 0.01f) //Corect shadow height if it is too far from ground.
+		if (!floating && (Mathf.Abs (transform.position.y - height) > 0.01f)) //Corect shadow height if it is too far from ground.
 		{
 			float x = transform.position.x;
 			float z = transform.position.z;
@@ -28,7 +30,13 @@ public class ShadowScript : MonoBehaviour {
 		}
 	}
 
-	public void SetHeight(float height){
+	public void SetHeight(float height)
+	{
 		this.height = height;
+		this.floating = false; // When a height is specified, we assume the shadow is to stay at that height.
+	}
+	 
+	public void SetFloating(bool floating){
+		this.floating = floating;
 	}
 }
