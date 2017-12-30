@@ -243,7 +243,8 @@ public class DragAndDrop : MonoBehaviour {
 			//Angle in limit
 			outHigh = false;
 			outLow = false;	
-		} else 
+		}
+		else 
 		{
 			if (outHigh) //Rotation is still outside limits to one side
 			{
@@ -253,13 +254,14 @@ public class DragAndDrop : MonoBehaviour {
 			{ 
 				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
 			}
-			//Check to which side rotation has exited the limits intervall
+			// Check to which side rotation has exited the limits intervall.
+			// If it is not yet in one of the halves of the outside of the twist limits, wait until it is.
 			else if (RotationUtils.InCounterClockwiseLimits(rotation, RotationUtils.MiddleOfRotations (tmpHighLimit, tmpLowLimit), tmpLowLimit))
 			{
 				outLow = true;
 				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpLowLimit);
 			}
-			else
+			else if (RotationUtils.InCounterClockwiseLimits(rotation, tmpLowLimit, RotationUtils.MiddleOfRotations (tmpHighLimit, tmpLowLimit)))
 			{
 				outHigh = true;
 				transform.parent.localEulerAngles = new Vector3 (0, 0, tmpHighLimit);

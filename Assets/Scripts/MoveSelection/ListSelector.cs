@@ -11,6 +11,7 @@ public class ListSelector : MonoBehaviour {
 	GameObject blockMovesText;
 	GameObject attackMovesText;
 	MovePanelBehaviour moveListHeader;
+	private GameObject deleteMovePrompt;
 
 	void Awake()
 	{
@@ -21,6 +22,7 @@ public class ListSelector : MonoBehaviour {
 		this.blockMovesText = GameObject.Find ("BlockMovesText");
 		this.attackMovesText = GameObject.Find ("AttackMovesText");
 		this.moveListHeader = GameObject.Find ("MoveListHeader").GetComponent<MovePanelBehaviour> ();
+		this.deleteMovePrompt = GameObject.Find ("DeleteMovePrompt");
 	}
 
 	void Start () {
@@ -32,14 +34,20 @@ public class ListSelector : MonoBehaviour {
 	}
 
 	void Update () {
-		bool leftPressed = Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A);
-		bool rightPressed = Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D);
 
-		if (leftPressed && !rightPressed)
+		bool horizontal1Right = Input.GetAxisRaw("Horizontal") > 0;
+		bool horizontal1Left = Input.GetAxisRaw("Horizontal") < 0;
+		bool horizontal2Right = Input.GetAxisRaw("Horizontal2") > 0;
+		bool horizontal2Left = Input.GetAxisRaw("Horizontal2") < 0;
+
+		bool leftPressed = (horizontal1Left || horizontal2Left);
+		bool rightPressed = (horizontal1Right || horizontal1Right);
+
+		if (leftPressed && !rightPressed && !deleteMovePrompt.activeSelf)
 		{
 			EnableAttackList ();
 		}
-		else if (rightPressed && !leftPressed)
+		else if (rightPressed && !leftPressed && !deleteMovePrompt.activeSelf)
 		{
 			EnableBlockList ();
 		}

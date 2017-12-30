@@ -40,8 +40,11 @@ public class FightCharacterSpawner : MonoBehaviour
         character1.transform.position = new Vector3(x1, y1, 0);
 		character2.transform.position = new Vector3(x2, y2, 0);
 
-		character1.transform.Find("undercharacter").GetComponent<SpriteRenderer>().color = Color.black;
-		character2.transform.Find("undercharacter").GetComponent<SpriteRenderer>().color = Color.black;
+		GameObject ground = GameObject.Find ("Ground");
+		BoxCollider2D groundCollider = ground.GetComponent<BoxCollider2D> ();
+		float groundPosition = groundCollider.bounds.max.y; // Shadows should be at top of ground.
+		character1.transform.Find ("undercharacter").GetComponent<ShadowScript> ().SetHeight (groundPosition);
+		character2.transform.Find ("undercharacter").GetComponent<ShadowScript> ().SetHeight (groundPosition);
 	}
 
 	private void AndAndRemoveComponents(GameObject characterObject, int index)
