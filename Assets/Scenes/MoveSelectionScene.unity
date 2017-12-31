@@ -210,8 +210,8 @@ RectTransform:
   m_Father: {fileID: 1870362075}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.425, y: 0.45}
-  m_AnchorMax: {x: 0.575, y: 0.5}
+  m_AnchorMin: {x: 0.425, y: 0.5}
+  m_AnchorMax: {x: 0.575, y: 0.6}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -232,7 +232,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -241,9 +241,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 51fa907ce78d0284a9e409120836563c,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 41066091871a25a45bbb494a24188a5d, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -286,8 +287,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b7c2822daab3ff545b9e62ef71b7436c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -899,7 +900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.39215687, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1298,6 +1299,7 @@ GameObject:
   - component: {fileID: 745890458}
   - component: {fileID: 745890460}
   - component: {fileID: 745890459}
+  - component: {fileID: 745890462}
   m_Layer: 5
   m_Name: AttackContent
   m_TagString: Untagged
@@ -1356,6 +1358,12 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
+--- !u!222 &745890462
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 745890457}
 --- !u!1 &923131089
 GameObject:
   m_ObjectHideFlags: 0
@@ -1815,7 +1823,7 @@ Prefab:
     - target: {fileID: 224217534504976660, guid: c25e25c0dd5244ec5a6d86f98dcbd76e,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.45
+      value: 0.475
       objectReference: {fileID: 0}
     - target: {fileID: 224217534504976660, guid: c25e25c0dd5244ec5a6d86f98dcbd76e,
         type: 2}
@@ -1835,17 +1843,17 @@ Prefab:
     - target: {fileID: 114883551391476624, guid: c25e25c0dd5244ec5a6d86f98dcbd76e,
         type: 2}
       propertyPath: m_Color.b
-      value: 0.8068962
+      value: 0.01324787
       objectReference: {fileID: 0}
     - target: {fileID: 114883551391476624, guid: c25e25c0dd5244ec5a6d86f98dcbd76e,
         type: 2}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114883551391476624, guid: c25e25c0dd5244ec5a6d86f98dcbd76e,
         type: 2}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.39215687
       objectReference: {fileID: 0}
     - target: {fileID: 114450889750569150, guid: c25e25c0dd5244ec5a6d86f98dcbd76e,
         type: 2}
@@ -1906,6 +1914,16 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: 6264a994659ecb64d9a36904f5baca52,
         type: 3}
+    - target: {fileID: 114883551391476624, guid: c25e25c0dd5244ec5a6d86f98dcbd76e,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 114883551391476624, guid: c25e25c0dd5244ec5a6d86f98dcbd76e,
+        type: 2}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c25e25c0dd5244ec5a6d86f98dcbd76e, type: 2}
   m_IsPrefabParent: 0
@@ -2051,6 +2069,7 @@ GameObject:
   - component: {fileID: 1177670179}
   - component: {fileID: 1177670180}
   - component: {fileID: 1177670181}
+  - component: {fileID: 1177670183}
   m_Layer: 5
   m_Name: BlockContent
   m_TagString: Untagged
@@ -2109,6 +2128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee7b04f1ae344cdd8f7043914bc0ae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!222 &1177670183
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1177670178}
 --- !u!1 &1225374574
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,7 +2412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.39215687, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2840,12 +2865,12 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 6264a994659ecb64d9a36904f5baca52, type: 3}
-    m_FontSize: 22
-    m_FontStyle: 0
+    m_FontSize: 32
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2973,7 +2998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.39215687, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2987,7 +3012,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0

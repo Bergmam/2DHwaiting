@@ -41,7 +41,7 @@ public class ListSelector : MonoBehaviour {
 		bool horizontal2Left = Input.GetAxisRaw("Horizontal2") < 0;
 
 		bool leftPressed = (horizontal1Left || horizontal2Left);
-		bool rightPressed = (horizontal1Right || horizontal1Right);
+		bool rightPressed = (horizontal1Right || horizontal2Right);
 
 		if (leftPressed && !rightPressed && !deleteMovePrompt.activeSelf)
 		{

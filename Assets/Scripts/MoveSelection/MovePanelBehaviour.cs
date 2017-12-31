@@ -16,12 +16,18 @@ public class MovePanelBehaviour : MonoBehaviour
 	private Text[] assignedButtonTexts; //One text field for each character so that they both can select the same move.
 	private Move move;
 
-    private Color32 defaultColor = new Color32(58,149,255,255); //Used to reset panel color on deselection.
+	private Color32 defaultColor = new Color32 (150, 255, 255, 200); //Used to reset panel color on deselection.
+	private Color32 selectedColor = new Color32 (150, 255, 255, 255);
 
 	private GameObject previewCharacter;
 
+	private Sprite deselectedSprite;
+	private Sprite selectedSprite;
+
     void Awake()
     {
+		this.deselectedSprite = Resources.Load <Sprite> ("Art/Main Menu/button_up_test");
+		this.selectedSprite = Resources.Load <Sprite> ("Art/Main Menu/button_highlight_test");
         speedText = transform.Find("SpeedText").GetComponent<Text>();
         strengthText = transform.Find("StrengthText").GetComponent<Text>();
 		nameText = transform.Find("NameText").GetComponent<Text>();
@@ -48,11 +54,13 @@ public class MovePanelBehaviour : MonoBehaviour
 
     public void Select()
     {
-        gameObject.GetComponent<Image>().color = Color.yellow;
+		gameObject.GetComponent<Image> ().sprite = selectedSprite; //.color = Color.yellow;
+		gameObject.GetComponent<Image>().color = selectedColor;
     }
 
     public void DeSelect()
-    {
+	{
+		gameObject.GetComponent<Image> ().sprite = deselectedSprite;
         gameObject.GetComponent<Image>().color = defaultColor;
     }
 
