@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ListKeyboardManager : MonoBehaviour {
 
@@ -47,21 +48,26 @@ public class ListKeyboardManager : MonoBehaviour {
 	void Update(){
 		// If enter i pressed, find next or save button and select it.
 		// This makes pressing enter again go to next phase.
-		if (Input.GetKeyDown (KeyCode.Return) || Input.GetKeyDown (KeyCode.KeypadEnter))
+		string selectedSelectableParentName = EventSystem.current.currentSelectedGameObject.transform.parent.name;
+		if ((Input.GetKeyDown (KeyCode.Return) || Input.GetKeyDown (KeyCode.KeypadEnter)) && !selectedSelectableParentName.Contains ("Prompt"))
 		{
-			Transform nextButtonTransform = transform.Find ("NextButton");
-			if (nextButtonTransform == null)
+			SelectNextButton ();
+		}
+	}
+
+	public void SelectNextButton(){
+		Transform nextButtonTransform = transform.Find ("NextButton");
+		if (nextButtonTransform == null)
+		{
+			nextButtonTransform = transform.Find ("SaveButton");
+		}
+		if (nextButtonTransform != null)
+		{
+			Button button = nextButtonTransform.GetComponent<Button> ();
+			if (button != null)
 			{
-				nextButtonTransform = transform.Find ("SaveButton");
-			}
-			if (nextButtonTransform != null)
-			{
-				Button button = nextButtonTransform.GetComponent<Button> ();
-				if (button != null)
-				{
-					button.Select ();
-					return;
-				}
+				button.Select ();
+				return;
 			}
 		}
 	}

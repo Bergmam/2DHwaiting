@@ -76,6 +76,11 @@ public class SceneReturnScript : MonoBehaviour
 		if (promptPanel != null)
 		{
 			promptPanel.SetActive (false);
+			//If panel is hidden, make sure a selectable in the scene is reselected to enable keyboard navigation.
+			Selectable selectable = GameObject.FindObjectOfType<Selectable> ();
+			if (selectable != null) {
+				selectable.Select ();
+			}
 		}
 	}
 }
