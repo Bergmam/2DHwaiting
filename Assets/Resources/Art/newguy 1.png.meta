@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 330649e98caac8d408971c8da338b374
-timeCreated: 1514270270
+timeCreated: 1514699841
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -133,10 +133,10 @@ TextureImporter:
       name: head
       rect:
         serializedVersion: 2
-        x: 54
-        y: 663
-        width: 243
-        height: 306
+        x: 49
+        y: 644
+        width: 266
+        height: 318
       alignment: 9
       pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,9 +148,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 363
-        y: 759
-        width: 216
-        height: 233
+        y: 744
+        width: 232
+        height: 254
       alignment: 9
       pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,10 +161,10 @@ TextureImporter:
       name: right_hand
       rect:
         serializedVersion: 2
-        x: 673
-        y: 770
-        width: 216
-        height: 232
+        x: 668
+        y: 752
+        width: 238
+        height: 257
       alignment: 9
       pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,10 +175,10 @@ TextureImporter:
       name: upper_leg
       rect:
         serializedVersion: 2
-        x: 424
-        y: 302
-        width: 144
-        height: 384
+        x: 425
+        y: 290
+        width: 152
+        height: 391
       alignment: 9
       pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,10 +189,10 @@ TextureImporter:
       name: foot
       rect:
         serializedVersion: 2
-        x: 455
-        y: 54
-        width: 89
-        height: 192
+        x: 457
+        y: 40
+        width: 100
+        height: 204
       alignment: 9
       pivot: {x: 0.5, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,10 +203,10 @@ TextureImporter:
       name: torso
       rect:
         serializedVersion: 2
-        x: 56
-        y: 32
-        width: 272
-        height: 608
+        x: 44
+        y: 14
+        width: 317
+        height: 620
       alignment: 9
       pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -217,8 +217,8 @@ TextureImporter:
       name: lower_leg_or_arm
       rect:
         serializedVersion: 2
-        x: 800
-        y: 312
+        x: 809
+        y: 300
         width: 96
         height: 384
       alignment: 9
