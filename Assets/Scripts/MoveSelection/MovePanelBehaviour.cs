@@ -49,6 +49,8 @@ public class MovePanelBehaviour : MonoBehaviour
 		{
 			this.previewCharacter.SetActive(true);
 			this.previewCharacter.GetComponent<MovePlayer>().FrameToCharacter(move.GetFrames()[(move.GetTotalNbrOfFrames() - 1) / 2]);
+			this.previewCharacter.GetComponent<MovePlayer>().setMoveToPlay(move);
+			this.previewCharacter.GetComponent<MovePlayer>().ShowActiveBodypart(true);
 		}
 	}
 

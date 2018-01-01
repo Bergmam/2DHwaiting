@@ -248,4 +248,9 @@ public class MovePlayer : MonoBehaviour
         frames = new List<Frame>();
         frameIndex = 0;
     }
+
+	public void setMoveToPlay(Move moveToPlay)
+	{
+		this.moveToPlay = moveToPlay;
+	}
 }
