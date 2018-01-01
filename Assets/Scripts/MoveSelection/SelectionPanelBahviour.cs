@@ -144,6 +144,8 @@ public class SelectionPanelBahviour : MonoBehaviour
 			if (previewCharacter != null)
 			{
 				previewCharacter.SetActive(false);
+				previewCharacter.GetComponent<MovePlayer>().ShowActiveBodypart(false);
+				previewCharacter.GetComponent<MovePlayer>().setMoveToPlay(null);
 			}
 		}
 	}
