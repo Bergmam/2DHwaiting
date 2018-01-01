@@ -43,7 +43,14 @@ public class SelectionPanelBahviour : MonoBehaviour
 			}
 
 			previewPanel.transform.Find("NameText").GetComponent<Text>().text = "Empty";
-			previewPanel.transform.Find ("NameText").GetComponent<Text> ().color = new Color (0, 0, 0.5f, 255);
+			previewPanel.transform.Find ("NameText").GetComponent<Text> ().color = new Color (0.5f, 0, 0, 255);
+
+			foreach (Transform child in transform) {
+				Text text = child.GetComponent<Text> ();
+				if (text != null) {
+					text.fontSize = 24;
+				}
+			}
 
 			GameObject previewCharacter = Instantiate ( previewCharacterObject, previewCharacterObject.transform.position, previewCharacterObject.transform.rotation, previewPanel.transform );
 

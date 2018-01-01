@@ -17,7 +17,7 @@ public class StaticCharacterHolder{
 			characters = new List<Character> ();
 			character1 = new Character (Color.red, 1);
 			characters.Add (character1);
-			character2 = new Character (Color.green, 2);
+			character2 = new Character (Color.blue, 2);
 			characters.Add (character2);
 		}
 	}
