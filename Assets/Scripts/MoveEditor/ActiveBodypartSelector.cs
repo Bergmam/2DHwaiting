@@ -10,6 +10,12 @@ public class ActiveBodypartSelector : MonoBehaviour {
 
 	private string activeBodypart;
 	private bool blockMove;
+	private GameObject headToggleObject;
+
+	void Awake()
+	{
+		headToggleObject = GameObject.Find ("HeadToggleButton");
+	}
 
 	/// <summary>
 	/// When a new bodypart is selected, deselect the currrent active bodypart on the character and select the new one.
@@ -71,6 +77,6 @@ public class ActiveBodypartSelector : MonoBehaviour {
 				}
 			}
 		}
-		transform.Find ("HeadToggleButton").GetComponent<Toggle> ().isOn = true; //Activate head. Head is default.
+		headToggleObject.GetComponent<Toggle> ().isOn = true; //Activate head. Head is default.
 	}
 }

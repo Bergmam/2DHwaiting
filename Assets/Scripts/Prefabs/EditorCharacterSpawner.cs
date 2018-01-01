@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class EditorCharacterSpawner : MonoBehaviour
 {
 
-    public float x1, y1;
-    public float x2, y2;
+	public float x1;
+	public float y1;
+	public float xScale;
+	public float yScale;
 
     private MoveCreator moveCreator;
 
@@ -33,7 +35,7 @@ public class EditorCharacterSpawner : MonoBehaviour
         }
 
 		character.transform.position = new Vector3(x1, y1, 0);
-        
+		character.transform.localScale = new Vector3 (xScale, yScale, 1f);
 
 		SpawnOnionCharacter();
 
