@@ -19,6 +19,15 @@ public class FightCharacterSpawner : MonoBehaviour
 		GameObject character1 = Instantiate(Resources.Load("Prefabs/Character", typeof(GameObject))) as GameObject;
 		GameObject character2 = Instantiate(Resources.Load("Prefabs/Character", typeof(GameObject))) as GameObject;
 
+		Object[] blueSprites = Resources.LoadAll("Art/newguy 1_blue");
+
+        UnityUtils.RecursiveFind(character2.transform, "Torso").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [6];
+		UnityUtils.RecursiveFind(character2.transform, "Head").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [2];
+		UnityUtils.RecursiveFind(character2.transform, "Right Hand").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [3];
+		UnityUtils.RecursiveFind(character2.transform, "Left Hand").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [5];
+		UnityUtils.RecursiveFind(character2.transform, "Upper Left Leg").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [7];
+		UnityUtils.RecursiveFind(character2.transform, "Upper Right Leg").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [7];
+
 		character1.transform.localScale = new Vector3 (character1.transform.localScale.x, character1.transform.localScale.y, character1.transform.localScale.z);
 		// - to change direction of character 2.
 		character2.transform.localScale = new Vector3 (-character2.transform.localScale.x, character2.transform.localScale.y, character2.transform.localScale.z);

@@ -5,18 +5,37 @@ using UnityEngine;
 public class SelectionCharacterSpawner : MonoBehaviour
 {
 
-    public float x1, x2, y1, y2;
+  //  public float x1, x2, y1, y2;
 
     void Start()
     {
-        SpawnCharacters();
+        SetCharacter2Color();
+      //  SpawnCharacters();
     }
 
+    public void SetCharacter2Color() 
+    {
+        GameObject character2 = GameObject.Find("Character 2");
 
+        Object[] blueSprites = Resources.LoadAll("Art/newguy 1_blue");
+
+        UnityUtils.RecursiveFind(character2.transform, "Torso").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [6];
+		UnityUtils.RecursiveFind(character2.transform, "Head").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [2];
+		UnityUtils.RecursiveFind(character2.transform, "Right Hand").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [3];
+		UnityUtils.RecursiveFind(character2.transform, "Left Hand").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [5];
+		UnityUtils.RecursiveFind(character2.transform, "Upper Left Leg").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [7];
+		UnityUtils.RecursiveFind(character2.transform, "Upper Right Leg").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [7];
+    }
+/* 
     public void SpawnCharacters()
     {
         GameObject character1 = Instantiate(Resources.Load("Prefabs/Character", typeof(GameObject))) as GameObject;
         GameObject character2 = Instantiate(Resources.Load("Prefabs/Character", typeof(GameObject))) as GameObject;
+
+        Object[] blueSprites = Resources.LoadAll("Art/newguy 1_blue");
+        print(blueSprites);
+        print(UnityUtils.RecursiveFind(character2.transform, "Torso"));
+        UnityUtils.RecursiveFind(character2.transform, "Torso").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [5];
 
         character1.transform.name = "Character 1";
         character2.transform.name = "Character 2";
@@ -43,5 +62,5 @@ public class SelectionCharacterSpawner : MonoBehaviour
             Destroy(child);
         }
     }   
-
+*/
 }
