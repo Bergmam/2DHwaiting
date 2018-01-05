@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+using UnityEditor;
 
 /// <summary>
 /// Used for manipulating the panels next to each character showing the currently selected moves.
@@ -41,6 +42,11 @@ public class SelectionPanelBahviour : MonoBehaviour
 					child.GetComponent<RectTransform> ().localScale = new Vector3 (-1, 1, 1);
 				}
 			}
+
+			//Make selection panel list entries have the default button sprite to make them look less like an interactable list.
+			string defaultButtonPath = "UI/Skin/Background.psd";
+			Sprite defaultButtonSprite = AssetDatabase.GetBuiltinExtraResource<Sprite> (defaultButtonPath);
+			previewPanel.GetComponent<Image> ().sprite = defaultButtonSprite;
 
 			previewPanel.transform.Find("NameText").GetComponent<Text>().text = "Empty";
 			previewPanel.transform.Find ("NameText").GetComponent<Text> ().color = new Color (0.5f, 0, 0, 255);
