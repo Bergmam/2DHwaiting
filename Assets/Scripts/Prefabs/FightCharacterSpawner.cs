@@ -25,8 +25,6 @@ public class FightCharacterSpawner : MonoBehaviour
 		UnityUtils.RecursiveFind(character2.transform, "Head").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [2];
 		UnityUtils.RecursiveFind(character2.transform, "Right Hand").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [3];
 		UnityUtils.RecursiveFind(character2.transform, "Left Hand").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [5];
-		UnityUtils.RecursiveFind(character2.transform, "Upper Left Leg").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [7];
-		UnityUtils.RecursiveFind(character2.transform, "Upper Right Leg").GetComponent<SpriteRenderer>().sprite = (Sprite)blueSprites [7];
 
 		character1.transform.localScale = new Vector3 (character1.transform.localScale.x, character1.transform.localScale.y, character1.transform.localScale.z);
 		// - to change direction of character 2.
