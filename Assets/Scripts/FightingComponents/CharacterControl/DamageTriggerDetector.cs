@@ -17,12 +17,15 @@ public class DamageTriggerDetector : MonoBehaviour {
 	private GameState gameState;
 	private Rigidbody2D rigidBody;
 
+	private GameObject hitParticle;
+
 	void Start ()
 	{
 		this.inputController = transform.root.gameObject.GetComponent<InputController> ();
 		this.character = StaticCharacterHolder.characters[characterIndex - 1];
 		this.rigidBody = transform.root.gameObject.GetComponent<Rigidbody2D> ();
 		this.gameState = GameObject.Find ("Handler").GetComponent<GameState> ();
+		this.hitParticle = Resources.Load("Prefabs/hitParticle", typeof(GameObject)) as GameObject;
 		audioCenter = GameObject.Find("AudioCenter").GetComponent<AudioSource>();
 	}
 
@@ -56,8 +59,17 @@ public class DamageTriggerDetector : MonoBehaviour {
 		this.character.SetInvunderable (true); //Make sure no other collider can do damage to the character in this frame.
 
 		otherCollider.enabled = false; //Make sure the other character's damaging bodypart does not also collide with character behind shield.
-		audioCenter.Play();
+		audioCenter.Play(); 
+
+		GameObject particleObject = Instantiate(this.hitParticle, (otherCollider.transform.position + transform.position) / 2, otherCollider.transform.rotation);
+		ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+		particleSystem.Play();
+		Destroy (particleObject,particleSystem.main.duration);
+		
         this.inputController.SetHitColor();
+
+
+		// PARTICLE STUFF HERE
 
 		float knockBackModifier = 0.0f;
 		Move blockMove = this.inputController.GetCurretlyPlayedMove ();
