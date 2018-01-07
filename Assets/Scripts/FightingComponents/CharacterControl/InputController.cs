@@ -11,6 +11,9 @@ public class InputController : MonoBehaviour
     public string horizontalAxis;
     public string verticalAxis;
 
+    public string horizontalAxisJoystick;
+    public string verticalAxisJoystick;
+
 	public int characterIndex;
 	private Character character;
 
@@ -93,69 +96,80 @@ public class InputController : MonoBehaviour
 		}
 
 		// Get information about the next position of the Character
+/*
+        if () {
+
+        } 
+        else 
+        {
+
+        }
+*/
         float horizontal = Input.GetAxisRaw(horizontalAxis);
+        float horizontalJoystick = Input.GetAxisRaw(horizontalAxisJoystick);
         float vertical = Input.GetAxisRaw(verticalAxis);
+        float verticalJoystick = Input.GetAxisRaw(verticalAxisJoystick);
         
 		//isPlaying is whether a fight move is being played. If it is, don't move the character.
 		if (!isPlayingMove)
 		{
 			// Move sideways
-			if (horizontal < 0 && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
+			if ((horizontal < 0 || horizontalJoystick < 0) && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        {
 				this.movementController.MoveLeft ();
 	        }
-			else if (horizontal > 0 && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
+			else if ((horizontal > 0 || horizontalJoystick > 0) && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        {
 				this.movementController.MoveRight ();
 	        }
-            else if (horizontal < 0 && this.isCrouching)
+            else if ((horizontal < 0 || horizontalJoystick < 0) && this.isCrouching)
             {
                 this.movementController.CrouchLeft();
             }
-            else if (horizontal > 0 && this.isCrouching)
+            else if ((horizontal > 0 || horizontalJoystick > 0) && this.isCrouching)
             {
                 this.movementController.CrouchRight();
             }
-            else if (horizontal == 0)
+            else if (horizontal == 0 || horizontalJoystick == 0)
 	        {
 				this.movementController.Stop ();
 	        }
-
-            if (vertical > 0 && !movementController.isKnockedBack())
+            
+            if ((vertical > 0 || verticalJoystick < 0) && !movementController.isKnockedBack())
             {
                 SetAnimatorBool("Crouching", false);
                 SetAnimatorBool("Jumping", true);
                 this.collisionDown = false;
                 jumpController.Jump();
             }
-            else if (Mathf.Abs(horizontal) > 0 && this.collisionDown && !this.isCrouching)
+            else if ((Mathf.Abs(horizontal) > 0 || Mathf.Abs(horizontalJoystick) > 0) && this.collisionDown && !this.isCrouching)
             {
                 SetAnimatorBool("Running", true);
                 this.isRunning = true;
             }
-            else if (Mathf.Abs(horizontal) > 0 && this.collisionDown && this.isCrouching)
+            else if ((Mathf.Abs(horizontal) > 0 || Mathf.Abs(horizontalJoystick) > 0) && this.collisionDown && this.isCrouching)
             {
                 SetAnimatorBool("CrouchWalking", true);
                 this.isRunning = true;
             }
-            else if (vertical < 0)
+            else if (vertical < 0 || verticalJoystick > 0)
             {
                 SetAnimatorBool("Crouching", true);
                 this.isCrouching = true;
             }
 
-            if (vertical <= 0 && collisionDown)
+            if (vertical <= 0 && verticalJoystick >= 0 && collisionDown)
             {
                 SetAnimatorBool("Jumping", false);
             }
             
-            if (vertical == 0 && collisionDown ) {
+            if (vertical == 0 && verticalJoystick == 0 && collisionDown ) {
                 SetAnimatorBool("CrouchWalking", false);
                 SetAnimatorBool("Crouching", false);
                 this.isCrouching = false;
             }
 
-            if (Mathf.Abs(horizontal) == 0)
+            if (Mathf.Abs(horizontal) == 0 && Mathf.Abs(horizontalJoystick) == 0)
             {
                 SetAnimatorBool("Running", false);
                 SetAnimatorBool("CrouchWalking", false);
