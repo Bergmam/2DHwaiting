@@ -39,9 +39,13 @@ public class ListSelector : MonoBehaviour {
 		bool horizontal1Left = Input.GetAxisRaw("Horizontal") < 0;
 		bool horizontal2Right = Input.GetAxisRaw("Horizontal2") > 0;
 		bool horizontal2Left = Input.GetAxisRaw("Horizontal2") < 0;
+		bool horizontal1JoystickRight = Input.GetAxisRaw("HorizontalJoystick") > 0;
+		bool horizontal1JoystickLeft = Input.GetAxisRaw("HorizontalJoystick") < 0;
+		bool horizontal2JoystickRight = Input.GetAxisRaw("HorizontalJoystick2") > 0;
+		bool horizontal2JoystickLeft = Input.GetAxisRaw("HorizontalJoystick2") < 0;
 
-		bool leftPressed = (horizontal1Left || horizontal2Left);
-		bool rightPressed = (horizontal1Right || horizontal2Right);
+		bool leftPressed = (horizontal1Left || horizontal2Left || horizontal1JoystickLeft || horizontal2JoystickLeft);
+		bool rightPressed = (horizontal1Right || horizontal2Right || horizontal1JoystickRight || horizontal2JoystickRight);
 
 		if (leftPressed && !rightPressed && !deleteMovePrompt.activeSelf)
 		{

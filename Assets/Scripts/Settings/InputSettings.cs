@@ -60,7 +60,7 @@ public static class InputSettings
 	/// <param name="character">The character which is to use the button.</param>
 	public static void AddButton(string button, Character character, int index)
 	{
-		if (button.Length == 1 && !allUsedButtons.Contains (button)) { //Make sure button is not already in use and that it is just one character long.
+		if (!allUsedButtons.Contains (button)) { //Make sure button is not already in use and that it is just one character long.
 			allUsedButtons.Add (button);
 			foreach (CharacterInput characterInput in characterInputs)
 			{

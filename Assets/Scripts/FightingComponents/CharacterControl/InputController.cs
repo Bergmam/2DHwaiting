@@ -81,10 +81,27 @@ public class InputController : MonoBehaviour
 			string pressedButton = "";
 			foreach (string button in InputSettings.allUsedButtons)
 			{
-				if (Input.GetKeyDown (button))
-				{
-					pressedButton = button;
-				}
+                try {
+                    if (Input.GetKeyDown (button))
+                    {
+                        pressedButton = button;
+                    }
+                }
+                catch
+                {
+
+                }
+                try {
+                    if (Input.GetButtonDown (button))
+                    {
+                        pressedButton = button;
+                    }
+                }
+                catch
+                {
+                    
+                }
+				
 			}
 			if (InputSettings.HasButton (characterIndex, pressedButton) && !isPlayingMove && !isCrouching)
 			{

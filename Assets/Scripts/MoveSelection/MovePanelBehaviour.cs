@@ -75,11 +75,8 @@ public class MovePanelBehaviour : MonoBehaviour
 	public void AssignButton(string button, Color32 color, int playerNumber)
 	{
 		playerNumber--; //Decrement to make player1 have index 0 etc.
-		if (button.Length == 1) //Make sure the assigned button is not more than one character
-		{
-			assignedButtonTexts[playerNumber].color = color;
-			assignedButtonTexts[playerNumber].text = button;
-		}
+		assignedButtonTexts[playerNumber].color = color;
+		assignedButtonTexts[playerNumber].text = button;
 	}
 
 	/// <summary>

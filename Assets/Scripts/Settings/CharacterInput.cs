@@ -34,10 +34,7 @@ public class CharacterInput
 	/// <param name="button">The button to be registered.</param>
 	public void SetButton(string button, int index)
 	{
-		if (button.Length == 1)
-		{
-			SetKey (index, button);
-		}
+		SetKey (index, button);
 	}
 
 	/// <summary>

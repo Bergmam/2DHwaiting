@@ -144,6 +144,10 @@ public class MovePanelListBehaviour : MonoBehaviour
 			bool vertical1Down = Input.GetAxisRaw("Vertical") < 0 && selected;
 			bool vertical2Up = Input.GetAxisRaw("Vertical2") > 0 && selected;
 			bool vertical2Down = Input.GetAxisRaw("Vertical2") < 0 && selected;
+			bool verticalControllerUp = Input.GetAxisRaw("VerticalJoystick") < 0 && selected;
+			bool verticalControllerDown = Input.GetAxisRaw("VerticalJoystick") > 0 && selected;
+			bool verticalController2Up = Input.GetAxisRaw("VerticalJoystick2") < 0 && selected;
+			bool verticalController2Down = Input.GetAxisRaw("VerticalJoystick2") > 0 && selected;
 
 			if (scrollDelay > 0)
 			{
@@ -152,7 +156,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 
 			else
 			{
-				if ((vertical1Up || vertical2Up) && scrollDelay <= 0 && listItems != null) //Up arrow pressed
+				if ((vertical1Up || vertical2Up || verticalControllerUp || verticalController2Up) && scrollDelay <= 0 && listItems != null) //Up arrow pressed
 				{
 					scrollDelay = Parameters.scrollDelay;
 					bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
@@ -163,7 +167,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 						ScrollList(-1);
 					}
 				}
-				else if ((vertical1Down || vertical2Down) && scrollDelay <= 0 && listItems != null) //Down arrow pressed
+				else if ((vertical1Down || vertical2Down | verticalControllerDown || verticalController2Down) && scrollDelay <= 0 && listItems != null) //Down arrow pressed
 				{
 					scrollDelay = Parameters.scrollDelay;
 					bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
@@ -184,7 +188,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 				}
 			}
 
-			if ((Input.GetKeyDown("enter") || Input.GetKeyDown("return")) && InputSettings.AllButtonsAssigned())
+			if ((Input.GetKeyDown("enter") || Input.GetKeyDown("return")) || Input.GetButtonDown("Controller1Button7") || Input.GetButtonDown("Controller2Button7") && InputSettings.AllButtonsAssigned())
 			{
 				playButtonBehaviour.SwitchScene("FightScene");
 			}
@@ -196,9 +200,25 @@ public class MovePanelListBehaviour : MonoBehaviour
 				//Check if any button used in the game has been pressed.
 				foreach (string button in InputSettings.allUsedButtons)
 				{
-					if(Input.GetKeyDown(button))
+					try {
+						if (Input.GetKeyDown (button))
+						{
+							RegisterPlayerMoveToButton (button);
+						}
+					}
+					catch
 					{
-						RegisterPlayerMoveToButton (button);
+
+					}
+					try {	
+						if (Input.GetButtonDown (button))
+						{
+							RegisterPlayerMoveToButton (button);
+						}
+					}
+					catch
+					{
+						
 					}
 				}
 			}
