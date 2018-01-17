@@ -10,7 +10,6 @@ public class InputController : MonoBehaviour
 	// Unity specific strings related to movement keys in our case.
     public string horizontalAxis;
     public string verticalAxis;
-
     public string horizontalAxisJoystick;
     public string verticalAxisJoystick;
 
@@ -25,6 +24,14 @@ public class InputController : MonoBehaviour
     private bool isRunning = false;
     private bool isCrouching = false;
     private bool collisionDown = true;
+    private float leftDoubleClickCooldown = 0;
+    private float rightDoubleClickCooldown = 0;
+    private float leftDashCoolDown = 0;
+    private float rightDashCoolDown = 0;
+    private bool pressedRight = false;
+    private bool pressedLeft = false;
+    private bool pressedLeftAndReleased = false;
+    private bool pressedRightAndReleased = false;
 
 	// isPlayingMove exists in addition to the MovePlayer.CheckIsPlaying() method to avoid concurrency issues.
 	bool isPlayingMove = false;
@@ -112,16 +119,6 @@ public class InputController : MonoBehaviour
 			}
 		}
 
-		// Get information about the next position of the Character
-/*
-        if () {
-
-        } 
-        else 
-        {
-
-        }
-*/
         float horizontal = Input.GetAxisRaw(horizontalAxis);
         float horizontalJoystick = Input.GetAxisRaw(horizontalAxisJoystick);
         float vertical = Input.GetAxisRaw(verticalAxis);
@@ -132,12 +129,36 @@ public class InputController : MonoBehaviour
 		{
 			// Move sideways
 			if ((horizontal < 0 || horizontalJoystick < 0) && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
-	        {
-				this.movementController.MoveLeft ();
+	        { 
+                if (leftDoubleClickCooldown > 0 && pressedLeftAndReleased && leftDashCoolDown <= 0) {
+                    this.movementController.DashLeft ();
+                    pressedLeftAndReleased = false;
+                    pressedLeft = false;
+                    leftDoubleClickCooldown = 0.0f;
+                    leftDashCoolDown = 0.7f;
+                }
+                else 
+                {
+                    pressedLeft = true;
+                    leftDoubleClickCooldown = 0.5f;
+                    this.movementController.MoveLeft ();
+                }
 	        }
 			else if ((horizontal > 0 || horizontalJoystick > 0) && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        {
-				this.movementController.MoveRight ();
+				if (rightDoubleClickCooldown > 0 && pressedRightAndReleased && rightDashCoolDown <= 0) {
+                    this.movementController.DashRight ();
+                    pressedRightAndReleased = false;
+                    pressedRight = false;
+                    rightDoubleClickCooldown = 0.0f;
+                    rightDashCoolDown = 0.7f;
+                }
+                else 
+                {
+                    pressedRight = true;
+                    rightDoubleClickCooldown = 0.5f;
+                    this.movementController.MoveRight ();
+                }
 	        }
             else if ((horizontal < 0 || horizontalJoystick < 0) && this.isCrouching)
             {
@@ -190,6 +211,41 @@ public class InputController : MonoBehaviour
             {
                 SetAnimatorBool("Running", false);
                 SetAnimatorBool("CrouchWalking", false);
+
+                if (pressedLeft) {
+                    pressedLeftAndReleased = true;
+                    pressedLeft = false;
+                }
+
+                if (pressedRight) {
+                    pressedRightAndReleased = true;
+                    pressedRight = false;
+                }
+            }
+
+            if ( leftDoubleClickCooldown > 0) {
+                leftDoubleClickCooldown -= 1 * Time.deltaTime;
+            }
+            else 
+            {
+                pressedLeftAndReleased = false;
+                pressedLeft = false;
+            }
+
+            if ( rightDoubleClickCooldown > 0) {
+                rightDoubleClickCooldown -= 1 * Time.deltaTime;
+            }
+            else 
+            {
+                pressedRightAndReleased = false;
+                pressedRight = false;
+            }
+
+            if (leftDashCoolDown > 0) {
+                leftDashCoolDown -= 1 * Time.deltaTime;
+            }
+            if (rightDashCoolDown > 0) {
+                rightDashCoolDown -= 1 * Time.deltaTime;
             }
 		}
     }
