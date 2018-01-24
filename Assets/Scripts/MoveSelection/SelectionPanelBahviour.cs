@@ -48,8 +48,7 @@ public class SelectionPanelBahviour : MonoBehaviour
 			Sprite defaultButtonSprite = AssetDatabase.GetBuiltinExtraResource<Sprite> (defaultButtonPath);
 			previewPanel.GetComponent<Image> ().sprite = defaultButtonSprite;
 
-			previewPanel.transform.Find("NameText").GetComponent<Text>().text = "Empty";
-			previewPanel.transform.Find ("NameText").GetComponent<Text> ().color = new Color (0.5f, 0, 0, 255);
+			ResetText (previewPanel);
 
 			foreach (Transform child in previewPanel.transform) {
 				Text text = child.GetComponent<Text> ();
@@ -143,8 +142,7 @@ public class SelectionPanelBahviour : MonoBehaviour
 			panelWithMove.GetComponent<MovePanelBehaviour> ().RemoveSpeedText ();
 			panelWithMove.GetComponent<MovePanelBehaviour> ().RemoveStrengthText ();
 			panelWithMove.GetComponent<MovePanelBehaviour> ().RemoveNameText ();
-			panelWithMove.transform.Find("NameText").GetComponent<Text>().text = "Empty";
-			panelWithMove.transform.Find("NameText").GetComponent<Text>().color = Color.blue;
+			ResetText (panelWithMove.gameObject);
 
 			GameObject previewCharacter = panelWithMove.GetComponent<MovePanelBehaviour>().getPreviewCharacter();
 			if (previewCharacter != null)
@@ -169,5 +167,11 @@ public class SelectionPanelBahviour : MonoBehaviour
 	public Character GetOwner()
 	{
 		return this.owner;
+	}
+
+	private void ResetText(GameObject panel)
+	{
+		panel.transform.Find ("NameText").GetComponent<Text> ().text = "Empty";
+		panel.transform.Find ("NameText").GetComponent<Text> ().color = new Color (0.5f, 0, 0, 255);
 	}
 }

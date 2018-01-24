@@ -48,10 +48,12 @@ public class ListKeyboardManager : MonoBehaviour {
 	void Update(){
 		// If enter i pressed, find next or save button and select it.
 		// This makes pressing enter again go to next phase.
-		string selectedSelectableParentName = EventSystem.current.currentSelectedGameObject.transform.parent.name;
-		if ((Input.GetKeyDown (KeyCode.Return) || Input.GetKeyDown (KeyCode.KeypadEnter)) && !selectedSelectableParentName.Contains ("Prompt"))
-		{
-			SelectNextButton ();
+		GameObject currentlySelectedObject = EventSystem.current.currentSelectedGameObject;
+		if (currentlySelectedObject != null) {
+			string selectedSelectableParentName = currentlySelectedObject.transform.parent.name;
+			if ((Input.GetKeyDown (KeyCode.Return) || Input.GetKeyDown (KeyCode.KeypadEnter)) && !selectedSelectableParentName.Contains ("Prompt")) {
+				SelectNextButton ();
+			}
 		}
 	}
 

@@ -108,6 +108,14 @@ public static class InputSettings
 		return null;
 	}
 
+	public static void Deregister(string moveName)
+	{
+		foreach (CharacterInput characterInput in characterInputs)
+		{
+			characterInput.Deregister (moveName);
+		}
+	}
+
 	/// <summary>
 	/// Checks if the specified character has a move assigned to the specified button.
 	/// </summary>
