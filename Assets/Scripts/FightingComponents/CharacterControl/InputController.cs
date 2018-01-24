@@ -130,7 +130,7 @@ public class InputController : MonoBehaviour
 			// Move sideways
 			if ((horizontal < 0 || horizontalJoystick < 0) && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        { 
-                if (leftDoubleClickCooldown > 0 && pressedLeftAndReleased && leftDashCoolDown <= 0) {
+                if (leftDoubleClickCooldown > 0 && pressedLeftAndReleased && leftDashCoolDown <= 0 && this.collisionDown) {
                     this.movementController.DashLeft ();
                     pressedLeftAndReleased = false;
                     pressedLeft = false;
@@ -146,7 +146,7 @@ public class InputController : MonoBehaviour
 	        }
 			else if ((horizontal > 0 || horizontalJoystick > 0) && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        {
-				if (rightDoubleClickCooldown > 0 && pressedRightAndReleased && rightDashCoolDown <= 0) {
+				if (rightDoubleClickCooldown > 0 && pressedRightAndReleased && rightDashCoolDown <= 0 && this.collisionDown) {
                     this.movementController.DashRight ();
                     pressedRightAndReleased = false;
                     pressedRight = false;

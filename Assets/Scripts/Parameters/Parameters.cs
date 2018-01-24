@@ -5,8 +5,8 @@ using UnityEngine;
 public static class Parameters {
 
     public static int health = 400;
-    public static float mass = 1.0f; //
-    public static float jumpForce = 300.0f; // InputController 
+    public static float mass = 1.2f; //
+    public static float jumpForce = 400.0f; // InputController 
     public static float moveSpeed = 5.0f; // 
     public static float crouchSpeed = 2.0f;
     public static float knockbackModifyer = 500.0f;
