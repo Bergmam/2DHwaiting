@@ -54,9 +54,7 @@ public class MovementController : MonoBehaviour {
 	public void DashLeft(){
 		if(!collisionLeft && !knockedBack)
 		{
-			//thisBody.AddForce(new Vector2(-2500, 250));
-			//thisBody.velocity = new Vector2(-Parameters.moveSpeed * 6, thisBody.velocity.y);
-			thisBody.AddForce (Vector2.left * Parameters.knockbackModifyer);
+			thisBody.AddForce (Vector2.left * Parameters.knockbackModifyer * 1.3f);
 			this.KnockBack();
 			collisionRight = false; //If moving left, there is no longer a collision to the right.
 		}
@@ -73,8 +71,8 @@ public class MovementController : MonoBehaviour {
 	public void DashRight(){
 		if (!collisionRight && !knockedBack)
 		{
-			//thisBody.AddForce(new Vector2(2500, 250));
-			thisBody.AddForce (Vector2.right * Parameters.knockbackModifyer);
+
+			thisBody.AddForce (Vector2.right * Parameters.knockbackModifyer * 1.3f);
 			this.KnockBack();
 			collisionLeft = false; //If moving right, there is no longer a collision to the left
 		}

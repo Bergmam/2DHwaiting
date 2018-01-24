@@ -134,6 +134,7 @@ public class InputController : MonoBehaviour
 			if ((horizontal < 0 || horizontalJoystick < 0) && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        { 
                 if (leftDoubleClickCooldown > 0 && pressedLeftAndReleased && leftDashCoolDown <= 0 && this.collisionDown) {
+                    print("dashing left");
                     this.movementController.DashLeft ();
                     pressedLeftAndReleased = false;
                     pressedLeft = false;
@@ -150,6 +151,7 @@ public class InputController : MonoBehaviour
 			else if ((horizontal > 0 || horizontalJoystick > 0) && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        {
 				if (rightDoubleClickCooldown > 0 && pressedRightAndReleased && rightDashCoolDown <= 0 && this.collisionDown) {
+                    print("dashing right");
                     this.movementController.DashRight ();
                     pressedRightAndReleased = false;
                     pressedRight = false;
