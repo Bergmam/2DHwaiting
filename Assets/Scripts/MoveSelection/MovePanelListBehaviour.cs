@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /// <summary>
 ///  Class for handling the list of available moves in the MoveSelectionScene.
@@ -152,32 +153,29 @@ public class MovePanelListBehaviour : MonoBehaviour
 			if (scrollDelay > 0)
 			{
 				scrollDelay -= Time.deltaTime;
-			} 
-
+			}
 			else
 			{
-				if ((vertical1Up || vertical2Up || verticalControllerUp || verticalController2Up) && scrollDelay <= 0 && listItems != null) //Up arrow pressed
-				{
-					scrollDelay = Parameters.scrollDelay;
-					bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
-					MoveSelection(-1);
-					bool movedIntoBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
-					if (!movedOutOfTopPanels && !movedIntoBotPanels)
-					{
-						ScrollList(-1);
+				if (scrollDelay <= 0 && listItems != null) {
+					if (vertical1Up || vertical2Up || verticalControllerUp || verticalController2Up) { //Up pressed
+						scrollDelay = Parameters.scrollDelay;
+						bool movedOutOfTopPanels = selectedListIndex <= (nbrOfVisiblePanels / 2);
+						MoveSelection (-1);
+						bool movedIntoBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
+						if (!movedOutOfTopPanels && !movedIntoBotPanels) {
+							ScrollList (-1);
+						}
+					} else if (vertical1Down || vertical2Down | verticalControllerDown || verticalController2Down) { //Down pressed
+						scrollDelay = Parameters.scrollDelay;
+						bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
+						MoveSelection (1);
+						bool moveIntoTopPanels = selectedListIndex <= nbrOfVisiblePanels / 2;
+						if (!moveIntoTopPanels && !movedOutOfBotPanels) {
+							ScrollList (1);
+						}
 					}
 				}
-				else if ((vertical1Down || vertical2Down | verticalControllerDown || verticalController2Down) && scrollDelay <= 0 && listItems != null) //Down arrow pressed
-				{
-					scrollDelay = Parameters.scrollDelay;
-					bool movedOutOfBotPanels = selectedListIndex >= listItems.Length - (nbrOfVisiblePanels / 2) - 1;
-					MoveSelection(1);
-					bool moveIntoTopPanels = selectedListIndex <= nbrOfVisiblePanels / 2;
-					if (!moveIntoTopPanels && !movedOutOfBotPanels)
-					{
-						ScrollList(1);
-					}
-				}
+
 				if (vertical1Up || vertical1Down)
 				{
 					PlayAnimation(1);
@@ -188,7 +186,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 				}
 			}
 
-			if ((Input.GetKeyDown("enter") || Input.GetKeyDown("return")) || Input.GetButtonDown("Controller1Button7") || Input.GetButtonDown("Controller2Button7") && InputSettings.AllButtonsAssigned())
+			if ((Input.GetButtonDown("Controller1Button7") || Input.GetButtonDown("Controller2Button7")) && InputSettings.AllButtonsAssigned())
 			{
 				playButtonBehaviour.SwitchScene("FightScene");
 			}
@@ -222,6 +220,11 @@ public class MovePanelListBehaviour : MonoBehaviour
 					}
 				}
 			}
+		}
+
+		if (Input.GetKeyDown (KeyCode.Escape)) 
+		{
+			controlsActive = true;
 		}
         
 	}
@@ -368,7 +371,6 @@ public class MovePanelListBehaviour : MonoBehaviour
 		}
 
 		AvailableMoves.DeleteMove(moveToBeDeleted);
-		playButton.SetActive(true);
 		foreach(MovePanelBehaviour panel in listItems)
 		{
 			Destroy(panel.gameObject);
@@ -393,6 +395,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 	public void CancelDeleteMove() {
 		controlsActive = true;
 		deleteMovePrompt.SetActive(false);
+		ShowOrHidePlayButton ();
 	}
 
 	/// <summary>
@@ -419,7 +422,13 @@ public class MovePanelListBehaviour : MonoBehaviour
 	/// </summary>
 	private void ShowOrHidePlayButton()
 	{
-		playButton.SetActive (InputSettings.AllButtonsAssigned ());
+		bool showPlayButton = InputSettings.AllButtonsAssigned ();
+		playButton.SetActive (showPlayButton);
+		if(showPlayButton){
+			EventSystem.current.SetSelectedGameObject(null);
+			playButton.GetComponent<Button> ().Select ();
+		}
+
 	}
 
 	public void SetSelected(bool selected){
