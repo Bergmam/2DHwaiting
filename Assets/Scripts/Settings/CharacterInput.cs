@@ -120,6 +120,13 @@ public class CharacterInput
 		}
 	}
 
+	public void Deregister(string moveName){
+		for (int i = 0; i < buttonMovePairs.Length; i++) {
+			if (buttonMovePairs [i].Value.Equals (moveName)) {
+				SetValue (i, "");
+			}
+		}
+	}
 
 	/// <summary>
 	/// Checks if all buttons have a move assigned.

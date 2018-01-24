@@ -384,6 +384,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 			selectedListIndex = Mathf.Max (selectedListIndex - 1, 0);
 		}
 
+		InputSettings.Deregister (moveToBeDeleted.GetName ());
 		
 		hasDeleted = true;
 		controlsActive = true;
