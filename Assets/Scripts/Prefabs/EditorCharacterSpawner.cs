@@ -64,5 +64,6 @@ public class EditorCharacterSpawner : MonoBehaviour
         }
 		character.transform.Find ("undercharacter").gameObject.SetActive (false); // Remove shadow of character onion skin.
         character.transform.position = new Vector3(x1, y1, 0);
+        character.transform.localScale = new Vector3 (xScale, yScale, 1f);
     }
 }

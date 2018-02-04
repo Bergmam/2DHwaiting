@@ -15,7 +15,7 @@ public class SettingsReturnScript : MonoBehaviour {
 
 	void Update ()
 	{
-		bool escapePressed = Input.GetKeyDown (KeyCode.Escape);
+		bool escapePressed = Input.GetKeyDown (KeyCode.Escape) || Input.GetButtonDown("Controller1Button6") || Input.GetButtonDown("Controller2Button6");
 		allButtonsAdded = InputSettings.AllButtonsAdded ();
 
 		if (allButtonsAdded)
