@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Parameters {
 
-    public static int health = 400;
+    public static int health = 600;
     public static float mass = 1.0f; //
     public static float jumpForce = 400.0f; // InputController 
     public static float moveSpeed = 5.0f; // 
