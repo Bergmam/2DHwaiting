@@ -150,7 +150,7 @@ public class MoveCreator : MonoBehaviour
 		activeBodypartSelector.Reset ();
 		Destroy (GameObject.Find ("Character"));
 
-		nameInputField.text = string.Empty;
+		nameInputField.text = nameValidator.GenerateValidName ();
 		sliders.ResetSlider(); //Reset slider to 50/50
 		SetBlockMove (false);
 		move = new Move ();
