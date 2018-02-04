@@ -5,6 +5,21 @@ using UnityEngine;
 public class UnityUtils
 {
 
+    static Dictionary<string, string> buttonNameDict = new Dictionary<string, string>(){
+        {"Controller1Button0", "cA"},
+        {"Controller1Button1", "cB"},
+        {"Controller1Button2", "cX"},
+        {"Controller1Button3", "cY"},
+        {"Controller1Button4", "cLT"},
+        {"Controller1Button5", "cRT"},
+        {"Controller2Button0", "cA"},
+        {"Controller2Button1", "cB"},
+        {"Controller2Button2", "cX"},
+        {"Controller2Button3", "cY"},
+        {"Controller2Button4", "cLT"},
+        {"Controller2Button5", "cRT"}
+    };
+
     /// <summary>
     /// Recursively finds a child of the current transform with the specified name.
     /// </summary>
@@ -79,6 +94,10 @@ public class UnityUtils
         bool verticalController2Right = Input.GetAxisRaw("HorizontalJoystick2") > 0;
 
         return horizontal1Right || horizontal2Right || verticalControllerRight || verticalController2Right;
+    }
+
+    public static string ControllerButtonToDisplayName(string button) {
+        return buttonNameDict[button];
     }
 
 }

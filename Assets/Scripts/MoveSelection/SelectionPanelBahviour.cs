@@ -79,7 +79,11 @@ public class SelectionPanelBahviour : MonoBehaviour
 			MovePanelBehaviour panelBehaviour = previewPanel.GetComponent<MovePanelBehaviour> ();
 			if (owner != null)
 			{
-				panelBehaviour.AssignButton (characterButton, owner.GetColor (), 2);
+				string characterButtonDisplayName = characterButton;
+				if (characterButtonDisplayName.Length > 1) {
+					characterButtonDisplayName = UnityUtils.ControllerButtonToDisplayName(characterButtonDisplayName);
+				}
+				panelBehaviour.AssignButton (characterButtonDisplayName, owner.GetColor (), 2);
 			}
 		}
 	}

@@ -330,10 +330,16 @@ public class MovePanelListBehaviour : MonoBehaviour
 			registeredCharacter.AddMove (selectedMove);
 			Color characterColor = registeredCharacter.GetColor ();
 			int characterNbr = registeredCharacter.GetNbr ();
-			listSelector.ClearButton (button);
-			listItems [index].AssignButton (button, characterColor, characterNbr); //Mark the selected list item with button and player color.
+
+			string buttonDisplayName = button;
+			if (buttonDisplayName.Length > 1){
+				buttonDisplayName = UnityUtils.ControllerButtonToDisplayName(buttonDisplayName);
+			} 
+
+			listSelector.ClearButton (buttonDisplayName);
+			listItems [index].AssignButton (buttonDisplayName, characterColor, characterNbr); //Mark the selected list item with button and player color.
 			//listSelector
-			AddPanelToCharacterMoves (registeredCharacter, button, index);
+			AddPanelToCharacterMoves (registeredCharacter, buttonDisplayName, index);
 			ShowOrHidePlayButton ();
 		}
 	}
