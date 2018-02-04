@@ -109,7 +109,9 @@ public class GameState : MonoBehaviour
 		pauseBackgroundToggel.Select ();
 		pauseMenu.SetActive (true);
 		GameObject.Find ("Character 1").GetComponent<InputController> ().Pause (true);
+		GameObject.Find ("Character 1").GetComponent<Rigidbody2D>().gravityScale = 0;
 		GameObject.Find ("Character 2").GetComponent<InputController> ().Pause (true);
+		GameObject.Find ("Character 2").GetComponent<Rigidbody2D>().gravityScale = 0;
 	}
 
 	/// <summary>
@@ -123,6 +125,8 @@ public class GameState : MonoBehaviour
 		pauseMenu.SetActive (false);
 		GameObject.Find ("Character 1").GetComponent<InputController> ().UnPause ();
 		GameObject.Find ("Character 2").GetComponent<InputController> ().UnPause ();
+		GameObject.Find ("Character 1").GetComponent<Rigidbody2D>().gravityScale = 1;
+		GameObject.Find ("Character 2").GetComponent<Rigidbody2D>().gravityScale = 1;
 	}
 
 	/// <summary>
