@@ -133,12 +133,24 @@ public class InputController : MonoBehaviour
 			// Move sideways
 			if ((horizontal < 0 || horizontalJoystick < 0) && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        { 
-                if (leftDoubleClickCooldown > 0 && pressedLeftAndReleased && leftDashCoolDown <= 0 && this.collisionDown) {
-                    this.movementController.DashLeft ();
-                    pressedLeftAndReleased = false;
-                    pressedLeft = false;
-                    leftDoubleClickCooldown = 0.0f;
-                    leftDashCoolDown = 0.7f;
+				//Time left on doubleclick cooldown means this button press is within time frame of a doubleclick.
+				//PressedLeftAndReleased means button has been pressed once, this press is the doubleclick.
+                if (leftDoubleClickCooldown > 0 && pressedLeftAndReleased && this.collisionDown) {
+					// If dashcooldown is below zero, do a dash, otherwise, do nothing and reset doubleclick cooldown.
+					if (leftDashCoolDown <= 0)
+					{
+						this.movementController.DashLeft ();
+						pressedLeftAndReleased = false;
+						pressedLeft = false;
+						leftDoubleClickCooldown = 0.0f;
+						leftDashCoolDown = 0.7f;
+					}
+					else
+					{
+						pressedLeft = true;
+						leftDoubleClickCooldown = 0.0f;
+						this.movementController.MoveLeft ();
+					}                    
                 }
                 else 
                 {
@@ -149,12 +161,21 @@ public class InputController : MonoBehaviour
 	        }
 			else if ((horizontal > 0 || horizontalJoystick > 0) && !this.isCrouching && !this.animator.GetBool("CrouchWalking"))
 	        {
-				if (rightDoubleClickCooldown > 0 && pressedRightAndReleased && rightDashCoolDown <= 0 && this.collisionDown) {
-                    this.movementController.DashRight ();
-                    pressedRightAndReleased = false;
-                    pressedRight = false;
-                    rightDoubleClickCooldown = 0.0f;
-                    rightDashCoolDown = 0.7f;
+				//Time left on doubleclick cooldown means this button press is within time frame of a doubleclick.
+				//PressedRightAndReleased means button has been pressed once, this press is the doubleclick.
+				if (rightDoubleClickCooldown > 0 && pressedRightAndReleased && this.collisionDown) {
+					// If dashcooldown is below zero, do a dash, otherwise, do nothing and reset doubleclick cooldown.
+					if (rightDashCoolDown <= 0) {
+						this.movementController.DashRight ();
+						pressedRightAndReleased = false;
+						pressedRight = false;
+						rightDoubleClickCooldown = 0.0f;
+						rightDashCoolDown = 0.7f;
+					} else {
+						pressedRight = true;
+						rightDoubleClickCooldown = 0.0f;
+						this.movementController.MoveRight ();
+					}
                 }
                 else 
                 {

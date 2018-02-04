@@ -36,16 +36,11 @@ public class InputGuiManager : MonoBehaviour {
 		}
 
 		//Make sure back button navigates to the proper button if right or down is pressed when it is currently selected.
-		Button backButton = GameObject.Find ("BackButton").GetComponent<Button> ();
 		Button player1TopButton = player1InputButtons [0].GetComponent<Button> ();
 		Button player2TopButton = player2InputButtons [0].GetComponent<Button> ();
 		if (player1InputButtons.Length > 1) {
-			EditButtonNavigation (backButton, null, player1TopButton, player1TopButton, null);
-			EditButtonNavigation (player1TopButton, backButton, player1InputButtons [1].GetComponent<Button> (), player2TopButton, backButton);
 			EditButtonNavigation (player2TopButton, null, player2InputButtons [1].GetComponent<Button> (), null, player1TopButton);
 		} else { // If there is just one button for each character, there is no down navigation for the button.
-			EditButtonNavigation (backButton, null, player1TopButton, player1TopButton, null);
-			EditButtonNavigation (player1TopButton, backButton, null, player2TopButton, backButton);
 			EditButtonNavigation (player2TopButton, null, null, null, player1TopButton);
 		}
 
