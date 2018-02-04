@@ -176,11 +176,11 @@ public class MovePanelListBehaviour : MonoBehaviour
 					}
 				}
 
-				if (vertical1Up || vertical1Down)
+				if (vertical1Up || vertical1Down || verticalControllerUp || verticalControllerDown)
 				{
 					PlayAnimation(1);
 				}
-				else if (vertical2Up || vertical2Down)
+				else if (vertical2Up || vertical2Down || verticalController2Down || verticalController2Up)
 				{
 					PlayAnimation(2);
 				}
