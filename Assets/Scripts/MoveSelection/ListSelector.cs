@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ListSelector : MonoBehaviour {
 
@@ -8,8 +9,8 @@ public class ListSelector : MonoBehaviour {
 	private MovePanelListBehaviour blockList;
 	GameObject attackViewport;
 	GameObject blockViewport;
-	GameObject blockMovesText;
-	GameObject attackMovesText;
+	GameObject blockMovesArrow;
+	GameObject attackMovesArrow;
 	MovePanelBehaviour moveListHeader;
 	private GameObject deleteMovePrompt;
 
@@ -19,8 +20,8 @@ public class ListSelector : MonoBehaviour {
 		this.blockList = GameObject.Find ("BlockContent").GetComponent<MovePanelListBehaviour> ();
 		this.attackViewport = GameObject.Find ("AttackViewport");
 		this.blockViewport = GameObject.Find ("BlockViewport");
-		this.blockMovesText = GameObject.Find ("BlockMovesText");
-		this.attackMovesText = GameObject.Find ("AttackMovesText");
+		this.blockMovesArrow = GameObject.Find ("BlockMovesArrow");
+		this.attackMovesArrow = GameObject.Find ("AttackMovesArrow");
 		this.moveListHeader = GameObject.Find ("MoveListHeader").GetComponent<MovePanelBehaviour> ();
 		this.deleteMovePrompt = GameObject.Find ("DeleteMovePrompt");
 	}
@@ -62,8 +63,9 @@ public class ListSelector : MonoBehaviour {
 		blockList.SetSelected (false);
 		blockViewport.SetActive (false);
 		attackViewport.SetActive (true);
-		attackMovesText.SetActive (false);
-		blockMovesText.SetActive (true);
+		attackMovesArrow.SetActive (false);
+		blockMovesArrow.SetActive (true);
+		moveListHeader.GetComponent<Image> ().color = new Color (1.0f, 0.0f, 0.3f, 1.0f);
 		moveListHeader.SetNameText ("Attack move name");
 		moveListHeader.SetSpeedText ("Spd");
 		moveListHeader.SetStrengthText ("Str");
@@ -74,8 +76,9 @@ public class ListSelector : MonoBehaviour {
 		blockList.SetSelected (true);
 		attackViewport.SetActive (false);
 		blockViewport.SetActive (true);
-		attackMovesText.SetActive (true);
-		blockMovesText.SetActive (false);
+		attackMovesArrow.SetActive (true);
+		blockMovesArrow.SetActive (false);
+		moveListHeader.GetComponent<Image> ().color = new Color (0.3f, 1.0f, 1.0f, 1.0f);
 		moveListHeader.SetNameText ("Block move name");
 		moveListHeader.SetSpeedText ("Blk");
 		moveListHeader.SetStrengthText ("Cvr");
