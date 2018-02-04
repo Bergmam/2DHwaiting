@@ -12,17 +12,17 @@ public static class Parameters {
     public static float knockbackModifyer = 500.0f;
     public static float blockKnockbackModifier = 80.0f;
 
-    public static int minSpeed = 20; // 
+    public static int minSpeed = 30; // 
     public static int maxSpeed = 81; // 
 
     public static int minStrength = 10; // 
-    public static int maxStrength = 101; // 
+    public static int maxStrength = 81; // 
 
     public static int minBlock = 30; // 
     public static int maxBlock = 121; //
 
-    public static float minStun = 0.5f; //Time in seconds
-    public static float maxStun = 3.0f; //Time in seconds
+    public static float minStun = 0.75f; //Time in seconds
+    public static float maxStun = 2.0f; //Time in seconds
 
     public static float characterCamMargin = 5f;
 
