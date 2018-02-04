@@ -7,6 +7,7 @@ public class EditorGuiManager : MonoBehaviour {
 	private GameObject[] statePanels;
 	private int currentStateIndex;
 	ProgressBarBehaviour phaseProgressBar;
+	private SceneReturnScript returnScript;
 
 	void Start ()
 	{
@@ -23,6 +24,7 @@ public class EditorGuiManager : MonoBehaviour {
 			slidersPanel,
 			nameAndSavePanel
 		};
+		this.returnScript = GameObject.FindObjectOfType<SceneReturnScript> ();
 	}
 
 	/// <summary>
@@ -31,6 +33,7 @@ public class EditorGuiManager : MonoBehaviour {
 	/// </summary>
 	public void Init()
 	{
+		this.returnScript.SetPromptEnabled (false); //Don't ask to go back while editing a move if move type hasn't been selected.
 		currentStateIndex = 0;
 		ShowOnlyCurrentPanel ();
 		UpdatePhaseProgressBar ();
@@ -66,6 +69,7 @@ public class EditorGuiManager : MonoBehaviour {
 		}
 		ShowOnlyCurrentPanel ();
 		UpdatePhaseProgressBar ();
+		this.returnScript.SetPromptEnabled (this.currentStateIndex > 0); //Don't ask to go back while editing a move if move type hasn't been selected.
 	}
 
 	/// <summary>
@@ -80,6 +84,7 @@ public class EditorGuiManager : MonoBehaviour {
 		}
 		ShowOnlyCurrentPanel ();
 		UpdatePhaseProgressBar ();
+		this.returnScript.SetPromptEnabled (this.currentStateIndex > 0); //Don't ask to go back while editing a move if move type hasn't been selected.
 	}
 
 	public void Reset()
@@ -87,6 +92,7 @@ public class EditorGuiManager : MonoBehaviour {
 		this.currentStateIndex = 0;
 		ShowOnlyCurrentPanel ();
 		UpdatePhaseProgressBar ();
+		this.returnScript.SetPromptEnabled (this.currentStateIndex > 0); //Don't ask to go back while editing a move if move type hasn't been selected.
 	}
 
 	/// <summary>

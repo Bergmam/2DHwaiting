@@ -83,4 +83,9 @@ public class SceneReturnScript : MonoBehaviour
 			}
 		}
 	}
+
+	public void SetPromptEnabled(bool promptEnabled)
+	{
+		this.promptInsteadOfReturn = promptEnabled;
+	}
 }
