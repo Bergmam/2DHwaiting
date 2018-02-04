@@ -222,7 +222,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.Escape)) 
+		if (Input.GetKeyDown (KeyCode.Escape) || Input.GetButtonDown("Controller1Button1") || Input.GetButtonDown("Controller2Button1")) 
 		{
 			controlsActive = true;
 		}

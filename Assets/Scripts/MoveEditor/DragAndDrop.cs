@@ -172,15 +172,15 @@ public class DragAndDrop : MonoBehaviour {
 			scrollDelay -= Time.deltaTime;
 		} else {
 			if (selected && !mouseDown) {
-				if (vertical1 > 0 || vertical2 > 0) {
+				if (UnityUtils.AnyInputUp()) {
 					//scrollDelay = Parameters.scrollDelay;
 					AddRotation (1);
-				} else if (vertical1 < 0 || vertical2 < 0) {
+				} else if (UnityUtils.AnyInputDown()) {
 					//scrollDelay = Parameters.scrollDelay;
 					AddRotation (-1);
-				} else if (horizontal1 > 0 || horizontal2 > 0) {
+				} else if (horizontal1 > 0 || horizontal2 > 0 || Input.GetButtonDown("Controller1Button5") || Input.GetButtonDown("Controller2Button5")) {
 					SelectNextDragPoint ();
-				} else if (horizontal1 < 0 || horizontal2 < 0) {
+				} else if (horizontal1 < 0 || horizontal2 < 0 || Input.GetButtonDown("Controller1Button4") || Input.GetButtonDown("Controller2Button4")) {
 					SelectPreviousDragPoint ();
 				}
 			}

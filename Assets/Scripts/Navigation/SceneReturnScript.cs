@@ -23,7 +23,7 @@ public class SceneReturnScript : MonoBehaviour
 	void Update () 
 	{
 		//Press Escape to go back
-		if (Input.GetKeyDown (KeyCode.Escape)) 
+		if (Input.GetKeyDown (KeyCode.Escape) || Input.GetButtonDown("Controller1Button6") || Input.GetButtonDown("Controller2Button6")) 
 		{
 			PromptOrGoBack ();
 		}

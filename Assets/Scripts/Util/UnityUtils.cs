@@ -45,4 +45,40 @@ public class UnityUtils
         return children;
     }
 
+    public static bool AnyInputUp(){
+        	bool vertical1Up = Input.GetAxisRaw("Vertical") > 0;
+			bool vertical2Up = Input.GetAxisRaw("Vertical2") > 0;
+			bool verticalControllerUp = Input.GetAxisRaw("VerticalJoystick") < 0;
+			bool verticalController2Up = Input.GetAxisRaw("VerticalJoystick2") < 0;
+
+            return vertical1Up || vertical2Up || verticalController2Up || verticalControllerUp;
+    }
+
+    public static bool AnyInputDown() {
+        bool vertical1Down = Input.GetAxisRaw("Vertical") < 0;
+        bool vertical2Down = Input.GetAxisRaw("Vertical2") < 0;
+        bool verticalControllerDown = Input.GetAxisRaw("VerticalJoystick") > 0;
+        bool verticalController2Down = Input.GetAxisRaw("VerticalJoystick2") > 0;
+
+        return vertical1Down || vertical2Down || verticalController2Down || verticalControllerDown;
+    }
+
+    public static bool AnyInputLeft() {
+        bool horizontal1Left = Input.GetAxisRaw("Horizontal") < 0;
+        bool horizontal2Left = Input.GetAxisRaw("Horizontal2") < 0;
+        bool verticalControllerLeft = Input.GetAxisRaw("HorizontalJoystick") < 0;
+        bool verticalController2Left = Input.GetAxisRaw("HorizontalJoystick2") < 0;
+
+        return horizontal1Left || horizontal2Left || verticalControllerLeft || verticalController2Left;
+    }
+
+    public static bool AnyInputRight() {
+        bool horizontal1Right = Input.GetAxisRaw("Horizontal") > 0;
+        bool horizontal2Right = Input.GetAxisRaw("Horizontal2") > 0;
+        bool verticalControllerRight = Input.GetAxisRaw("HorizontalJoystick") > 0;
+        bool verticalController2Right = Input.GetAxisRaw("HorizontalJoystick2") > 0;
+
+        return horizontal1Right || horizontal2Right || verticalControllerRight || verticalController2Right;
+    }
+
 }

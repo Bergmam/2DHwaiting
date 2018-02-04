@@ -51,7 +51,8 @@ public class ListKeyboardManager : MonoBehaviour {
 		GameObject currentlySelectedObject = EventSystem.current.currentSelectedGameObject;
 		if (currentlySelectedObject != null) {
 			string selectedSelectableParentName = currentlySelectedObject.transform.parent.name;
-			if ((Input.GetKeyDown (KeyCode.Return) || Input.GetKeyDown (KeyCode.KeypadEnter)) && !selectedSelectableParentName.Contains ("Prompt")) {
+			bool enterButtonPressed = Input.GetKeyDown (KeyCode.Return) || Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetButtonDown("Controller1Button0") || Input.GetButtonDown("Controller2Button0");
+			if (enterButtonPressed && !selectedSelectableParentName.Contains ("Prompt")) {
 				SelectNextButton ();
 			}
 		}
