@@ -59,7 +59,7 @@ public class InputController : MonoBehaviour
 		this.animator = GetComponent<Animator>();
 
         // Pause inputcontroller to let fightscene animations finish playing
-        PauseSeconds(4.0f);
+        PauseSeconds(2.0f);
 	}
 
     void Update() {
