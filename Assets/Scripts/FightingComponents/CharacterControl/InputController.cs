@@ -113,7 +113,7 @@ public class InputController : MonoBehaviour
                 }
 				
 			}
-			if (InputSettings.HasButton (characterIndex, pressedButton) && !isPlayingMove && !isCrouching)
+			if (InputSettings.HasButton (characterIndex, pressedButton) && !isPlayingMove && !isCrouching && !animator.GetCurrentAnimatorStateInfo(0).IsName("crouch"))
 			{
 				isPlayingMove = true;
 				SetAnimatorEnabled (false);
@@ -225,7 +225,7 @@ public class InputController : MonoBehaviour
                 SetAnimatorBool("Jumping", false);
             }
             
-            if (vertical == 0 && verticalJoystick == 0 && collisionDown ) {
+            if (vertical == 0 && verticalJoystick == 0 && collisionDown) {
                 SetAnimatorBool("CrouchWalking", false);
                 SetAnimatorBool("Crouching", false);
                 this.isCrouching = false;
