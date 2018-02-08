@@ -59,6 +59,7 @@ public class DamageTriggerDetector : MonoBehaviour {
 		this.character.SetInvunderable (true); //Make sure no other collider can do damage to the character in this frame.
 
 		otherCollider.enabled = false; //Make sure the other character's damaging bodypart does not also collide with character behind shield.
+		audioCenter.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("Audio/punch_general");
 		audioCenter.Play(); 
 
 		GameObject particleObject = Instantiate(this.hitParticle, (otherCollider.transform.position + transform.position) / 2, otherCollider.transform.rotation);

@@ -31,6 +31,7 @@ public class SelectionPanelBahviour : MonoBehaviour
 
 			GameObject previewPanelObject = (GameObject)Resources.Load (previewPath);
 			GameObject previewCharacterObject = (GameObject)Resources.Load(previewCharacterPath);
+			previewCharacterObject.GetComponent<CharacterCollisionDetector>().enabled = false;
 			GameObject previewPanel = Instantiate (previewPanelObject, previewPanelObject.transform.position, previewPanelObject.transform.rotation, transform);
 
 			if (owner.GetNbr () == 1)

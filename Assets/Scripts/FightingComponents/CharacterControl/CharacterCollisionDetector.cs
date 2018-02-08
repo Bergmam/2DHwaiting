@@ -8,10 +8,13 @@ using UnityEngine;
 public class CharacterCollisionDetector : MonoBehaviour
 {
 	private InputController inputController;
+    private AudioSource audioCenter;
+    private int characterPlaced = 3;
 
     void Start ()
 	{
 		this.inputController = GetComponent<InputController> ();
+        audioCenter = GameObject.Find("AudioCenter").GetComponent<AudioSource>();
     }
 		
 	//Detect collisions with other non-trigger colliders.
@@ -23,6 +26,13 @@ public class CharacterCollisionDetector : MonoBehaviour
 
         if (otherCollider.transform.tag.Equals("Floor"))
         {
+            if (characterPlaced == 0) {
+                audioCenter.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("Audio/impact");
+                audioCenter.Play(); 
+            }
+            if (characterPlaced > 0 ) characterPlaced--;
+            
+            
             inputController.CollisionDown();
         }
 
