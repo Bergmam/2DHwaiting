@@ -6,7 +6,9 @@ public static class Parameters {
 
     public static int health = 600;
     public static float mass = 1.0f; //
-    public static float jumpForce = 400.0f; // InputController 
+    public static float jumpForce = 800.0f; // InputController 
+    public static float jumpUpMultiplier = 3.0f; // Jumpcontroller
+    public static float fallMultiplier = 4.0f; // Jumpcontroller
     public static float moveSpeed = 5.0f; // 
     public static float crouchSpeed = 2.0f;
     public static float knockbackModifyer = 500.0f;

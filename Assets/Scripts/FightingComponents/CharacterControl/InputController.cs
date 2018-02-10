@@ -63,7 +63,6 @@ public class InputController : MonoBehaviour
 	}
 
     void Update() {
-
 		// Reduce pause time or unpause if pause time has run out.
         if (pauseTime > 0)
         {
@@ -223,6 +222,7 @@ public class InputController : MonoBehaviour
             if (vertical <= 0 && verticalJoystick >= 0 && collisionDown)
             {
                 SetAnimatorBool("Jumping", false);
+                this.jumpController.jumping = false;
             }
             
             if (vertical == 0 && verticalJoystick == 0 && collisionDown) {
