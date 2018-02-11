@@ -34,13 +34,21 @@ public class JumpController : MonoBehaviour {
 		}
 	}
 
-	public void Jump()
+	/// <summary>
+	/// Makes the character jump. Returns true if jump is successful, false otherwise.
+	/// </summary>
+	public bool Jump()
 	{
 		if (Mathf.Abs (thisBody.velocity.y) <= 0.01 && jumpFrameDelay == 0)
 		{
 			jumping = true;
-			thisBody.AddForce(Vector2.up * Parameters.jumpForce);
+			thisBody.AddForce (Vector2.up * Parameters.jumpForce);
 			jumpFrameDelay = 3;
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 }
