@@ -6,18 +6,18 @@ public class UnityUtils
 {
 
     static Dictionary<string, string> buttonNameDict = new Dictionary<string, string>(){
-        {"Controller1Button0", "cA"},
-        {"Controller1Button1", "cB"},
-        {"Controller1Button2", "cX"},
-        {"Controller1Button3", "cY"},
-        {"Controller1Button4", "cLT"},
-        {"Controller1Button5", "cRT"},
-        {"Controller2Button0", "cA"},
-        {"Controller2Button1", "cB"},
-        {"Controller2Button2", "cX"},
-        {"Controller2Button3", "cY"},
-        {"Controller2Button4", "cLT"},
-        {"Controller2Button5", "cRT"}
+        {"Controller1Button0", "c1A"},
+        {"Controller1Button1", "c1B"},
+        {"Controller1Button2", "c1X"},
+        {"Controller1Button3", "c1Y"},
+        {"Controller1Button4", "c1LT"},
+        {"Controller1Button5", "c1RT"},
+        {"Controller2Button0", "c2A"},
+        {"Controller2Button1", "c2B"},
+        {"Controller2Button2", "c2X"},
+        {"Controller2Button3", "c2Y"},
+        {"Controller2Button4", "c2LT"},
+        {"Controller2Button5", "c2RT"}
     };
 
     /// <summary>
