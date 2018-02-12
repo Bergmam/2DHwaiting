@@ -198,10 +198,15 @@ public class InputController : MonoBehaviour
             
             if ((vertical > 0 || verticalJoystick < 0) && !movementController.isKnockedBack())
             {
-                SetAnimatorBool("Crouching", false);
-                SetAnimatorBool("Jumping", true);
-                this.collisionDown = false;
-                jumpController.Jump();
+				bool jumpSucessful = jumpController.Jump ();
+
+				//Only show jump animation if jump is successful.
+				if (jumpSucessful) {
+					SetAnimatorBool("Crouching", false);
+					SetAnimatorBool("Jumping", true);
+					this.collisionDown = false;
+				}               
+                
             }
             else if ((Mathf.Abs(horizontal) > 0 || Mathf.Abs(horizontalJoystick) > 0) && this.collisionDown && !this.isCrouching)
             {
@@ -219,7 +224,7 @@ public class InputController : MonoBehaviour
                 this.isCrouching = true;
             }
 
-            if (vertical <= 0 && verticalJoystick >= 0 && collisionDown)
+			if (this.collisionDown) // If character touches the ground, it is not jumping.
             {
                 SetAnimatorBool("Jumping", false);
                 this.jumpController.jumping = false;
