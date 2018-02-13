@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
-using UnityEditor;
+//using UnityEditor;
 
 /// <summary>
 /// Used for manipulating the panels next to each character showing the currently selected moves.
@@ -46,7 +46,8 @@ public class SelectionPanelBahviour : MonoBehaviour
 
 			//Make selection panel list entries have the default button sprite to make them look less like an interactable list.
 			string defaultButtonPath = "UI/Skin/Background.psd";
-			Sprite defaultButtonSprite = AssetDatabase.GetBuiltinExtraResource<Sprite> (defaultButtonPath);
+			//Sprite defaultButtonSprite = AssetDatabase.GetBuiltinExtraResource<Sprite> (defaultButtonPath);
+			Sprite defaultButtonSprite = Resources.Load<Sprite>(defaultButtonPath);
 			previewPanel.GetComponent<Image> ().sprite = defaultButtonSprite;
 
 			ResetText (previewPanel);
