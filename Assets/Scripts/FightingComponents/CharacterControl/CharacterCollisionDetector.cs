@@ -28,7 +28,7 @@ public class CharacterCollisionDetector : MonoBehaviour
         {
             if (characterPlaced == 0) {
                 audioCenter.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("Audio/impact");
-                audioCenter.Play(); 
+               // audioCenter.Play(); 
             }
             if (characterPlaced > 0 ) characterPlaced--;
             

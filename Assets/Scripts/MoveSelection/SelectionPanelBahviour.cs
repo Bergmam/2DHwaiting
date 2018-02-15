@@ -45,7 +45,11 @@ public class SelectionPanelBahviour : MonoBehaviour
 			}
 
 			//Make selection panel list entries have the default button sprite to make them look less like an interactable list.
-			string defaultButtonPath = "UI/Skin/Background.psd";
+			//string defaultButtonPath = "UI/Skin/Background.psd";
+			string defaultButtonPath = "Art/Main Menu/button_up_test";
+			if (System.IO.File.Exists(defaultButtonPath)){
+				Debug.Log("foooound! file ");
+			}
 			//Sprite defaultButtonSprite = AssetDatabase.GetBuiltinExtraResource<Sprite> (defaultButtonPath);
 			Sprite defaultButtonSprite = Resources.Load<Sprite>(defaultButtonPath);
 			previewPanel.GetComponent<Image> ().sprite = defaultButtonSprite;
