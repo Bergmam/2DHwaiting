@@ -67,9 +67,9 @@ public class ActiveBodypartSelector : MonoBehaviour {
 	}
 
 	public void Reset(){
-
 		//Deactivate all buttons that are not the head. Head is default.
-		foreach (Transform child in transform) {
+		Transform buttonHolder = transform.Find("Panel").Find("Buttons");
+		foreach (Transform child in buttonHolder) {
 			if (!child.name.Equals ("HeadToggleButton")) {
 				Toggle toggle = child.GetComponent<Toggle> ();
 				if (toggle != null) {
