@@ -15,6 +15,6 @@ Unzip 2DHwaiting.rar and start with "Robot Wrestling.exe".
 # How to Play
 Create moves for your character from the "Create Move" menu. 
 
-Assign them to your character in the "Play" menu by navigating to the move in the menu and pressing the corresponding button as defined by the "Input Settings" menu.
+Assign them to your character in the "Play" menu by navigating to the move in the menu and pressing the corresponding button as defined by the "Input Settings" menu. You probably also want to have a friend to play with.
 
 The game is playable with Xbox360 controllers or with a keyboard.
