@@ -10,6 +10,8 @@ Download the project, open it in Unity and run.
 # Built version
 If you just want to play the game, a pre-built version can be found to download at https://drive.google.com/file/d/1ktGojy7ipWBQTMqt829M5eaiJJUOKToo/view?usp=sharing
 
+Unzip 2DHwaiting.rar and start with "Robot Wrestling.exe".
+
 # How to Play
 Create moves for your character from the "Create Move" menu. 
 
