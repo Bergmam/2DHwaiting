@@ -19,10 +19,10 @@ public class MovePanelListBehaviour : MonoBehaviour
 	private SelectionPanelBahviour[] selectedMovesPanels;
 	private MovePlayer character1; //used for displaying the selected move on one of the visible characters.
     private MovePlayer character2;
-    private GameObject playButton;
+    private GameObject playText;
     private float scrollDelay;
 	private bool hasDeleted = false;
-    private SceneButtonBehaviour playButtonBehaviour;
+    private SceneButtonBehaviour playTextBehaviour;
 
 	private bool selected;
 	private bool containsBlockMoves;
@@ -35,10 +35,10 @@ public class MovePanelListBehaviour : MonoBehaviour
 	void Awake ()
 	{
 		this.deleteMovePrompt = GameObject.Find ("DeleteMovePrompt");
-		playButton = GameObject.Find ("PlayButton");
+		playText = GameObject.Find ("PlayText");
 		character1 = GameObject.Find("Character 1").GetComponent<MovePlayer>(); //Choose the character to use for animating move previews.
 		character2 = GameObject.Find("Character 2").GetComponent<MovePlayer>();
-		playButtonBehaviour = GameObject.Find("Handler").GetComponent<SceneButtonBehaviour>(); //Used to switch scene by pressing Enter.
+		playTextBehaviour = GameObject.Find("Handler").GetComponent<SceneButtonBehaviour>(); //Used to switch scene by pressing Enter.
 		listSelector = GameObject.Find("Handler").GetComponent<ListSelector>();
 	}
 
@@ -47,7 +47,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 		deleteMovePrompt.SetActive(false);
         scrollDelay = 0;
 		//Hide the play button untill each character has a move assigned to each of its used buttons.
-		playButton.SetActive (false);
+		playText.SetActive (false);
 		//Create a list item for each available move.
 		moves = AvailableMoves.GetMoves ();
 
@@ -186,9 +186,13 @@ public class MovePanelListBehaviour : MonoBehaviour
 				}
 			}
 
-			if ((Input.GetButtonDown("Controller1Button7") || Input.GetButtonDown("Controller2Button7")) && InputSettings.AllButtonsAssigned())
+			bool startPressed = Input.GetButtonDown("Controller1Button7") || Input.GetButtonDown("Controller2Button7");
+			bool enterPressed = Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return);
+			bool playButtonPressed = startPressed || enterPressed;
+
+			if (playButtonPressed && InputSettings.AllButtonsAssigned())
 			{
-				playButtonBehaviour.SwitchScene("FightScene");
+				playTextBehaviour.SwitchScene("FightScene");
 			}
 			if (Input.GetKeyDown("delete") && selected) {
 				ShowDeleteMovePanel();
@@ -340,7 +344,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 			listItems [index].AssignButton (buttonDisplayName, characterColor, characterNbr); //Mark the selected list item with button and player color.
 			//listSelector
 			AddPanelToCharacterMoves (registeredCharacter, buttonDisplayName, index);
-			ShowOrHidePlayButton ();
+			ShowOrHideplayText ();
 		}
 	}
 
@@ -402,7 +406,7 @@ public class MovePanelListBehaviour : MonoBehaviour
 	public void CancelDeleteMove() {
 		controlsActive = true;
 		deleteMovePrompt.SetActive(false);
-		ShowOrHidePlayButton ();
+		ShowOrHideplayText ();
 	}
 
 	/// <summary>
@@ -427,15 +431,10 @@ public class MovePanelListBehaviour : MonoBehaviour
 	/// <summary>
 	/// Shows the or hide play button depending on wether all characters have registered all moves.
 	/// </summary>
-	private void ShowOrHidePlayButton()
+	private void ShowOrHideplayText()
 	{
-		bool showPlayButton = InputSettings.AllButtonsAssigned ();
-		playButton.SetActive (showPlayButton);
-		if(showPlayButton){
-			EventSystem.current.SetSelectedGameObject(null);
-			playButton.GetComponent<Button> ().Select ();
-		}
-
+		bool showplayText = InputSettings.AllButtonsAssigned ();
+		playText.SetActive (showplayText);
 	}
 
 	public void SetSelected(bool selected){
