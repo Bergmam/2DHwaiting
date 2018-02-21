@@ -8,7 +8,7 @@ The project was created in Unity 5.6.1f1 Personal (64bit) by Anton and Lage Berg
 Download the project, open it in Unity and run.
 
 # Built version
-If you just want to play the game, a pre-built version can be found to download at https://drive.google.com/file/d/1ktGojy7ipWBQTMqt829M5eaiJJUOKToo/view?usp=sharing
+If you just want to play the game, a pre-built version can be found to download at https://drive.google.com/file/d/18h1eliP3mA9RHY76LzRYmufzH7SMMqCu/view?usp=sharing
 
 Unzip 2DHwaiting.rar and start with "Robot Wrestling.exe".
 
